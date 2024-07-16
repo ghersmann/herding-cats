@@ -1,0 +1,293 @@
+/* Herding Cats Travel App*/
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Satoshi-Variable';
+  src: url(@/assets/fonts/Satoshi-Variable.woff) format(woff);
+  src: url(@/assets/fonts/Satoshi-Variable.woff2) format(woff2);
+  src: url(@/assets/fonts/Satoshi-Variable.ttf) format(truetype);
+}
+
+:root {
+  --dark-button-blue: #051533;
+  --green-travel: #556c6c;
+  --green-packing-list: #4d836d;
+  --gray-accomodation: #dfd9c4;
+  --pink-activities: #f1c8bc;
+  --pink-background: #caa9a0;
+  --turqoise-notes: #599097;
+  --turqoise-gray-background: #88a3a7;
+  --yellow-calendar: #f4e2a6;
+  --required-red: rgb(165, 0, 0);
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  background-image: url('background-pattern.svg');
+}
+
+header {
+  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  width: 32rem;
+  margin: 2rem auto;
+}
+
+h1 {
+  font-family: 'Satoshi-Variable', 'Times New Roman', Times, serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 4.8rem;
+  line-height: 6.5rem;
+  text-align: center;
+  color: #000000;
+  text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
+}
+
+h2 {
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 3.2rem;
+  line-height: 4.3rem;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
+}
+
+h3 {
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.4rem;
+  text-align: center;
+  color: #000000;
+  text-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+h4 {
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #000000;
+  text-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+p {
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  color: #000000;
+}
+
+.list {
+  margin-top: 2rem;
+}
+
+.list-p {
+  margin-top: 1rem;
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  color: #000000;
+  line-height: 2.5rem;
+}
+
+.list-item {
+  display: flex;
+  align-items: baseline;
+}
+
+.title {
+  margin-bottom: 3rem;
+}
+
+.container {
+  width: 32rem;
+  min-height: 52rem;
+  background-color: var(--green-packing-list);
+  border: 1px solid white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  margin: 0.7rem auto;
+}
+
+.transport-entry,
+.lodging-entry,
+.activity-entry {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 28rem;
+}
+
+.transport-entry + .transport-entry,
+.lodging-entry + .lodging-entry,
+.activity-entry + .activity-entry {
+  border-top: 0.25rem solid black;
+  margin-top: 2rem;
+  padding-top: 1rem;
+}
+
+.rect-delete-btn {
+  background-color: var(--required-red);
+  margin-bottom: 2rem;
+}
+
+.required::after {
+  content: '*';
+  color: var(--required-red);
+  margin-left: 0.5rem;
+}
+
+button {
+  margin: 0.7rem auto;
+  background-color: var(--dark-button-blue);
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  color: white;
+  width: 28rem;
+  height: 4rem;
+  border: 0.1rem solid white;
+  box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+button:hover,
+button:focus {
+  box-shadow: white 0px 0px 1rem;
+  outline: 0.2rem solid var(--green-travel);
+}
+
+button:active {
+  outline: 0.2rem solid var(--pink-activities);
+  border: 0.1rem solid var(--pink-background);
+}
+
+.btn-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+  margin: 0.7rem auto;
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 2.7rem;
+  width: 28rem;
+  height: 4rem;
+  border: 0.1rem solid var(--dark-button-blue);
+  box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+textarea {
+  width: 28rem;
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: #000000;
+  border: 0.1rem solid var(--dark-button-blue);
+  box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+input[type='text']::placeholder,
+textarea::placeholder,
+input[type='email']::placeholder,
+input[type='password']::placeholder {
+  color: var(--turqoise-gray-background);
+}
+
+input[type='text']:focus,
+input[type='text']:active,
+input[type='text']:hover,
+textarea:focus,
+textarea:active,
+textarea:hover,
+input[type='email']:focus,
+input[type='email']:active,
+input[type='email']:hover,
+input[type='password']:focus,
+input[type='password']:active,
+input[type='password']:hover {
+  box-shadow: white 0px 0px 1rem;
+  outline: 0.1rem solid white;
+}
+
+input[type='datetime-local'] {
+  margin: 0.7rem auto;
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: black;
+  width: 28rem;
+  height: 3rem;
+  border: 0.1rem solid black;
+  box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+.delete-btn {
+  margin: 0;
+  padding: 0;
+  min-height: 2rem;
+  min-width: 2rem;
+  max-height: 2rem;
+  max-width: 2rem;
+  font-size: 1rem;
+  border-radius: 50%;
+}
+
+.weiterbtn {
+  margin-top: 5rem;
+}
+
+.title {
+  margin-bottom: 5px;
+}
+
+label {
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  color: #000000;
+}
+
+.date-label {
+  margin-top: 1rem;
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  color: #000000;
+  line-height: 2.5rem;
+}
+
+.member-dates {
+  display: block;
+  font-size: 1.1rem;
+  line-height: 1.4rem;
+  color: white;
+  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
+}
