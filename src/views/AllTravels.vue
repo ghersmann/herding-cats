@@ -2,35 +2,8 @@
   <header>
     <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
   </header>
-  <div class="container">
-    <div class="burger-title">
-      <div @mouseover="showSidebar = true" @mouseleave="hideSidebar" class="hamburger-menu">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-      </div>
-      <h3 class="user-name">Hello <br />{{ state.user.name }}!</h3>
-    </div>
-    <!-- <transition name="slide">
-      <div v-show="showSidebar" class="sidebar">
-        <ul>
-          <li><router-link to="/newtrip">Create new trip</router-link></li>
-          <li><router-link to="/notes">Notes</router-link></li>
-          <li><router-link to="/logout">Log Out</router-link></li>
-        </ul>
-      </div>
-    </transition> -->
-
-    <div id="app">
-      <div class="wrap">
-        <ejs-calendar
-          id="calendar"
-          ref="CalendarInstance"
-          :isMultiSelection="isMultiSelection"
-          :values="values2"
-        ></ejs-calendar>
-      </div>
-    </div>
+  <main class="container">
+      <h3>Hello {{ state.user.name }}!</h3>
 
     <div class="calendar-list">
       <ul>
@@ -41,10 +14,6 @@
             {{ trip.tripStart.split(' ')[0] }} -
             {{ trip.tripEnd.split(' ')[0] }}
           </router-link>
-
-          <span @click="favoriteStatus">
-            {{ favStat ? '\ud83d\udda4' : '\u2665\ufe0f' }}
-          </span>
         </li>
       </ul>
     </div>
@@ -57,15 +26,9 @@
       ><button class="personal-btn">Personal Notes</button></router-link
     >
     <LogoutButton />
-  </div>
+  </main>
 </template>
 
-<script setup>
-// import Vue from 'vue'
-import { CalendarComponent as EjsCalendar } from '@syncfusion/ej2-vue-calendars'
-// import { CalendarPlugin } from '@syncfusion/ej2-vue-calendars'
-// Vue.use(CalendarPlugin)
-</script>
 
 <script>
 import searchPublicTrips from '@/components/searchPublicTrips.vue'
@@ -106,11 +69,6 @@ export default {
     }
   },
   methods: {
-    /*     hideSidebar() {
-      setTimeout(() => {
-        this.showSidebar = false
-      }, 2000)
-    }, */
     favoriteStatus() {
       this.favStat = !this.favStat
     },
@@ -141,23 +99,8 @@ export default {
 </script>
 
 <style scoped>
-.hamburger-menu {
-  width: 30px;
-  height: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.burger-title {
-  display: flex;
-  align-items: top;
-}
-
-.user-name {
-  width: 21rem;
-}
 .container {
-  background-color: var(--green-travel);
+  background-color: var(--turqoise-gray-background);
 }
 
 .create-trip-btn {
@@ -169,45 +112,9 @@ export default {
   background-color: var(--yellow-calendar);
 }
 
-.line {
-  width: 100%;
-  height: 3px;
-  margin-top: 5px;
-  background-color: white;
-}
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 100%;
-  background-color: whitesmoke;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding-left: 5px;
-}
-
 h3 {
   color: white;
-  margin-bottom: 1rem;
-}
-
-.slide-enter-active {
-  transition: transform 0.3s;
-}
-
-.slide-leave-active {
-  transition: transform 1s;
-}
-
-.slide-enter,
-.slide-leave-to {
-  transform: translateX(-200px);
-}
-
-.wrap {
-  margin: 10px auto;
-  max-width: 250px;
+  margin-bottom: 4rem;
 }
 
 .calendar-list {
@@ -229,11 +136,7 @@ p {
 }
 
 .calendar-list-item {
-  margin-bottom: 2rem;
-  border-top: 0.1rem solid var(--dark-button-blue);
-}
-
-span {
-  padding-left: 1rem;
+  margin-bottom: 4rem;
+  border-top: 0.1rem solid rgb(193, 193, 193);
 }
 </style>

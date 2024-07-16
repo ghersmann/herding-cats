@@ -65,7 +65,6 @@ export default {
             item.category === 'lodging'
         )
       } else {
-        console.log('error')
         return []
       }
     }
