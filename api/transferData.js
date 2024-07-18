@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Read the local JSON file
-const dataFilePath = path.join(__dirname, 'data.json');
+const dataFilePath = path.join(__dirname, 'db.json');
 const rawData = fs.readFileSync(dataFilePath);
 const data = JSON.parse(rawData);
 
