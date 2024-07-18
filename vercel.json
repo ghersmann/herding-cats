@@ -4,7 +4,8 @@
       { "src": "api/**/*.cjs", "use": "@vercel/node" }
     ],
     "routes": [
-      { "src": "/api/(.*)", "dest": "/api/hcta.cjs" }
+      { "src": "/api/data", "dest": "/api/data.cjs" },
+      { "src": "/api/data/(.*)", "dest": "/api/data.cjs" }
     ]
   }
   
