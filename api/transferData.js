@@ -8,7 +8,7 @@ const rawData = fs.readFileSync(dataFilePath);
 const data = JSON.parse(rawData);
 
 // Define the API endpoint
-const apiEndpoint = 'https://your-project-name.vercel.app/api/data';
+const apiEndpoint = 'https://herding-cats.vercel.app/api/data';
 
 // Function to transfer data
 const transferData = async () => {
