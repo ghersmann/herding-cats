@@ -1,6 +1,5 @@
-// api/index.js
 import express from 'express';
-import db from '../db'; 
+import db from '../db';
 import dotenv from 'dotenv';
 
 dotenv.config();
