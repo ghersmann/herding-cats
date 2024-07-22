@@ -1,9 +1,8 @@
 {
-  "name": "package.json",
-  "version": "0.0.0",
+  "name": "herding-cats",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
-  "main": "index.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
