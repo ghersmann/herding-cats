@@ -1,5 +1,5 @@
 import express from 'express';
-import db from '../db/db.js';
+import db from './db/db.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
