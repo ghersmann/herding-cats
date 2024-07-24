@@ -1,31 +1,29 @@
-import express from 'express';
-import db from './db/db.js';
-import dotenv from 'dotenv';
+// index.js
 
-dotenv.config();
+const express = require('express');
+const { Pool } = require('pg');
+require('dotenv').config();
 
 const app = express();
+const port = process.env.PORT || 3000;
+
+// PostgreSQL connection pool
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
 app.use(express.json());
 
-app.get('/users', async (req, res) => {
-  try {
-    const result = await db.query('SELECT * FROM users');
-    res.status(200).json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+// Routes
+const usersRouter = require('./routes/users');
+const eventsRouter = require('./routes/events.js');
 
-app.get('/events/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const result = await db.query('SELECT * FROM events WHERE id = $1', [id]);
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+app.use('/api/users', usersRouter(pool));
+app.use('/api/events', eventsRouter(pool));
 
-export default app;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});

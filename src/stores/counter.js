@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const herdingCatsstore = defineStore('registration', {
   state: () => {
     return {
-      apiUrl: `http://localhost:3000/`,
+      apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:3000/',
       user: null,
       userData: null,
       tripData: [],
