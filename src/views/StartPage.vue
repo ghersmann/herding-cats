@@ -30,7 +30,6 @@
 export default {
   data() {
     return {
-      tripApiUrl: 'http://localhost:3000/events',
       tripId: null,
       disableGoBtn: true,
       tripData: [],
@@ -40,7 +39,7 @@ export default {
 
   methods: {
     async loadData() {
-      const response = await fetch(this.tripApiUrl)
+      const response = await fetch(this.state.apiUrl)
       const apiData = await response.json()
       this.tripData = apiData
       return this.tripData
