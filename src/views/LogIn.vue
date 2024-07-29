@@ -25,6 +25,9 @@
     </div>
     <input type="password" id="pw" v-model="password" />
     <button @click="logIn()">LogIn</button>
+    <router-link :to="{ name: 'home' }">
+        <button>Back to Start Page</button></router-link
+      >
   </main>
 </template>
 
