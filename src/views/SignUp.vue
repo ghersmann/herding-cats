@@ -47,6 +47,9 @@
     <router-link @click.prevent="createAccount" :to="validation() ? { name: 'alltravels' } : ''">
       <button class="weiterbtn">Create Account</button>
     </router-link>
+    <router-link :to="{ name: 'home' }">
+        <button>Back to Start Page</button></router-link
+      >
   </main>
 </template>
 
