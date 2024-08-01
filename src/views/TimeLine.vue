@@ -4,19 +4,17 @@
   </header>
   <main class="container">
     <h2 class="title">Timeline</h2>
-    <div class="line">
       <div v-for="(item, index) in sortedEvents" :key="item">
         <h3 v-if="isNewDate(item.startDate, index)" class="week">
           {{ weekNumber(item.startDate) }} {{ item.startDate.slice(0, 10) }}
         </h3>
-        <h3 class="weekline">{{ item.category }}</h3>
+        <h3 class="weekline">{{ item.category.charAt(0).toUpperCase() + item.category.slice(1) }}</h3>
         <p class="value-name">
           {{ item.name }}
         </p>
         <h3>{{ item.to }}</h3>
-        <p class="value-startdate">{{ item.startDate.slice(13, 18) }}</p>
+        <p class="value-startdate">Start: {{ item.startDate.slice(13, 18) }}</p>
       </div>
-    </div>
 
     <router-link :to="{ path: '/trip/' + this.$route.params.id }"
       ><button>Back to Trip</button></router-link
@@ -90,15 +88,11 @@ export default {
       const time = startDate.slice(13, 18)
       const reconvertedDate = year + '-' + month + '-' + day + 'T' + time
       const todaydate = new Date(reconvertedDate)
-      //object für den 1. Januar des jetzigen Jahres
-      // let oneJan = new Date(todaydate.getFullYear(), 0, 1)
-      // // number of days between 1. Januar and today (24 Std./Tag, 60 min./std., 60 sec./min, 1000 Millisekunden/ sec.
-      // let numberOfDays = Math.floor((todaydate - oneJan) / (24 * 60 * 60 * 1000))
-      // Kalenderwoche:
+ 
       let daynr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
       let weekday = todaydate.getDay()
       let weekday2 = daynr[parseInt(weekday)]
-      // let result = Math.ceil((todaydate.getDay() + 1 + numberOfDays) / 7)
+ 
       return weekday2
     }
   },
@@ -111,12 +105,7 @@ export default {
 </script>
 
 <style scoped>
-.list {
-  margin-top: 2rem;
-}
-.list-item {
-  display: block;
-}
+
 .value-name {
   margin: 0;
 }
@@ -127,27 +116,27 @@ export default {
 }
 .week {
   text-align: left;
+  font-weight: 350;
 }
 
 .weekline {
-  border-top: 2px solid white;
+  border-top: 2px solid var(--green-travel);
   text-align: left;
   font-size: 2rem;
-}
-
-.container {
-  margin: 0.7rem auto;
-  background-color: var(--yellow-calendar);
-  min-height: 10rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  font-weight: 300;
 }
 
 .title {
   color: black;
   text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .container {
-  background-color: var(--pink-background);
+  background-color: var(--yellow-calendar);
+  min-height: 10rem;
 }
 </style>
