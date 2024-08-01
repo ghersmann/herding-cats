@@ -8,8 +8,9 @@ export default async function handler(
   try {
     const userFirstName = request.query.userFirstName as string;
     const userLastName = request.query.userLastName as string;
-    if (!userFirstName || !userLastName) throw new Error('Names required');
-    await sql`INSERT INTO users (firstname, lastname) VALUES (${userFirstName}, ${userLastName});`;
+    const userAge = request.query.userAge as string;
+    if (!userFirstName || !userLastName || !userAge) throw new Error('Stuff Required');
+    await sql`INSERT INTO users (firstname, lastname, age) VALUES (${userFirstName}, ${userLastName}, ${userAge});`;
   } catch (error) {
     return response.status(500).json({ error });
   }
