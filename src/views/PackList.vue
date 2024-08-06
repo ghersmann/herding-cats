@@ -1,7 +1,6 @@
 <template>
-  <header>
-    <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logotype" />
-  </header>
+  <CatHeader />
+
   <main class="container">
     <h2 class="title">Packing List</h2>
     <ul class="list">
@@ -40,6 +39,7 @@
 
 <script>
 import { herdingCatsstore } from '@/stores/counter.js'
+import CatHeader from '@/components/CatHeader.vue';
 export default {
   data() {
     return {
@@ -47,6 +47,9 @@ export default {
       state: herdingCatsstore(),
       newDetails: ''
     }
+  },
+  components: {
+    CatHeader
   },
   computed: {
     checkInput() {

@@ -1,7 +1,6 @@
 <template>
-  <header>
-    <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
-  </header>
+<CatHeader />
+
   <main class="container">
     <h2 class="title">Notes</h2>
     <ul class="note-content">
@@ -42,6 +41,7 @@
 
 <script>
 import { herdingCatsstore } from '@/stores/counter.js'
+import CatHeader from '@/components/CatHeader.vue';
 export default {
   data() {
     return {
@@ -49,6 +49,11 @@ export default {
       newNotes: ''
     }
   },
+  
+  components: {
+    CatHeader
+  },
+
   computed: {
     checkInput() {
       if (this.newNotes.trim().length >= 1) {
@@ -58,6 +63,7 @@ export default {
       }
     }
   },
+
   methods: {
     async checkUser() {
       if (this.state.user === null || Object.keys(this.state.user).length === 0) {
@@ -101,11 +107,6 @@ export default {
 </script>
 
 <style scoped>
-header {
-  margin: 1rem auto;
-  display: flex;
-  justify-content: center;
-}
 .container {
   background-color: var(--turqoise-notes);
 }
@@ -148,6 +149,7 @@ h2 {
 .list-item {
   justify-content: space-between;
 }
+
 p {
   font-size: 1.5rem;
   line-height: 2rem;

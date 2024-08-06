@@ -1,7 +1,6 @@
 <template>
-  <header>
-    <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
-  </header>
+<CatHeader />
+
   <main class="container">
     <h2 class="title">Profile page</h2>
     <div class="profile-entry">
@@ -56,6 +55,7 @@
 </template>
 
 <script>
+import CatHeader from '@/components/CatHeader.vue';
 import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
@@ -68,6 +68,10 @@ export default {
       teleInput: ''
     }
   },
+components: {
+  CatHeader
+},
+
   computed: {
     currentGroupMember() {
       if (this.state.tripData[0]) {

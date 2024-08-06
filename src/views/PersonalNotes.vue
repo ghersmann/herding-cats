@@ -1,7 +1,6 @@
 <template>
-  <header>
-    <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
-  </header>
+<CatHeader />
+
   <main class="container">
     <h2 class="title">Personal Notes</h2>
     <div id="app">
@@ -30,6 +29,7 @@
 
 <script>
 import { herdingCatsstore } from '@/stores/counter.js'
+import CatHeader from '@/components/CatHeader.vue';
 export default {
   data() {
     return {
@@ -37,6 +37,9 @@ export default {
       editMode: [false],
       state: herdingCatsstore()
     }
+  },
+  components: {
+    CatHeader
   },
   methods: {
     startEditing(index) {
@@ -68,20 +71,6 @@ export default {
         body: JSON.stringify(currentUser)
       })
     }
-
-    // async deleteItem(index) {
-    //   const userId = JSON.parse(localStorage.getItem('loggedUser')).id
-    //   const currentUser = this.state.userData.find((data) => data.id === userId)
-    //   currentUser.notes.splice(index, 1)
-
-    //   await fetch(`${this.state.apiUrl}users/${userId}/`, {
-    //     method: 'PUT',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(currentUser)
-    //   })
-    // }
   },
   async created() {
     await this.state.loadUserData()

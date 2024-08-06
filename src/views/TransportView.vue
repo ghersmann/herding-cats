@@ -1,7 +1,6 @@
 <template>
-  <header>
-    <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
-  </header>
+ <CatHeader />
+
   <main class="container">
     <h2 class="title">Transport</h2>
     <ul>
@@ -55,6 +54,7 @@
 <script>
 import EditButton from '@/components/EditButton.vue'
 import InputForm from '@/components/InputForm.vue'
+import CatHeader from '@/components/CatHeader.vue'
 import { herdingCatsstore } from '@/stores/counter.js'
 
 export default {
@@ -84,7 +84,8 @@ export default {
 
   components: {
     InputForm,
-    EditButton
+    EditButton,
+    CatHeader
   },
   methods: {
     async checkUser() {

@@ -1,7 +1,5 @@
 <template>
-  <header>
-    <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
-  </header>
+    <CatHeader />
 
   <main>
     <section v-if="state.tripData[0]" class="container overview">
@@ -22,16 +20,6 @@
         </li>
       </ul>
     </section>
-
-    <!--     <transition name="slide">
-      <div v-show="showSidebar" class="sidebar">
-        <ul>
-          <li><router-link to="/newtrip">Create new trip</router-link></li>
-          <li><router-link to="/notes">Notes</router-link></li>
-          <li><router-link to="/logout">Log Out</router-link></li>
-        </ul>
-      </div>
-    </transition> -->
     <nav>
       <button v-if="isUserThere" @click="openOptions">Add Item</button>
       <dialog class="add-options" ref="add-options">
@@ -78,6 +66,7 @@
 import ToggleSwitch from '@/components/ToggleSwitch.vue'
 import DeleteButton from '@/components/DeleteButton.vue'
 import EditTripTitleDate from '@/components/EditTripTitleDate.vue'
+import CatHeader from '@/components/CatHeader.vue'
 import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
@@ -91,7 +80,8 @@ export default {
   components: {
     ToggleSwitch,
     DeleteButton,
-    EditTripTitleDate
+    EditTripTitleDate,
+    CatHeader
   },
   computed: {
     filteredDetailsKeys() {
@@ -116,12 +106,6 @@ export default {
         this.isUserThere = true
       }
     }
-
-    /*  hideSidebar() {
-      setTimeout(() => {
-        this.showSidebar = false
-      }, 2000)
-    } */
   },
   created() {
     this.tripId = this.$route.params.id
@@ -139,6 +123,7 @@ export default {
 h4 {
   margin-top: 1rem;
 }
+
 .list {
   position: relative;
   margin-top: 2rem;
@@ -189,45 +174,4 @@ button {
   display: flex;
   flex-direction: column;
 }
-
-/* .hamburger-menu {
-  margin-top: 5rem;
-  width: 30px;
-  height: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-.line {
-  width: 100%;
-  height: 3px;
-  margin-top: 5px;
-  background-color: #000;
-}
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 100%;
-  background-color: whitesmoke;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding-left: 5px;
-}
-
-.slide-enter-active {
-  transition: transform 0.3s;
-}
-
-.slide-leave-active {
-  transition: transform 1s;
-}
-
-.slide-enter,
-.slide-leave-to {
-  transform: translateX(-200px);
-} */
 </style>
