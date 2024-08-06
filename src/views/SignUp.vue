@@ -1,6 +1,6 @@
 <template>
   <header>
-    <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logotype" />
+    <img class="catlogo" src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logotype" />
   </header>
   <main class="container">
     <h2 class="title">Sign Up</h2>
@@ -99,6 +99,20 @@ export default {
 </script>
 
 <style scoped>
+header {
+  margin: 1rem auto;
+  width: 32rem;
+}
+
+.catlogo {
+  margin: 0 auto;
+}
+
+h2 {
+  color: black;
+  text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
+}
+
 .info-icon {
   cursor: pointer;
   font-size: large;
@@ -147,7 +161,6 @@ export default {
 }
 
 .container {
-  min-height: 30rem;
   background-color: var(--pink-activities);
 }
 </style>

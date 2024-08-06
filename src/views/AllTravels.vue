@@ -1,7 +1,6 @@
 <template>
-  <header>
-    <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
-  </header>
+ <CatHeader />
+ 
   <main class="container">
       <h3>Hello {{ state.user.name }}!</h3>
 
@@ -34,6 +33,7 @@
 import searchPublicTrips from '@/components/searchPublicTrips.vue'
 import { herdingCatsstore } from '@/stores/counter.js'
 import LogoutButton from '@/components/LogoutButton.vue'
+import CatHeader from '@/components/CatHeader.vue';
 
 export default {
   data() {
@@ -48,7 +48,8 @@ export default {
   },
   components: {
     LogoutButton,
-    searchPublicTrips
+    searchPublicTrips,
+    CatHeader
   },
   computed: {
     sortedEvents() {

@@ -34,15 +34,9 @@ body {
   background-image: url('background-pattern.svg');
 }
 
-header {
-  margin: 1rem auto;
-  display: flex;
-  justify-content: center;
-}
-
 main {
   width: 32rem;
-  margin: 2rem auto;
+  margin: 0 auto;
 }
 
 h1 {

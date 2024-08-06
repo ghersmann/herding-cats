@@ -1,7 +1,6 @@
 <template>
-  <header>
-    <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
-  </header>
+<CatHeader />
+
   <main id="form" class="container">
     <h2 class="title">Group Members</h2>
     <ul class="list list-p">
@@ -45,6 +44,7 @@
 
 <script>
 import InputForm from '@/components/InputForm.vue'
+import CatHeader from '@/components/CatHeader.vue'
 import { herdingCatsstore } from '@/stores/counter.js'
 
 export default {
@@ -57,6 +57,11 @@ export default {
       placeholder: 'e.g. Max Mustermann'
     }
   },
+  components: {
+    InputForm,
+    CatHeader
+  },
+
   created() {
     this.state.loadTripData(this.$route.params.id)
     this.state.loadUserData()
@@ -96,9 +101,7 @@ export default {
       }
     }
   },
-  components: {
-    InputForm
-  },
+
 
   methods: {
     async checkUser() {

@@ -1,7 +1,6 @@
 <template>
-  <header>
-    <img src="../assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
-  </header>
+<CatHeader />
+
   <main class="container">
     <h2 class="title">Timeline</h2>
       <div v-for="(item, index) in sortedEvents" :key="item">
@@ -23,6 +22,7 @@
 </template>
 
 <script>
+import CatHeader from '@/components/CatHeader.vue';
 import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
@@ -31,6 +31,9 @@ export default {
       tripData: {},
       allEvents: []
     }
+  },
+  components: {
+    CatHeader
   },
   computed: {
     sortedEvents() {

@@ -1,7 +1,6 @@
 <template>
-  <header>
-    <img src="../assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
-  </header>
+<CatHeader />
+
   <main class="container">
     <h2 class="title">Create new trip</h2>
 
@@ -24,6 +23,7 @@
 <script>
 import { herdingCatsstore } from '@/stores/counter.js'
 import router from '@/router/index.js'
+import CatHeader from '@/components/CatHeader.vue';
 export default {
   data() {
     return {
@@ -33,6 +33,10 @@ export default {
       tripStart: '',
       tripEnd: ''
     }
+  },
+
+  components: {
+    CatHeader
   },
   methods: {
     convertDate(date) {
