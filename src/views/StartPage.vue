@@ -27,13 +27,15 @@
 </template>
 
 <script>
+import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
     return {
       tripId: null,
       disableGoBtn: true,
       tripData: [],
-      allTripIds: []
+      allTripIds: [],
+      state: herdingCatsstore()
     }
   },
 
