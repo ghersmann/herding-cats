@@ -144,7 +144,8 @@ h4 {
 }
 
 .back-btn {
-  background-color: var(--green-travel);
+  background-color: var(--pink-background);
+  color: black;
 }
 
 button {
