@@ -39,17 +39,16 @@ export const herdingCatsstore = defineStore('registration', {
       }
     },
 
-    async loadTripData(tripId) {
-      this.tripData = []
-      const existingTrip = this.tripData.find((trip) => trip.id === tripId)
-      if (!existingTrip) {
-        const response = await fetch(this.apiUrl + 'events/' + tripId)
-        const apiTripData = await response.json()
-        this.tripData.push(apiTripData)
-        return this.tripData
-      } else {
-        return this.tripData
+      async loadTripData(tripId) {
+        const existingTrip = this.tripData.find((trip) => trip.id === tripId);
+      
+        if (!existingTrip) {
+          const response = await fetch(this.apiUrl + 'events/' + tripId);
+          const apiTripData = await response.json();
+          this.tripData = [apiTripData];
+        }
+        
+        return this.tripData;
       }
-    }
   }
 })
