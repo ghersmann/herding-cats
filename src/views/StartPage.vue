@@ -41,7 +41,7 @@ export default {
 
   methods: {
     async loadData() {
-      const response = await fetch(this.state.apiUrl)
+      const response = await fetch(this.state.apiUrl + 'events/')
       const apiData = await response.json()
       this.tripData = apiData
       return this.tripData
@@ -60,7 +60,7 @@ export default {
         this.$router.push({ name: 'trip', params: { id: this.tripId } })
         return true
       } else {
-        alert("Looks like you put in a Trip ID that doesn't exist")
+        alert("Looks like you put in a Trip ID that doesn't exist.")
         return false
       }
     }
