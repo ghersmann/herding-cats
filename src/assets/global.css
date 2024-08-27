@@ -114,7 +114,7 @@ p {
 
 .container {
   width: 32rem;
-  min-height: 52rem;
+  min-height: 25rem;
   background-color: var(--green-packing-list);
   border: 1px solid white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

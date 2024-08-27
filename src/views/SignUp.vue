@@ -44,9 +44,7 @@
       <input type="password" v-model="confirmPassword" />
     </form>
 
-    <router-link @click.prevent="createAccount" :to="validation() ? { name: 'alltravels' } : ''">
-      <button class="weiterbtn">Create Account</button>
-    </router-link>
+      <button @click.prevent="createAccount" class="weiterbtn">Create Account</button>
     <router-link :to="{ name: 'home' }">
         <button>Back to Start Page</button></router-link
       >
@@ -54,18 +52,23 @@
 </template>
 
 <script>
+import { herdingCatsstore } from '@/stores/counter.js'
+import router from '@/router/index.js'
 export default {
   data() {
     return {
+      state: herdingCatsstore(),
       firstname: '',
       lastname: '',
       email: '',
       address: '',
       phone: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      userId: ''
     }
   },
+
   methods: {
     validation() {
       if (
@@ -83,6 +86,7 @@ export default {
         return true
       }
     },
+
     createAccount() {
       if (!this.validation()) {
         alert(`Please make sure your name, e-mail address and password are entered correctly.
@@ -92,6 +96,47 @@ export default {
     - min. 1 lowercase letter
     - min. 1 digit`)
         return
+      } else {
+        console.log('Validation ok')
+        this.userId = Date.now() + Math.floor(Math.random() * 10)
+        this.sendData()
+      }
+    },
+    async sendData() {
+      const requestData = {
+        id: this.userId,
+        name: `${this.firstname} ${this.lastname}`,
+        email: this.email,
+        address: this.address,
+        phone: this.phone,
+        password: this.password,
+        trips: [],
+        }
+        console.log(requestData)
+      
+      try {
+        const createResponse = await fetch(this.state.apiUrl + 'users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestData)
+        })
+
+        if (createResponse.ok) {
+          console.log('createResponse.ok')
+          const responseData = await createResponse.json()
+          this.state.user = responseData
+          localStorage.setItem('loggedUser', JSON.stringify(this.state.user))
+          console.log('User stored in local storage')
+          router.push(`/AllTravels/`)
+        } else {
+          router.push('/')
+          alert('Server Error. Failed to create user. Sorry.')
+        }
+      } catch (error) {
+        router.push('/')
+        alert('Server Error. Failed to create user. Sorry.')
       }
     }
   }

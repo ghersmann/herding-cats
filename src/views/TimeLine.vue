@@ -108,6 +108,9 @@ export default {
 </script>
 
 <style scoped>
+button {
+  margin-top: auto; 
+}
 
 .value-name {
   margin: 0;
@@ -140,6 +143,5 @@ export default {
 
 .container {
   background-color: var(--yellow-calendar);
-  min-height: 10rem;
 }
 </style>

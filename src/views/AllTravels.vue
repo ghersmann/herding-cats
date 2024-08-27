@@ -6,6 +6,12 @@
 
     <div class="calendar-list">
       <ul>
+        <li v-if="Object.values(state.user.trips).every((array) => array.length === 0)"
+        class="calendar-list-item">
+        <p>You currently have <br>no cats to herd.</p>
+        <p>Started herding.</p>
+        <img class="arrow-down" src="@/assets/arrow-white.svg" />
+        </li>
         <li class="calendar-list-item" v-for="trip in sortedEvents" :key="trip.id">
           <router-link :to="`/trip/${trip.id}`">
             <p>{{ trip.tripTitle }}</p>
@@ -38,12 +44,8 @@ import CatHeader from '@/components/CatHeader.vue';
 export default {
   data() {
     return {
-      showSidebar: false,
-      favStat: false,
-      isMultiSelection: true,
       state: herdingCatsstore(),
-      values: [new Date('1/1/2020'), new Date('1/15/2020')],
-      values2: []
+      tripDateValue: []
     }
   },
   components: {
@@ -70,12 +72,9 @@ export default {
     }
   },
   methods: {
-    favoriteStatus() {
-      this.favStat = !this.favStat
-    },
     formatChange() {
       const eventStart = this.state.userTrips.map((trip) => trip.tripStart)
-      this.values2 = eventStart.flatMap((dateString) => {
+      this.tripDateValue = eventStart.flatMap((dateString) => {
         const parts = dateString.split(' - ')
         const datePart = parts[0].split('.').reverse().join('-')
         const timePart = parts[1]
@@ -87,6 +86,7 @@ export default {
     async checkUser() {
       if (this.state.user === null || Object.keys(this.state.user).length === 0) {
         alert('No user logged in. No data to show. Sorry mate.')
+        router.push('/')
       } else {
         await this.state.loadUserTripData()
         this.formatChange()
@@ -100,6 +100,12 @@ export default {
 </script>
 
 <style scoped>
+.arrow-down {
+  width: 2rem;
+  margin-top: 2rem;
+  transform: rotate(270deg);
+}
+
 .container {
   background-color: var(--turqoise-gray-background);
 }
@@ -137,6 +143,11 @@ p {
 }
 
 .calendar-list-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 28rem;
   margin-bottom: 4rem;
   border-top: 0.1rem solid rgb(193, 193, 193);
 }

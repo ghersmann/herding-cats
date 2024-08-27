@@ -6,7 +6,7 @@
       <EditTripTitleDate />
       <p
         v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
-        class="initial-text"
+        class="placeholder-text"
       >
         Click "Add Item" to start Herding your Cats
       </p>
@@ -174,5 +174,9 @@ button {
 .add-options form {
   display: flex;
   flex-direction: column;
+}
+
+.placeholder-text {
+  text-align: center;
 }
 </style>
