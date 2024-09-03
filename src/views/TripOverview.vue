@@ -48,7 +48,7 @@
       <router-link :to="{ path: '/timeline/' + this.$route.params.id }">
         <button class="timeline-btn">Trip Timeline</button>
       </router-link>
-      <ToggleSwitch v-if="isUserThere" class="toggle-switch" labelText="This trip is Public" />
+      <ToggleSwitch v-if="isUserThere && state.isDataLoaded" class="toggle-switch" labelText="This trip is Public" />
       <p class="white-box-id">Trip ID: {{ tripId }}</p>
       <button @click="copyId">Copy ID</button>
       <router-link :to="{ name: 'alltravels' }">
@@ -107,9 +107,10 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
     this.tripId = this.$route.params.id
-    this.state.loadTripData(this.tripId)
+    await this.state.loadTripData(this.tripId);
+    this.state.isDataLoaded = true;
     this.checkUser()
   }
 }

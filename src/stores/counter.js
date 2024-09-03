@@ -8,7 +8,8 @@ export const herdingCatsstore = defineStore('registration', {
       userData: null,
       tripData: [],
       userTrips: [],
-      userSearchedTrips: []
+      userSearchedTrips: [],
+      isDataLoaded: false
     }
   },
   actions: {
@@ -39,7 +40,7 @@ export const herdingCatsstore = defineStore('registration', {
       }
     },
 
-      async loadTripData(tripId) {
+    async loadTripData(tripId) {
         const existingTrip = this.tripData.find((trip) => trip.id === tripId);
       
         if (!existingTrip) {
@@ -49,6 +50,6 @@ export const herdingCatsstore = defineStore('registration', {
         }
         
         return this.tripData;
-      }
+    }
   }
 })

@@ -1,5 +1,5 @@
 <template>
-  <div @click="editTripTitleDate">
+  <div class="edit-trip" @click="editTripTitleDate">
     <h3>
       {{ state.tripData[0].tripTitle }}
     </h3>
@@ -57,5 +57,8 @@ h4 {
 }
 .cancel-btn {
   background-color: var(--required-red);
+}
+.edit-trip {
+  cursor: pointer;
 }
 </style>
