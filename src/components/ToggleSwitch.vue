@@ -1,16 +1,48 @@
 <template>
-  <label class="switch" for="switch-input"
-    ><span class="label-text">{{ labelText }}</span>
-    <input id="switch-input" name="switch" type="checkbox" />
+  <label class="switch" for="switch-input">
+    <span class="label-text">{{ labelText }}</span>
+    <input 
+      id="switch-input" 
+      name="switch" 
+      type="checkbox" 
+      v-model="tripPublicState"
+    />
     <span class="switch-background"></span>
   </label>
 </template>
 
+
+
 <script>
+import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   name: 'ToggleSwitch',
   props: {
     labelText: String
+  },
+  data() {
+    return {
+      state: herdingCatsstore(),
+      tripPublicState: false
+    }
+  },
+  watch: {
+    tripPublicState: 'updateTripPublicState'
+  },
+  methods: {
+  async updateTripPublicState() {
+    this.state.tripData[0].public = this.tripPublicState;
+    await fetch(`${this.state.apiUrl}events/${this.$route.params.id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state.tripData[0])
+    });
+  }
+},
+  async created() {
+    this.tripPublicState = this.state.tripData[0].public
   }
 }
 </script>
@@ -46,7 +78,7 @@ export default {
 
 .switch-background {
   position: absolute;
-  background-color: #ccc;
+  background-color: var(--required-red);
   border-radius: 1rem;
   cursor: pointer;
   top: 0;
@@ -67,7 +99,7 @@ export default {
   width: 1.5rem;
 }
 #switch-input:checked + span {
-  background-color: var(--required-red);
+  background-color: rgb(1, 193, 84);
 }
 
 #switch-input:checked + span::before {
