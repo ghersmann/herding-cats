@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const herdingCatsstore = defineStore('registration', {
   state: () => {
     return {
-      apiUrl: import.meta.env.VITE_VERCEL_SERVERLESS_API_URL || 'http://localhost:3000/',
+      apiUrl:  'https://herding-cats.vercel.app/api/db/' || 'http://localhost:3000/',
       user: null,
       userData: null,
       tripData: [],
