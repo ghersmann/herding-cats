@@ -1,20 +1,18 @@
 import { defineStore } from 'pinia'
 
 export const herdingCatsstore = defineStore('registration', {
-  state: () => {
-    return {
-      apiUrl:  'https://herding-cats.vercel.app/api/db/' || 'http://localhost:3000/',
+  state: () => ({
+      apiUrl:  import.meta.env.VITE_VERCEL_SERVERLESS_API_URL,
       user: null,
       userData: null,
-      tripData: [],
       userTrips: [],
       userSearchedTrips: [],
+      tripData: [],
       isDataLoaded: false
-    }
-  },
+  }),
   actions: {
     async loadUserData() {
-      const response = await fetch(this.apiUrl + 'users')
+      const response = await fetch(`${this.apiUrl}?pathname=users`)
       const apiUserData = await response.json()
       this.userData = apiUserData
       return this.userData
@@ -31,7 +29,7 @@ export const herdingCatsstore = defineStore('registration', {
     async loadUserTrips(tripId) {
       const existingTrip = this.userTrips.find((trip) => trip.id === tripId)
       if (!existingTrip) {
-        const response = await fetch(this.apiUrl + 'events/' + tripId)
+        const response = await fetch(`${this.apiUrl}?pathname=events&id=${tripId}`)
         const apiTripData = await response.json()
         this.userTrips.push(apiTripData)
         return this.userTrips
@@ -44,11 +42,10 @@ export const herdingCatsstore = defineStore('registration', {
         const existingTrip = this.tripData.find((trip) => trip.id === tripId);
       
         if (!existingTrip) {
-          const response = await fetch(this.apiUrl + 'events/' + tripId);
+          const response = await fetch(`${this.apiUrl}?pathname=events&id=${tripId}`);
           const apiTripData = await response.json();
           this.tripData = [apiTripData];
         }
-        
         return this.tripData;
     }
   }
