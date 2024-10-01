@@ -31,7 +31,7 @@ import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
     return {
-      tripId: null,
+      tripId: '',
       disableGoBtn: true,
       tripData: [],
       allTripIds: [],
@@ -41,7 +41,7 @@ export default {
 
   methods: {
     async loadData() {
-      const response = await fetch(this.state.apiUrl + 'events/')
+      const response = await fetch(`${this.state.apiUrl}?pathname=events`)
       const apiData = await response.json()
       this.tripData = apiData
       return this.tripData
@@ -56,7 +56,7 @@ export default {
       this.tripData.forEach((trip) => {
         this.allTripIds.push(trip.id)
       })
-      if (this.allTripIds.includes(Number(this.tripId))) {
+      if (this.allTripIds.includes(this.tripId)) {
         this.$router.push({ name: 'trip', params: { id: this.tripId } })
         return true
       } else {
