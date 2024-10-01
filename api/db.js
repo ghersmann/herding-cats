@@ -12,7 +12,7 @@ import path from 'path';
 
 export default function handler(req, res) {
   // Define the path to your db.json file
-  const filePath = path.join(process.cwd(), '../db.json');
+  const filePath = path.join(process.cwd(), 'database.json');
   
   // Read the file asynchronously
   fs.readFile(filePath, 'utf8', (err, data) => {
