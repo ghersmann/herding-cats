@@ -37,7 +37,8 @@
         "1714031007615",
         "17",
         "1727849327863",
-        "1727849720580"
+        "1727849720580",
+        "1727851518708"
       ],
       "notes": []
     },
@@ -220,93 +221,6 @@
         "notes": [
           "Please add your notes on how the coffee tasting goes here!",
           "No guns this time Michelle!"
-        ]
-      }
-    },
-    {
-      "id": "1713948486160",
-      "admins": [
-        {
-          "userId": "4a3eac09-f652-4d5e-8f4d-691502a71ef6"
-        },
-        {
-          "userId": "4a3eav12-e682-4r7r-9f4t-711502a71ef6"
-        }
-      ],
-      "tripTitle": "Ausflug nach Bremen",
-      "tripStart": "16.06.2024 - 13:30",
-      "tripEnd": "20.06.2024 - 12:00",
-      "public": false,
-      "details": {
-        "transport": [
-          {
-            "category": "transport",
-            "name": "Hauptbahnhof",
-            "startDate": "16.05.2024 - 13:30",
-            "endDate": "16.05.2024 - 15:07",
-            "zipcode": "20099",
-            "city": "Hamburg",
-            "address": "Hachmannplatz 16",
-            "notes": "Wir treffen uns 15 Minuten vorher bei Gleis 3."
-          },
-          {
-            "category": "transport",
-            "name": "Parkplatz bei Aldi",
-            "startDate": "20.05.2024 - 12:00",
-            "zipcode": "28195",
-            "city": "Bremen",
-            "address": "Aldiallee 13"
-          }
-        ],
-        "lodging": [
-          {
-            "category": "lodging",
-            "name": "Vier Jahreszeiten",
-            "zipcode": "28195",
-            "city": "Bremen",
-            "address": "Hauptstr. 1"
-          }
-        ],
-        "activity": [
-          {
-            "category": "activity",
-            "name": "Stadtführung",
-            "startDate": "17.05.2024 - 10:00",
-            "endDate": "17.05.2024 - 12:00",
-            "zipcode": "28195",
-            "city": "Bremen",
-            "address": "Mozartstr. 42"
-          },
-          {
-            "category": "activity",
-            "name": "Fußball spielen",
-            "startDate": "19.05.2024 - 13:00",
-            "notes": "Wir gehen vom Hotel gemeinsam zum Sportplatz"
-          }
-        ],
-        "groupmembers": [
-          {
-            "name": "Gustav",
-            "id": "1"
-          },
-          {
-            "name": "Sonja",
-            "id": "2"
-          },
-          {
-            "name": "Claas",
-            "id": "3",
-            "startDate": "19.05.2024 - 12:30",
-            "endDate": "20.05.2024 - 18:00"
-          }
-        ],
-        "packlist": [
-          "Fußball",
-          "Bahnticket",
-          "Gute Laune :)"
-        ],
-        "notes": [
-          "Ethically investing dynamically customer-focused propositions is crucial to our unparalleled dot-bomb. Intelligently touching base about monetizing products will make us leaders in the best-of-breed paradigm shift industry. Key players will take ownership of their ballpark figures by effectively revolutionizing next-generation innovations. Efficiencies will come from proactively connecting our standard setters.\n\nWe aim to reliably strategize our stakeholder by virtually right-sizing our cloud native self-driving brands. We thrive because of our company-wide deliverable and world-class architecture culture. It's critical that we give 110% when globally productizing executive searches. Our bandwidth development lifecycle enables mobile, proactive intrapreneurs."
         ]
       }
     },
@@ -671,6 +585,119 @@
         "groupmembers": [],
         "packlist": [],
         "notes": []
+      }
+    },
+    {
+      "id": "1727851518708",
+      "admins": [
+        {
+          "userId": "4a3eav12-e682-4r7r-9f4t-711502a71ff4"
+        }
+      ],
+      "tripTitle": "New trip 3",
+      "tripStart": "03.10.2024 - 08:45",
+      "tripEnd": "04.10.2024 - 08:45",
+      "public": false,
+      "details": {
+        "transport": [],
+        "lodging": [],
+        "activity": [],
+        "groupmembers": [],
+        "packlist": [],
+        "notes": []
+      }
+    },
+    {
+      "id": "1713948486160",
+      "admins": [
+        {
+          "userId": "4a3eac09-f652-4d5e-8f4d-691502a71ef6"
+        },
+        {
+          "userId": "4a3eav12-e682-4r7r-9f4t-711502a71ef6"
+        }
+      ],
+      "tripTitle": "Ausflug nach Bremen",
+      "tripStart": "16.06.2024 - 13:30",
+      "tripEnd": "20.06.2024 - 12:00",
+      "public": false,
+      "details": {
+        "transport": [
+          {
+            "category": "transport",
+            "name": "Flight to Melbourne",
+            "zipcode": "12345",
+            "city": "Frankfurt a.M.",
+            "address": "Flughafen, Frankfurt a.M.",
+            "startDate": "27.04.2024 - 08:52",
+            "endDate": "27.04.2024 - 19:52",
+            "notes": "Meet at check-in at 07:00",
+            "isAdmin": false,
+            "id": "796749"
+          },
+          {
+            "category": "transport",
+            "name": "Flight to Frankfurt",
+            "zipcode": "54321",
+            "city": "Melbourne",
+            "address": "Melbourne Airport",
+            "startDate": "28.04.2024 - 08:56",
+            "endDate": "28.04.2024 - 22:52",
+            "notes": "Meet at check-in at 07:00",
+            "isAdmin": false,
+            "id": "482203"
+          }
+        ],
+        "lodging": [
+          {
+            "category": "lodging",
+            "name": "Vier Jahreszeiten",
+            "zipcode": "28195",
+            "city": "Bremen",
+            "address": "Hauptstr. 1"
+          }
+        ],
+        "activity": [
+          {
+            "category": "activity",
+            "name": "Stadtführung",
+            "startDate": "17.05.2024 - 10:00",
+            "endDate": "17.05.2024 - 12:00",
+            "zipcode": "28195",
+            "city": "Bremen",
+            "address": "Mozartstr. 42"
+          },
+          {
+            "category": "activity",
+            "name": "Fußball spielen",
+            "startDate": "19.05.2024 - 13:00",
+            "notes": "Wir gehen vom Hotel gemeinsam zum Sportplatz"
+          }
+        ],
+        "groupmembers": [
+          {
+            "name": "Gustav",
+            "id": "1"
+          },
+          {
+            "name": "Sonja",
+            "id": "2"
+          },
+          {
+            "name": "Claas",
+            "id": "3",
+            "startDate": "19.05.2024 - 12:30",
+            "endDate": "20.05.2024 - 18:00"
+          }
+        ],
+        "packlist": [
+          "Fußball",
+          "Bahnticket",
+          "Gute Laune :)"
+        ],
+        "notes": [
+          "Ethically investing dynamically customer-focused propositions is crucial to our unparalleled dot-bomb. Intelligently touching base about monetizing products will make us leaders in the best-of-breed paradigm shift industry. Key players will take ownership of their ballpark figures by effectively revolutionizing next-generation innovations. Efficiencies will come from proactively connecting our standard setters.\n\nWe aim to reliably strategize our stakeholder by virtually right-sizing our cloud native self-driving brands. We thrive because of our company-wide deliverable and world-class architecture culture. It's critical that we give 110% when globally productizing executive searches. Our bandwidth development lifecycle enables mobile, proactive intrapreneurs."
+        ]
       }
     }
   ]

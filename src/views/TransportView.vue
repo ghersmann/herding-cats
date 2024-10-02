@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       isUserThere: false,
-      tripApiUrl: 'http://localhost:3000/events',
+      // tripApiUrl: import.meta.env.VITE_VERCEL_SERVERLESS_API_URL,
       state: herdingCatsstore(),
       itemName: 'Transport',
       beginName: 'Departure',
@@ -99,20 +99,32 @@ export default {
     getFromChild(data) {
       this.transportList = data
     },
+    
     async deleteItem(index) {
-      this.state.tripData[0].details.transport.splice(index, 1)
-      await fetch(`${this.tripApiUrl}/${this.$route.params.id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.state.tripData[0])
-      })
-    }
+      this.state.tripData[0].details.transport.splice(index, 1);
+        try {
+          const response = await fetch(`${this.state.apiUrl}?pathname=events&id=${this.$route.params.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state.tripData[0]), 
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Failed to update event: ${errorData.error}`);
+          }
+        } catch (error) {
+          console.error('Error updating event:', error);
+          alert('Failed to update event. Please try again.');
+        }
+      }
   },
-  created() {
-    this.state.loadTripData(this.$route.params.id)
-    this.checkUser()
+  async created() {
+    await this.checkUser()
+    await this.state.loadTripData(this.$route.params.id)
+    
   }
 }
 </script>
