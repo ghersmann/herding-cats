@@ -40,7 +40,9 @@
         "1727849720580",
         "1727851518708"
       ],
-      "notes": []
+      "notes": [
+        "Ethically investing dynamically customer-focused propositions is crucial to our unparalleled dot-bomb. Intelligently touching base about monetizing products will make us leaders in the best-of-breed paradigm shift industry. Key players will take ownership of their ballpark figures by effectively revolutionizing next-generation innovations. Efficiencies will come from proactively connecting our standard setters.\n\nWe aim to reliably strategize our stakeholder by virtually right-sizing our cloud native self-driving brands. We thrive because of our company-wide deliverable and world-class architecture culture. It's critical that we give 110% when globally productizing executive searches. Our bandwidth development lifecycle enables mobile, proactive intrapreneurs."
+      ]
     },
     {
       "id": "1724745622305",
@@ -236,19 +238,7 @@
       "tripEnd": "12.05.2024 - 09:20",
       "public": true,
       "details": {
-        "transport": [
-          {
-            "category": "transport",
-            "name": "Claas Auto",
-            "zipcode": "",
-            "city": "Ratzeburg",
-            "address": "Parkplatz Rewe",
-            "startDate": "05.05.2024 - 09:21",
-            "notes": "Long drive - Bring snacks",
-            "isAdmin": false,
-            "id": "338563"
-          }
-        ],
+        "transport": [],
         "lodging": [
           {
             "category": "lodging",
@@ -333,9 +323,7 @@
           "Deodorant.",
           "Shoes"
         ],
-        "notes": [
-          "No guns this time Michelle!"
-        ]
+        "notes": []
       }
     },
     {

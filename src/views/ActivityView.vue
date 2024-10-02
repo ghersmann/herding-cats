@@ -29,7 +29,7 @@
           :notesValue="activity.notes"
           :idValue="activity.id"
         />
-        <button v-if="isUserThere" class="rect-delete-btn" @click="deleteItem(index)">
+        <button v-if="isUserThere" class="rect-delete-btn" @click="removeActivity(index)">
           Delete
         </button>
       </li>
@@ -56,7 +56,6 @@ export default {
   data() {
     return {
       isUserThere: false,
-      tripApiUrl: 'http://localhost:3000/events',
       state: herdingCatsstore(),
       itemName: 'Activity',
       placeholder: 'e.g. Museum'
@@ -80,7 +79,7 @@ export default {
     }
   },
   methods: {
-    async checkUser() {
+    checkUser() {
       if (this.state.user === null || Object.keys(this.state.user).length === 0) {
         this.isUserThere = false
       } else {
@@ -91,20 +90,15 @@ export default {
     getFromChild(data) {
       this.transportList = data
     },
-    async deleteItem(index) {
+
+    removeActivity(index) {
       this.state.tripData[0].details.activity.splice(index, 1)
-      await fetch(`${this.tripApiUrl}/${this.$route.params.id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.state.tripData[0])
-      })
-    }
+      this.state.deleteItem(this.$route.params.id)
+    },
   },
   created() {
-    this.state.loadTripData(this.$route.params.id)
     this.checkUser()
+    this.state.loadTripData(this.$route.params.id)
   }
 }
 </script>

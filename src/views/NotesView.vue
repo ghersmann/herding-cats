@@ -10,7 +10,7 @@
         class="list-item"
       >
         <p>{{ item }}</p>
-        <button v-if="isUserThere" class="delete-btn" @click="deleteItem(index)">x</button>
+        <button v-if="isUserThere" class="delete-btn" @click="removeNote(index)">x</button>
       </li>
     </ul>
 
@@ -65,7 +65,7 @@ export default {
   },
 
   methods: {
-    async checkUser() {
+    checkUser() {
       if (this.state.user === null || Object.keys(this.state.user).length === 0) {
         this.isUserThere = false
       } else {
@@ -87,21 +87,16 @@ export default {
       })
     },
 
-    async deleteItem(index) {
+    
+    removeNote(index) {
       this.state.tripData[0].details.notes.splice(index, 1)
-
-      await fetch(`${this.state.apiUrl}events/${this.$route.params.id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.state.tripData[0])
-      })
-    }
+      this.state.deleteItem(this.$route.params.id)
+    },
   },
+
   created() {
-    this.state.loadTripData(this.$route.params.id)
     this.checkUser()
+    this.state.loadTripData(this.$route.params.id)
   }
 }
 </script>
