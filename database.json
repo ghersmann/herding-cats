@@ -35,7 +35,9 @@
         "1714029612972",
         "1714030246633",
         "1714031007615",
-        "17"
+        "17",
+        "1727849327863",
+        "1727849720580"
       ],
       "notes": []
     },
@@ -630,5 +632,46 @@
           "No guns"
         ]
       }
+    },
+    {
+      "id": "1727849327863",
+      "admins": [
+        {
+          "userId": "4a3eav12-e682-4r7r-9f4t-711502a71ff4"
+        }
+      ],
+      "tripTitle": "New trip 1",
+      "tripStart": "03.10.2024 - 08:08",
+      "tripEnd": "04.10.2024 - 08:08",
+      "public": false,
+      "details": {
+        "transport": [],
+        "lodging": [],
+        "activity": [],
+        "groupmembers": [],
+        "packlist": [],
+        "notes": []
+      }
+    },
+    {
+      "id": "1727849720580",
+      "admins": [
+        {
+          "userId": "4a3eav12-e682-4r7r-9f4t-711502a71ff4"
+        }
+      ],
+      "tripTitle": "NEw Trip 2",
+      "tripStart": "03.10.2024 - 08:15",
+      "tripEnd": "04.10.2024 - 08:15",
+      "public": false,
+      "details": {
+        "transport": [],
+        "lodging": [],
+        "activity": [],
+        "groupmembers": [],
+        "packlist": [],
+        "notes": []
+      }
     }
-  ]}
+  ]
+}
