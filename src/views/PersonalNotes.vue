@@ -74,7 +74,7 @@ export default {
     }
   },
   methods: {
-    async checkUser() {
+    checkUser() {
       if (!this.state.user || Object.keys(this.state.user).length === 0) {
         this.isUserThere = false;
       } else {

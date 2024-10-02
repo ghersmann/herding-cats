@@ -47,6 +47,30 @@ export const herdingCatsstore = defineStore('registration', {
           this.tripData = [apiTripData];
         }
         return this.tripData;
+      },
+
+    async deleteItem(id) {
+      console.log('pinia deleteItem')
+
+      try {
+        const response = await fetch(`${this.apiUrl}?pathname=events&id=${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.tripData[0]), 
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(`Failed to update event: ${errorData.error}`);
+        } else {
+          console.log('pinia ', this.tripData[0])
+        }
+      } catch (error) {
+        console.error('Error updating event:', error);
+        alert('Failed to update event. Please try again.');
+      }
     }
-  }
+  },
 })

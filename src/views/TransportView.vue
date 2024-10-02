@@ -33,7 +33,7 @@
           :notesValue="transport.notes"
           :idValue="transport.id"
         />
-        <button v-if="isUserThere" class="rect-delete-btn" @click="deleteItem(index)">
+        <button v-if="isUserThere" class="rect-delete-btn" @click="removeTransport(index)">
           Delete
         </button>
       </li>
@@ -61,7 +61,6 @@ export default {
   data() {
     return {
       isUserThere: false,
-      tripApiUrl: 'http://localhost:3000/events',
       state: herdingCatsstore(),
       itemName: 'Transport',
       beginName: 'Departure',
@@ -99,20 +98,17 @@ export default {
     getFromChild(data) {
       this.transportList = data
     },
-    async deleteItem(index) {
+    
+    removeTransport(index) {
       this.state.tripData[0].details.transport.splice(index, 1)
-      await fetch(`${this.tripApiUrl}/${this.$route.params.id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.state.tripData[0])
-      })
-    }
+      this.state.deleteItem(this.$route.params.id)
+    }, 
   },
-  created() {
-    this.state.loadTripData(this.$route.params.id)
-    this.checkUser()
+
+  async created() {
+    await this.checkUser()
+    await this.state.loadTripData(this.$route.params.id)
+    
   }
 }
 </script>
