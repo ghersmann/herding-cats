@@ -33,7 +33,7 @@
           :notesValue="transport.notes"
           :idValue="transport.id"
         />
-        <button v-if="isUserThere" class="rect-delete-btn" @click="deleteItem(index)">
+        <button v-if="isUserThere" class="rect-delete-btn" @click="removeTransport(index)">
           Delete
         </button>
       </li>
@@ -61,7 +61,6 @@ export default {
   data() {
     return {
       isUserThere: false,
-      // tripApiUrl: import.meta.env.VITE_VERCEL_SERVERLESS_API_URL,
       state: herdingCatsstore(),
       itemName: 'Transport',
       beginName: 'Departure',
@@ -100,27 +99,12 @@ export default {
       this.transportList = data
     },
     
-    async deleteItem(index) {
-      this.state.tripData[0].details.transport.splice(index, 1);
-        try {
-          const response = await fetch(`${this.state.apiUrl}?pathname=events&id=${this.$route.params.id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state.tripData[0]), 
-          });
-
-          if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Failed to update event: ${errorData.error}`);
-          }
-        } catch (error) {
-          console.error('Error updating event:', error);
-          alert('Failed to update event. Please try again.');
-        }
-      }
+    removeTransport(index) {
+      this.state.tripData[0].details.transport.splice(index, 1)
+      this.state.deleteItem(this.$route.params.id)
+    }, 
   },
+
   async created() {
     await this.checkUser()
     await this.state.loadTripData(this.$route.params.id)

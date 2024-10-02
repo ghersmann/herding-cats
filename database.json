@@ -111,18 +111,6 @@
         "transport": [
           {
             "category": "transport",
-            "name": "Flight to Melbourne",
-            "zipcode": "12345",
-            "city": "Frankfurt a.M.",
-            "address": "Flughafen, Frankfurt a.M.",
-            "startDate": "27.04.2024 - 08:52",
-            "endDate": "27.04.2024 - 19:52",
-            "notes": "Meet at check-in at 07:00",
-            "isAdmin": false,
-            "id": "796749"
-          },
-          {
-            "category": "transport",
             "name": "Flight to Frankfurt",
             "zipcode": "54321",
             "city": "Melbourne",
