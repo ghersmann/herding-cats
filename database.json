@@ -38,8 +38,7 @@
         "17",
         "1727849327863",
         "1727849720580",
-        "1727851518708",
-        "1727868508738"
+        "1727851518708"
       ],
       "notes": [
         "Ethically investing dynamically customer-focused propositions is crucial to our unparalleled dot-bomb. Intelligently touching base about monetizing products will make us leaders in the best-of-breed paradigm shift industry. Key players will take ownership of their ballpark figures by effectively revolutionizing next-generation innovations. Efficiencies will come from proactively connecting our standard setters.\n\nWe aim to reliably strategize our stakeholder by virtually right-sizing our cloud native self-driving brands. We thrive because of our company-wide deliverable and world-class architecture culture. It's critical that we give 110% when globally productizing executive searches. Our bandwidth development lifecycle enables mobile, proactive intrapreneurs."
@@ -111,12 +110,119 @@
       "tripEnd": "30.04.2024 - 08:50",
       "public": true,
       "details": {
-        "transport": [],
-        "lodging": [],
-        "activity": [],
-        "groupmembers": [],
-        "packlist": [],
-        "notes": []
+        "transport": [
+          {
+            "category": "transport",
+            "name": "Flight to Melbourne",
+            "zipcode": "12345",
+            "city": "Frankfurt a.M.",
+            "address": "Flughafen, Frankfurt a.M.",
+            "startDate": "27.04.2024 - 08:52",
+            "endDate": "27.04.2024 - 19:52",
+            "notes": "Meet at check-in at 07:00",
+            "isAdmin": false,
+            "id": "796749"
+          },
+          {
+            "category": "transport",
+            "name": "Flight to Frankfurt",
+            "zipcode": "54321",
+            "city": "Melbourne",
+            "address": "Melbourne Airport",
+            "startDate": "28.04.2024 - 08:56",
+            "endDate": "28.04.2024 - 22:52",
+            "notes": "Meet at check-in at 07:00",
+            "isAdmin": false,
+            "id": "482203"
+          }
+        ],
+        "lodging": [
+          {
+            "category": "lodging",
+            "name": "Fawlty Towers",
+            "zipcode": "12345",
+            "city": "Melbourne",
+            "address": "Queen Victoria Market 1",
+            "startDate": "27.04.2024 - 21:00",
+            "endDate": "28.04.2024 - 10:00",
+            "notes": "Breakfast NOT included",
+            "isAdmin": false,
+            "id": "667395"
+          },
+          {
+            "category": "lodging",
+            "name": "Hotel Crud",
+            "zipcode": "46252",
+            "city": "Suhl",
+            "address": "Hauptstr. 1",
+            "startDate": "17.07.2024 - 09:02",
+            "endDate": "28.07.2024 - 09:02",
+            "notes": "Breakfast included",
+            "isAdmin": false,
+            "id": "77671"
+          }
+        ],
+        "activity": [
+          {
+            "category": "activity",
+            "name": "Coffee Tasting",
+            "zipcode": "23EV23",
+            "city": "Pedros Coffee",
+            "address": "608 St. Kilda Road",
+            "startDate": "28.04.2024 - 05:00",
+            "endDate": "28.04.2024 - 06:00",
+            "notes": "Pedro like whisky. Get some at the Airport",
+            "isAdmin": false,
+            "id": "449070"
+          }
+        ],
+        "groupmembers": [
+          {
+            "category": "groupmembers",
+            "name": "max sdaisadf",
+            "zipcode": "12345",
+            "city": "Gotha",
+            "address": "dfghg",
+            "notes": "In charge of bringing coffee beans for the tasting.",
+            "isAdmin": false,
+            "id": "429762",
+            "tele": "124"
+          },
+          {
+            "category": "groupmembers",
+            "name": "Karen Hydro",
+            "zipcode": "23GE45",
+            "city": "Suhl",
+            "address": "ah, down by the bowling alley",
+            "startDate": "",
+            "endDate": "",
+            "notes": "No, Karen, no.",
+            "isAdmin": false,
+            "id": "25615",
+            "tele": "ad"
+          },
+          {
+            "category": "groupmembers",
+            "name": "Glenn Fiske",
+            "zipcode": "Fisk!3",
+            "city": "Zella-Mehlis",
+            "address": "Am Rain 23, 22351 Bäckerbach",
+            "startDate": "18.07.2024 - 12:32",
+            "endDate": "21.07.2024 - 12:33",
+            "notes": "",
+            "isAdmin": false,
+            "id": "457326"
+          }
+        ],
+        "packlist": [
+          "Coffee Beans",
+          "Coffee Grinder",
+          "Camping Stove"
+        ],
+        "notes": [
+          "Please add your notes on how the coffee tasting goes here!",
+          "No guns this time Michelle!"
+        ]
       }
     },
     {
@@ -579,103 +685,6 @@
         "notes": [
           "Ethically investing dynamically customer-focused propositions is crucial to our unparalleled dot-bomb. Intelligently touching base about monetizing products will make us leaders in the best-of-breed paradigm shift industry. Key players will take ownership of their ballpark figures by effectively revolutionizing next-generation innovations. Efficiencies will come from proactively connecting our standard setters.\n\nWe aim to reliably strategize our stakeholder by virtually right-sizing our cloud native self-driving brands. We thrive because of our company-wide deliverable and world-class architecture culture. It's critical that we give 110% when globally productizing executive searches. Our bandwidth development lifecycle enables mobile, proactive intrapreneurs."
         ]
-      }
-    },
-    {
-      "id": "1713948486160123",
-      "admins": [
-        {
-          "userId": "4a3eac09-f652-4d5e-8f4d-691502a71ef6"
-        },
-        {
-          "userId": "4a3eav12-e682-4r7r-9f4t-711502a71ef6"
-        }
-      ],
-      "tripTitle": "Ausflug nach Lübeck",
-      "tripStart": "16.06.2024 - 13:30",
-      "tripEnd": "20.06.2024 - 12:00",
-      "public": false,
-      "details": {
-        "transport": [
-          {
-            "category": "transport",
-            "name": "Parkplatz bei Aldi",
-            "startDate": "20.05.2024 - 12:00",
-            "zipcode": "28195",
-            "city": "Bremen",
-            "address": "Aldiallee 13"
-          }
-        ],
-        "lodging": [
-          {
-            "category": "lodging",
-            "name": "Vier Jahreszeiten",
-            "zipcode": "28195",
-            "city": "Bremen",
-            "address": "Hauptstr. 1"
-          }
-        ],
-        "activity": [
-          {
-            "category": "activity",
-            "name": "Stadtführung",
-            "startDate": "17.05.2024 - 10:00",
-            "endDate": "17.05.2024 - 12:00",
-            "zipcode": "28195",
-            "city": "Bremen",
-            "address": "Mozartstr. 42"
-          },
-          {
-            "category": "activity",
-            "name": "Fußball spielen",
-            "startDate": "19.05.2024 - 13:00",
-            "notes": "Wir gehen vom Hotel gemeinsam zum Sportplatz"
-          }
-        ],
-        "groupmembers": [
-          {
-            "name": "Gustav",
-            "id": "1"
-          },
-          {
-            "name": "Sonja",
-            "id": "2"
-          },
-          {
-            "name": "Claas",
-            "id": "3",
-            "startDate": "19.05.2024 - 12:30",
-            "endDate": "20.05.2024 - 18:00"
-          }
-        ],
-        "packlist": [
-          "Fußball",
-          "Bahnticket",
-          "Gute Laune :)"
-        ],
-        "notes": [
-          "Ethically investing dynamically customer-focused propositions is crucial to our unparalleled dot-bomb. Intelligently touching base about monetizing products will make us leaders in the best-of-breed paradigm shift industry. Key players will take ownership of their ballpark figures by effectively revolutionizing next-generation innovations. Efficiencies will come from proactively connecting our standard setters.\n\nWe aim to reliably strategize our stakeholder by virtually right-sizing our cloud native self-driving brands. We thrive because of our company-wide deliverable and world-class architecture culture. It's critical that we give 110% when globally productizing executive searches. Our bandwidth development lifecycle enables mobile, proactive intrapreneurs."
-        ]
-      }
-    },
-    {
-      "id": "1727868508738",
-      "admins": [
-        {
-          "userId": "4a3eav12-e682-4r7r-9f4t-711502a71ff4"
-        }
-      ],
-      "tripTitle": "Test 4",
-      "tripStart": "03.10.2024 - 13:28",
-      "tripEnd": "05.10.2024 - 13:28",
-      "public": false,
-      "details": {
-        "transport": [],
-        "lodging": [],
-        "activity": [],
-        "groupmembers": [],
-        "packlist": [],
-        "notes": []
       }
     }
   ]

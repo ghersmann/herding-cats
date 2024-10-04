@@ -84,7 +84,6 @@ export default {
     },
 
     removePackItem(index) {
-      console.log('removePackItem')
       this.state.tripData[0].details.packlist.splice(index, 1)
       this.state.deleteItem(this.$route.params.id)
     },
