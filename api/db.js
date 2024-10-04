@@ -5,8 +5,8 @@ export default function handler(req, res) {
   const { pathname, id } = req.query; // Extract pathname and id from query params
   const filePath = path.join(process.cwd(), 'database.json');
 
-console.log('-----------------')
-  console.log(Date().toString())
+  console.log('-----------------');
+  console.log(Date().toString());
   console.log('Start of db.js Received request: ', req.method, pathname, id);
 
   // Read the database file
@@ -38,24 +38,38 @@ console.log('-----------------')
       }
     }
 
-    // Handle POST requests to add new data
+    //Handle POST requests
     else if (req.method === 'POST') {
-      if (pathname === 'events') {
+      console.log('POST request received');
+      
+      try {
+        if (!req.body || typeof req.body !== 'object') {
+          return res.status(400).json({ error: 'Invalid or missing JSON body' });
+        }
+    
         const newEvent = req.body;
-        db.events.push(newEvent); // Add the new event to the database
-
-        // Write the updated data back to the file
-        fs.writeFile(filePath, JSON.stringify(db, null, 2), (writeErr) => {
-          if (writeErr) {
-            res.status(500).json({ error: 'Error writing to the database file' });
-            return;
-          }
-          res.status(201).json(newEvent); // Respond with the newly created event
-        });
-      } else {
-        res.status(404).json({ error: 'Invalid pathname' });
+        console.log('New Event:', newEvent);
+    
+        if (pathname === 'events') {
+          db.events.push(newEvent); // Add the new event to the database
+    
+          // Write the updated data back to the file
+          fs.writeFile(filePath, JSON.stringify(db, null, 2), (writeErr) => {
+            if (writeErr) {
+              throw new Error('Failed to write to database file');
+            }
+            res.status(201).json(newEvent); // Respond with the newly created event
+          });
+        } else {
+          res.status(404).json({ error: 'Invalid pathname' });
+        }
+    
+      } catch (error) {
+        console.error('POST request error:', error);
+        res.status(500).json({ error: 'Server error occurred' });
       }
     }
+    
 
     // Handle PUT requests for both events and users
     else if (req.method === 'PUT') {
@@ -78,7 +92,7 @@ console.log('-----------------')
           // Update the event data
           db.events[itemIndex] = updatedItem;
 
-        } else if (pathname === 'users') {
+        } else if (pathname.toLowerCase() === 'users') {
           updatedItem = req.body;
           itemIndex = db.users.findIndex(user => user.id === id);
 
@@ -155,6 +169,7 @@ console.log('-----------------')
 
     // Handle unsupported methods
     else {
+      res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
       res.status(405).json({ error: `Method ${req.method} not allowed` });
     }
   });
