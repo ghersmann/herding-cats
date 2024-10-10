@@ -98,7 +98,7 @@ export default {
         return
       } else {
         console.log('Validation ok')
-        this.userId = Date.now() + Math.floor(Math.random() * 10)
+        this.userId = (Date.now() + Math.floor(Math.random() * 10)).toString()
         this.sendData()
       }
     },
