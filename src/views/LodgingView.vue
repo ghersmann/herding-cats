@@ -29,7 +29,7 @@
           :notesValue="lodging.notes"
           :idValue="lodging.id"
         />
-        <button v-if="isUserThere" class="rect-delete-btn" @click="removeLodging(index)">
+        <button v-if="state.isUserThere" class="rect-delete-btn" @click="removeLodging(index)">
           Delete
         </button>
       </li>
@@ -56,7 +56,6 @@ import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
     return {
-      isUserThere: false,
       state: herdingCatsstore(),
       itemName: 'Lodging',
       placeholder: 'e.g. Hauptbahnhof'
@@ -81,14 +80,6 @@ export default {
     CatHeader
   },
   methods: {
-    checkUser() {
-      if (this.state.user === null || Object.keys(this.state.user).length === 0) {
-        this.isUserThere = false
-      } else {
-        this.isUserThere = true
-      }
-    },
-
     getFromChild(data) {
       this.lodgingList = data
     },
@@ -99,7 +90,7 @@ export default {
     },
   },
   created() {
-    this.checkUser()
+    this.state.checkUser()
     this.state.loadTripData(this.$route.params.id)
   }
 }

@@ -10,12 +10,12 @@
         class="list-item"
       >
         <p>{{ item }}</p>
-        <button v-if="isUserThere" class="delete-btn" @click="removePackItem(index)">x</button>
+        <button v-if="state.isUserThere" class="delete-btn" @click="removePackItem(index)">x</button>
       </li>
     </ul>
     <div class="input-area">
       <textarea
-        v-if="isUserThere"
+        v-if="state.isUserThere"
         class="input-text-area"
         v-model="newDetails"
         id="item-input"
@@ -23,7 +23,7 @@
         @keyup.enter="addItem"
       ></textarea>
       <button
-        v-if="isUserThere"
+        v-if="state.isUserThere"
         @click="addItem"
         :disabled="checkInput"
         :class="{ 'btn-disabled': checkInput }"
@@ -43,7 +43,6 @@ import CatHeader from '@/components/CatHeader.vue';
 export default {
   data() {
     return {
-      isUserThere: false,
       state: herdingCatsstore(),
       newDetails: ''
     }
@@ -61,14 +60,6 @@ export default {
     }
   },
   methods: {
-    checkUser() {
-      if (this.state.user === null || Object.keys(this.state.user).length === 0) {
-        this.isUserThere = false
-      } else {
-        this.isUserThere = true
-      }
-    },
-    
     async addItem() {
       if (this.newDetails.trim() !== '') {
         this.state.tripData[0].details.packlist.push(this.newDetails.trim())
@@ -90,7 +81,7 @@ export default {
   },
 
   created() { 
-    this.checkUser()
+    this.state.checkUser()
     this.state.loadTripData(this.$route.params.id)
   }
 }

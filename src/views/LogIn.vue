@@ -39,7 +39,7 @@ export default {
       state: herdingCatsstore(),
       email: '',
       password: '',
-      showList: false
+     // showList: false
     }
   },
 

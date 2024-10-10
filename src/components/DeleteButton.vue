@@ -10,12 +10,11 @@ export default {
   data() {
     return {
       state: herdingCatsstore(),
-      tripId: this.$route.params.id
     }
   },
   methods: {
     async deleteTrip() {
-      await fetch(`${this.state.apiUrl}events/${this.tripId}`, {
+      await fetch(`${this.state.apiUrl}events/${this.$route.params.id}`, {
         method: 'DELETE'
       })
 
@@ -26,8 +25,8 @@ export default {
       let updatedLoggedUser = null
 
       const updateUsersPromises = users.map(async (user) => {
-        if (user.trips.includes(this.tripId)) {
-          const updatedTrips = user.trips.filter((trip) => trip !== this.tripId)
+        if (user.trips.includes(this.$route.params.id)) {
+          const updatedTrips = user.trips.filter((trip) => trip !== this.$route.params.id)
           const updatedUser = { ...user, trips: updatedTrips }
 
           if (user.id === loggedUser.id) {

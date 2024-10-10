@@ -26,17 +26,17 @@
         <a
           v-if="!editing"
           @click="sendMessage"
-          href="'https://wa.me/' + 4915754288565"
+          href="'https://wa.me/' + {{ currentGroupMember.tele }}"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img class="wa" src="../assets/WhatsApp.svg.png" alt="Click here to send a message" />
+          <img class="wa" src="../assets/WhatsApp.svg.png" alt="Click to send a message" />
         </a>
 
         <input v-else type="text" v-model="teleInput" :placeholder="currentGroupMember.tele" />
       </div>
 
-      <label v-if="isUserThere && editing" class="member-dates">(Please use the +49 format)</label>
+      <label v-if="state.isUserThere && editing" class="member-dates">(Please use the +49 format)</label>
     </div>
     <div class="profile-entry list-p">
       <ul class="member-dates">
@@ -45,7 +45,7 @@
       </ul>
     </div>
     <div class="btns">
-      <button v-if="isUserThere && !editing" class="edit-btn" @click="startEditing">Edit</button>
+      <button v-if="state.isUserThere && !editing" class="edit-btn" @click="startEditing">Edit</button>
       <button v-if="editing" class="save-btn" @click="finishEditing">Save</button>
       <router-link :to="{ path: '/groupmembers/' + this.$route.params.id }"
         ><button class="back-btn">Back to Group Members</button></router-link
@@ -60,7 +60,6 @@ import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
     return {
-      isUserThere: false,
       state: herdingCatsstore(),
       editing: false,
       nameInput: '',
@@ -85,14 +84,6 @@ components: {
   },
 
   methods: {
-    async checkUser() {
-      if (this.state.user === null || Object.keys(this.state.user).length === 0) {
-        this.isUserThere = false
-      } else {
-        this.isUserThere = true
-      }
-    },
-
     sendMessage() {
       const phoneNumber = this.teleInput.replace(/\D/g, '')
       const whatsappLink = `https://wa.me/${phoneNumber}`
@@ -127,8 +118,8 @@ components: {
     }
   },
   created() {
+    this.state.checkUser()
     this.state.loadTripData(this.$route.params.id)
-    this.checkUser()
   }
 }
 </script>
