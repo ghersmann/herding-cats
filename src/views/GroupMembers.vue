@@ -25,7 +25,7 @@
             {{ groupMember.name }} - {{ groupMember.isAdmin ? 'Admin' : 'Participant' }}
           </router-link>
 
-          <button v-if="isUserThere" class="delete-btn" @click="deleteMember(index)">x</button>
+          <button v-if="state.isUserThere" class="delete-btn" @click="deleteMember(index)">x</button>
         </div>
         <ul class="member-dates">
           <li v-if="groupMember.startDate">From: {{ groupMember.startDate }}</li>
@@ -50,8 +50,6 @@ import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
     return {
-      isUserThere: false,
-      //tripApiUrl: 'http://localhost:3000/events',
       state: herdingCatsstore(),
       itemName: 'Member',
       placeholder: 'e.g. Max Mustermann'
@@ -99,14 +97,6 @@ export default {
   },
 
   methods: {
-    checkUser() {
-      if (this.state.user === null || Object.keys(this.state.user).length === 0) {
-        this.isUserThere = false
-      } else {
-        this.isUserThere = true
-      }
-    },
-
     deleteMember(index) {
       this.state.tripData[0].details.groupmembers.splice(index, 1)
       this.state.deleteItem(this.$route.params.id)
@@ -122,10 +112,9 @@ export default {
   },
 
   created() {
-    this.checkUser()
+    this.state.checkUser()
     this.state.loadTripData(this.$route.params.id)
     this.state.loadUserData()
-
   }
 }
 </script>

@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     async searchPublicTrip() {
-      const response = await fetch(this.state.apiUrl + 'events')
+      const response = await fetch(`${this.apiUrl}?pathname=events`)
       const apiTripData = await response.json()
       this.allTripData = apiTripData
       const searchTermLower = this.searchField.toLowerCase()
