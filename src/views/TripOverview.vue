@@ -72,7 +72,6 @@ export default {
   data() {
     return {
       state: herdingCatsstore(),
-      showSidebar: false,
     }
   },
   components: {
