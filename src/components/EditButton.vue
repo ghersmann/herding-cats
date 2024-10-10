@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       isUserThere: false,
-      tripApiUrl: 'http://localhost:3000/events',
+      tripApiUrl: this.state.apiUrl,
       state: herdingCatsstore(),
       tripDetails: [],
       newEntry: {
