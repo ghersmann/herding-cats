@@ -24,7 +24,7 @@
 
     <div class="input-area">
       <textarea
-        v-if="isUserThere"
+        v-if="state.isUserThere"
         class="input-text-area"
         v-model="newDetails"
         id="item-input"
@@ -32,7 +32,7 @@
         @keyup.enter="addNote"
       ></textarea>
       <button
-        v-if="isUserThere"
+        v-if="state.isUserThere"
         @click="addNote"
         :disabled="checkInput"
         :class="{ 'btn-disabled': checkInput }"
@@ -59,7 +59,6 @@ export default {
     return {
       notes: [],
       editMode: null,
-      isUserThere: false,
       newDetails: '',
       state: herdingCatsstore(),
       placeholderText: `Take notes or write poetry. Or something else. We don't care.` // Placeholder text
@@ -74,14 +73,6 @@ export default {
     }
   },
   methods: {
-    checkUser() {
-      if (!this.state.user || Object.keys(this.state.user).length === 0) {
-        this.isUserThere = false;
-      } else {
-        this.isUserThere = true;
-      }
-    },
-
     async loadUserNotes() {
       const userId = JSON.parse(localStorage.getItem('loggedUser')).id;
       const currentUser = this.state.userData.find(user => user.id === userId);
@@ -127,7 +118,7 @@ export default {
     }
   },
   async created() {
-    await this.checkUser();
+    await this.state.checkUser();
     await this.state.loadUserData();
     await this.loadUserNotes();
   }

@@ -8,7 +8,8 @@ export const herdingCatsstore = defineStore('registration', {
       userTrips: [],
       userSearchedTrips: [],
       tripData: [],
-      isDataLoaded: false
+      isDataLoaded: false,
+      isUserThere: false
   }),
   actions: {
     async loadUserData() {
@@ -70,6 +71,13 @@ export const herdingCatsstore = defineStore('registration', {
       } catch (error) {
         console.error('Error updating event:', error);
         alert('Failed to update event. Please try again.');
+      }
+    },
+    async checkUser() {
+      if (this.user === null || Object.keys(this.user).length === 0) {
+        this.isUserThere = false
+      } else {
+        this.isUserThere = true
       }
     }
   },

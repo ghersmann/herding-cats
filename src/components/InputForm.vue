@@ -28,7 +28,7 @@
     </form>
   </dialog>
   <footer>
-    <button v-if="isUserThere" @click.prevent="openDialog">Add new {{ itemName }}</button>
+    <button v-if="state.isUserThere" @click.prevent="openDialog">Add new {{ itemName }}</button>
   </footer>
 </template>
 
@@ -37,8 +37,6 @@ import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
     return {
-      isUserThere: false,
-      tripApiUrl: 'http://localhost:3000/events',
       state: herdingCatsstore(),
       tripDetails: [],
       newEntry: {
@@ -83,14 +81,6 @@ export default {
   },
 
   methods: {
-    async checkUser() {
-      if (this.state.user === null || Object.keys(this.state.user).length === 0) {
-        this.isUserThere = false
-      } else {
-        this.isUserThere = true
-      }
-    },
-
     convertDate(date) {
       if (date.length >= 1) {
         const year = date.slice(0, 4)
@@ -113,7 +103,7 @@ export default {
         this.newEntry.endDate = this.convertDate(this.newEntry.endDate)
         this.state.tripData[0].details[category].push({ ...this.newEntry })
 
-        await fetch(`${this.tripApiUrl}/${this.$route.params.id}/`, {
+        await fetch(`${this.state.apiUrl}/${this.$route.params.id}/`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -140,7 +130,7 @@ export default {
   },
   created() {
     this.$emit('clickAdd', this.tripDetails)
-    this.checkUser()
+    this.state.checkUser()
   },
 
   emits: ['clickAdd']

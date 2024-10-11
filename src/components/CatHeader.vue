@@ -1,9 +1,12 @@
 <template>
   <header>
     <a href="#" @click.prevent="$router.go(-1)"><img class="left" src="@/assets/arrow-white.svg" alt="Arrow symbol" /></a>
+      
+    <a :href="state.isUserThere ? '/AllTravels' : '/trip/' + this.$route.params.id">
       <img class="center" src="../assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logo" />
-    <!-- Is user there? go to alltravels, if not goto tripoverview -->
-  <div class="right" @click.prevent="openMenu">
+    </a>
+  
+    <div class="right" @click.prevent="openMenu">
     <div class="line"></div>
     <div class="line"></div>
     <div class="line"></div>
@@ -20,7 +23,6 @@
     data() {
       return {
         state: herdingCatsstore(),
-        tripId: this.$route.params.id
       }
     },
     methods: {

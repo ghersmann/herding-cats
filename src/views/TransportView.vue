@@ -33,7 +33,7 @@
           :notesValue="transport.notes"
           :idValue="transport.id"
         />
-        <button v-if="isUserThere" class="rect-delete-btn" @click="removeTransport(index)">
+        <button v-if="state.isUserThere" class="rect-delete-btn" @click="removeTransport(index)">
           Delete
         </button>
       </li>
@@ -60,7 +60,6 @@ import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
     return {
-      isUserThere: false,
       state: herdingCatsstore(),
       itemName: 'Transport',
       beginName: 'Departure',
@@ -87,14 +86,6 @@ export default {
     CatHeader
   },
   methods: {
-    async checkUser() {
-      if (this.state.user === null || Object.keys(this.state.user).length === 0) {
-        this.isUserThere = false
-      } else {
-        this.isUserThere = true
-      }
-    },
-
     getFromChild(data) {
       this.transportList = data
     },
@@ -106,9 +97,8 @@ export default {
   },
 
   async created() {
-    await this.checkUser()
-    await this.state.loadTripData(this.$route.params.id)
-    
+    await this.state.checkUser()
+    await this.state.loadTripData(this.$route.params.id)    
   }
 }
 </script>

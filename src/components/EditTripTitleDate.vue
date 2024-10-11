@@ -45,8 +45,6 @@ export default {
     }
   },
   methods: {
-
-
     validateDates() {
       if (this.formattedEndDate < this.formattedStartDate) {
         this.errorMessage = 'End date cannot be before the start date.';

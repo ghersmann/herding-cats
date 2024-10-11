@@ -13,7 +13,7 @@
 
       <ul class="list">
         <li class="list-item" v-for="(key, index) in filteredDetailsKeys" :key="index">
-          <router-link :to="`/${key}/${this.tripId}`">
+          <router-link :to="`/${key}/${this.$route.params.id}`">
             <img class="arrow" src="@/assets/arrow.svg" alt="Arrow symbol" />
             <p>{{ key.charAt(0).toUpperCase() + key.slice(1) }}</p>
           </router-link>
@@ -21,7 +21,7 @@
       </ul>
     </section>
     <nav>
-      <button v-if="isUserThere" @click="openOptions">Add Item</button>
+      <button v-if="state.isUserThere" @click="openOptions">Add Item</button>
       <dialog class="add-options" ref="add-options">
         <form method="dialog" action="">
           <router-link :to="{ path: '/transport/' + this.$route.params.id }"
@@ -48,16 +48,16 @@
       <router-link :to="{ path: '/timeline/' + this.$route.params.id }">
         <button class="timeline-btn">Trip Timeline</button>
       </router-link>
-      <ToggleSwitch v-if="isUserThere && state.isDataLoaded" class="toggle-switch" labelText="This trip is Public" />
-      <p class="white-box-id">Trip ID: {{ tripId }}</p>
+      <ToggleSwitch v-if="state.isUserThere && state.isDataLoaded" class="toggle-switch" labelText="This trip is Public" />
+      <p class="white-box-id">Trip ID: {{ this.$route.params.id }}</p>
       <button @click="copyId">Copy ID</button>
       <router-link :to="{ name: 'alltravels' }">
-        <button class="back-btn" v-if="isUserThere">Back to all your trips</button></router-link
+        <button class="back-btn" v-if="state.isUserThere">Back to all your trips</button></router-link
       >
       <router-link :to="{ name: 'home' }">
-        <button v-if="!isUserThere">Back to Start Page</button></router-link
+        <button v-if="!state.isUserThere">Back to Start Page</button></router-link
       >
-      <DeleteButton v-if="isUserThere" />
+      <DeleteButton v-if="state.isUserThere" />
     </nav>
   </main>
 </template>
@@ -72,9 +72,6 @@ export default {
   data() {
     return {
       state: herdingCatsstore(),
-      tripId: '',
-      showSidebar: false,
-      isUserThere: false
     }
   },
   components: {
@@ -96,22 +93,13 @@ export default {
     },
 
     async copyId() {
-      await navigator.clipboard.writeText(this.tripId)
+      await navigator.clipboard.writeText(this.$route.params.id)
     },
-
-    checkUser() {
-      if (this.state.user === null || Object.keys(this.state.user).length === 0) {
-        this.isUserThere = false
-      } else {
-        this.isUserThere = true
-      }
-    }
   },
   async created() {
-    this.tripId = this.$route.params.id
-    await this.state.loadTripData(this.tripId);
+    await this.state.checkUser()
+    await this.state.loadTripData(this.$route.params.id);
     this.state.isDataLoaded = true;
-    this.checkUser()
   }
 }
 </script>
