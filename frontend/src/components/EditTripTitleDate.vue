@@ -79,13 +79,7 @@ export default {
       this.state.tripData[0].tripStart = this.formatDateFromInput(this.formattedStartDate);
       this.state.tripData[0].tripEnd = this.formatDateFromInput(this.formattedEndDate);
 
-      await fetch(`${this.state.apiUrl}events/${this.$route.params.id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.state.tripData[0])
-      });
+    await this.state.updateTripState(this.$route.params.id)
     }
   }
 }

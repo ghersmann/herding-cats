@@ -11,10 +11,9 @@
   </label>
 </template>
 
-
-
 <script>
 import { herdingCatsstore } from '@/stores/counter.js'
+
 export default {
   name: 'ToggleSwitch',
   props: {
@@ -23,26 +22,30 @@ export default {
   data() {
     return {
       state: herdingCatsstore(),
-      tripPublicState: false
+      tripPublicState: false, // Controls the state of the toggle switch
+      initialPublicState: null // Store the initial value of `public`
     }
   },
   watch: {
-    tripPublicState: 'updateTripPublicState'
+    tripPublicState: 'updateTripPublicState' // Watch for changes to `tripPublicState`
   },
   methods: {
-  async updateTripPublicState() {
-    this.state.tripData[0].public = this.tripPublicState;
-    await fetch(`${this.state.apiUrl}events/${this.$route.params.id}/`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state.tripData[0])
-    });
-  }
-},
-  async created() {
-    this.tripPublicState = this.state.tripData[0].public
+    // Function to update the public state of the trip
+    async updateTripPublicState() {
+      // Check if the state has changed before updating
+      if (this.tripPublicState !== this.initialPublicState) {
+        this.state.tripData[0].public = this.tripPublicState; // Update the state
+        await this.state.updateTripState(this.$route.params.id); // Call the API to update the trip state
+        // After updating, update the `initialPublicState` to the new value
+        this.initialPublicState = this.tripPublicState;
+      }
+    }
+  },
+  created() {
+    // Set the initial state of the toggle switch based on the trip's `public` value
+    this.tripPublicState = this.state.tripData[0].public;
+    // Store the initial value to compare later
+    this.initialPublicState = this.state.tripData[0].public;
   }
 }
 </script>

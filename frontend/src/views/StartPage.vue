@@ -9,7 +9,7 @@
     <div class="start-button-input">
       <router-link :to="{ name: 'login' }"><button>LogIn</button></router-link>
       <router-link :to="{ name: 'signup' }"><button>Sign Up</button></router-link>
-      <form @submit.prevent="checkValidId">
+      <form @submit.prevent="checkValidId(tripId)">
         <input
           type="text"
           name="trip-id"
@@ -33,40 +33,32 @@ export default {
     return {
       tripId: '',
       disableGoBtn: true,
-      tripData: [],
       allTripIds: [],
       state: herdingCatsstore()
     }
   },
 
   methods: {
-    async loadData() {
-      const response = await fetch(`${this.state.apiUrl}?pathname=events`)
-      const apiData = await response.json()
-      this.tripData = apiData
-      return this.tripData
-    },
-
     checkInputLength() {
-      this.disableGoBtn = this.tripId.trim().length <= 4
+      this.disableGoBtn = this.tripId.trim().length <= 3
     },
 
-    async checkValidId() {
-      await this.loadData()
-      this.tripData.forEach((trip) => {
-        this.allTripIds.push(trip.id)
-      })
-      if (this.allTripIds.includes(this.tripId)) {
-        this.$router.push({ name: 'trip', params: { id: this.tripId } })
-        return true
+    async checkValidId(tripId) {
+      if (this.state.allTripIds.length === 0) {
+        await this.state.loadTripIds();
+      }  
+      if (this.state.allTripIds.includes(tripId)) {
+        this.$router.push({ name: 'trip', params: { id: tripId } });
+        return true;
       } else {
-        alert("Looks like you put in a Trip ID that doesn't exist.")
-        return false
+        alert("Invalid Trip ID. Please check the ID.");
+        return false;
       }
-    }
+    },
+
   },
   created() {
-    this.loadData()
+    this.state.loadTripIds()
   }
 }
 </script>

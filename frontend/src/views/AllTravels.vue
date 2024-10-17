@@ -9,7 +9,7 @@
         <li v-if="Object.values(state.user.trips).every((array) => array.length === 0)"
         class="calendar-list-item">
         <p>You currently have <br>no cats to herd.</p>
-        <p>Started herding.</p>
+        <p>Start herding.</p>
         <img class="arrow-down" src="@/assets/arrow-white.svg" />
         </li>
         <li class="calendar-list-item" v-for="trip in sortedEvents" :key="trip.id">
@@ -86,7 +86,7 @@ export default {
     async checkUser() {
       if (this.state.user === null || Object.keys(this.state.user).length === 0) {
         alert('No user logged in. No data to show. Sorry mate.')
-        router.push('/')
+        this.$router.push({ name: 'home' })
       } else {
         await this.state.loadUserTripData()
         this.formatChange()

@@ -4,22 +4,28 @@
 
 <script>
 import { herdingCatsstore } from '@/stores/counter.js'
+
 export default {
   data() {
     return {
       name: 'LogoutButton',
-      state: herdingCatsstore()
-    }
+      state: herdingCatsstore(),
+    };
   },
   methods: {
     logOutUser() {
-      this.state.user = null
-      localStorage.removeItem('loggedUser')
-      this.$router.push({ name: 'logout' })
+      // Navigate first, then clear user data to avoid access errors
+      this.$router.push({ name: 'logout' }).then(() => {
+        this.state.user = null;
+        localStorage.removeItem('loggedUser');
+      }).catch(err => {
+        console.error('Error during logout navigation:', err);
+      });
     }
   }
 }
 </script>
+
 
 <style scoped>
 button {

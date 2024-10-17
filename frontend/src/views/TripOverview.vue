@@ -99,6 +99,7 @@ export default {
   async created() {
     await this.state.checkUser()
     await this.state.loadTripData(this.$route.params.id);
+    //Used for Toggleswitch component
     this.state.isDataLoaded = true;
   }
 }

@@ -33,43 +33,60 @@
 
 <script>
 import { herdingCatsstore } from '@/stores/counter.js'
+
 export default {
   data() {
     return {
       state: herdingCatsstore(),
       email: '',
       password: '',
-     // showList: false
     }
   },
 
   methods: {
-    validation() {
-      this.state.user = this.state.userData.find((user) => user.email === this.email)
-
-      if (this.state.user) {
-        if (this.state.user.password === this.password) {
-          localStorage.setItem('loggedUser', JSON.stringify(this.state.user))
-          this.state.tripData = []
-          this.state.loadUserTripData()
-          return true
+    async validation() {
+      try {
+        // Make an API request to fetch the user by email
+        const response = await fetch(`${this.state.apiUrl}/users?email=${this.email}`);
+        const user = await response.json();
+        
+        if (response.ok && user) {
+          // If user is found, validate the password
+          if (user.password === this.password) {
+            // Store user in Pinia store and localStorage
+            this.state.user = user;
+            localStorage.setItem('loggedUser', JSON.stringify(user));
+            this.state.tripData = [];
+            this.state.loadUserTripData(); // Load user trip data
+            return true;
+          } else {
+            // Incorrect password
+            alert('Incorrect password.');
+            return false;
+          }
         } else {
-          return false
+          // User not found
+          alert('User not found. Please check your email.');
+          return false;
         }
-      } else {
-        return false
+      } catch (error) {
+        console.error('Error during login validation:', error);
+        alert('Server error. Please try again later.');
+        return false;
       }
     },
 
-    logIn() {
-      if (this.validation()) {
-        this.$router.push({ name: 'alltravels' })
+    async logIn() {
+      const isValid = await this.validation(); // Wait for validation result
+      if (isValid) {
+        this.$router.push({ name: 'alltravels' }); // Redirect on successful login
       } else {
-        alert('Please make sure your e-mail and password is entered correctly.')
+        // Alert is handled in the validation method
       }
     }
   }
 }
+
 </script>
 
 <style scoped>
