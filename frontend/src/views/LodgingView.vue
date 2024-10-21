@@ -86,7 +86,7 @@ export default {
 
     removeLodging(index) {
       this.state.tripData[0].details.lodging.splice(index, 1)
-      this.state.deleteItem(this.$route.params.id)
+      this.state.updateTripState(this.$route.params.id)
     },
   },
   created() {

@@ -107,19 +107,14 @@ components: {
         this.currentGroupMember.tele = this.teleInput
       }
 
-      await fetch(`${this.state.apiUrl}events/${this.$route.params.id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.state.tripData[0])
-      })
+      await this.state.updateTripState(this.$route.params.id)
+      
       this.editing = false
     }
   },
-  created() {
-    this.state.checkUser()
-    this.state.loadTripData(this.$route.params.id)
+  async created() {
+    await this.state.checkUser()
+    await this.state.loadTripData(this.$route.params.id)
   }
 }
 </script>

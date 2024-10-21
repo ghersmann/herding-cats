@@ -15,7 +15,6 @@ export default {
   },
   methods: {
     async deleteTrip() {
-      console.log('Delete trip initiated');
       await this.deleteApiTrip();
       await this.deleteTripFromUserTrips();
       this.$router.push({ name: 'alltravels' });
@@ -57,27 +56,7 @@ export default {
       this.state.user = updatedUser;
 
       // Update the user in the API
-      try {
-        const response = await fetch(`${this.state.apiUrl}/users?id=${loggedUser.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updatedUser),
-        });
-
-        if (response.ok) {
-          console.log('User updated successfully in the API');
-          // Update the user in localStorage
-          localStorage.setItem('loggedUser', JSON.stringify(updatedUser));
-        } else {
-          console.error('Failed to update user in the API');
-        }
-        const localUser = JSON.parse(localStorage.getItem('loggedUser'))
-        console.log('LocalUser', localUser)
-      } catch (error) {
-        console.error('Error updating user in the API:', error);
-      }
+      this.state.updateUserState(this.state.user.id)
     },
   },
 };

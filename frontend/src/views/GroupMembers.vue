@@ -99,7 +99,7 @@ export default {
   methods: {
     deleteMember(index) {
       this.state.tripData[0].details.groupmembers.splice(index, 1)
-      this.state.deleteItem(this.$route.params.id)
+      this.state.updateTripState(this.$route.params.id)
     },
 
     goToProfile(id) {
@@ -111,10 +111,10 @@ export default {
     }
   },
 
-  created() {
-    this.state.checkUser()
-    this.state.loadTripData(this.$route.params.id)
-    this.state.loadUserData()
+  async created() {
+    await this.state.checkUser()
+    await this.state.loadTripData(this.$route.params.id)
+    // this.state.loadUserData()
   }
 }
 </script>

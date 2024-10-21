@@ -90,9 +90,10 @@ export default {
       this.transportList = data
     },
     
-    removeTransport(index) {
+    async removeTransport(index) {
       this.state.tripData[0].details.transport.splice(index, 1)
-      this.state.deleteItem(this.$route.params.id)
+      //PUT Request with updated state.tripData 
+      await this.state.updateTripState(this.$route.params.id)
     }, 
   },
 

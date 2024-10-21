@@ -3,18 +3,19 @@
 
   <main class="container">
     <h2 class="title">Personal Notes</h2>
-    <div v-if="notes.length === 0" class="note-container">
+    <div v-if="state.user.notes.length === 0" class="note-container">
       <p class="note-box">{{ placeholderText }}</p>
     </div>
-    <div v-else v-for="(note, index) in notes" :key="index" class="note-container">
+    <div v-else v-for="(note, index) in state.user.notes" :key="index" class="note-container">
       <template v-if="editMode !== index">
         <p class="note-box" @click="startEditing(index)">{{ note }}</p>
       </template>
       <template v-else>
         <textarea
           class="note-box edit-note"
-          v-model="notes[index]"
-          @keyup.enter="finishEditing(index)"
+          v-model="state.user.notes[index]"
+          :ref="setTextareaRef(index)"
+          @keyup="adjustTextarea(index)"
         ></textarea>
         <button class="delete-btn save-btn" @click="finishEditing(index)">Save</button>
       </template>
@@ -57,11 +58,11 @@ import CatHeader from '@/components/CatHeader.vue';
 export default {
   data() {
     return {
-      notes: [],
       editMode: null,
       newDetails: '',
       state: herdingCatsstore(),
-      placeholderText: `Take notes or write poetry. Or something else. We don't care.` // Placeholder text
+      placeholderText: `Take notes or write poetry. Or something else. We don't care.`, // Placeholder text
+      textareaRefs: {}
     }
   },
   components: {
@@ -73,54 +74,44 @@ export default {
     }
   },
   methods: {
-    async loadUserNotes() {
-      const userId = JSON.parse(localStorage.getItem('loggedUser')).id;
-      const currentUser = this.state.userData.find(user => user.id === userId);
-      if (currentUser.notes.length > 0) {
-        this.notes = currentUser.notes;
-      } else {
-        this.notes = [];
+    startEditing(index) {
+      this.editMode = index; // Enter edit mode for the specific note
+      this.$nextTick(() => this.adjustTextarea(index));
+    },
+
+    setTextareaRef(index) {
+      return (el) => {
+        this.textareaRefs[index] = el; // Store the reference for each textarea by index
+      };
+    },
+
+    adjustTextarea(index) {
+      const textarea = this.textareaRefs[index]; // Access the textarea ref for the given index
+      if (textarea) {
+        textarea.style.height = 'auto'; // Reset height
+        textarea.style.height = textarea.scrollHeight + 'px'; // Adjust to content
       }
     },
 
-    startEditing(index) {
-      this.editMode = index;
+    async deleteNote(index) {
+      this.state.user.notes.splice(index, 1); // Remove the note from the array in the Pinia store
+      await this.state.updateUserState(this.state.user.id); // Call store action to persist the update
     },
 
-    finishEditing() {
-      this.submitNote();
+    async finishEditing() {
+      await this.state.updateUserState(this.state.user.id); // Call store action to persist the update
       this.editMode = null;
     },
 
-    addNote() {
-      this.notes.push(this.newDetails.trim());
-      this.submitNote();
+    async addNote() {
+      this.state.user.notes.push(this.newDetails.trim());
+      await this.state.updateUserState(this.state.user.id); // Call store action to persist the update
       this.newDetails = '';
     },
-
-    async deleteNote(index) {
-      this.notes.splice(index, 1);
-      this.submitNote();
-    },
-
-    async submitNote() {
-      const userId = JSON.parse(localStorage.getItem('loggedUser')).id;
-      const currentUser = this.state.userData.find(data => data.id === userId);
-      currentUser.notes = [...this.notes];
-
-      await fetch(`${this.state.apiUrl}users/${userId}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(currentUser)
-      });
-    }
   },
+
   async created() {
     await this.state.checkUser();
-    await this.state.loadUserData();
-    await this.loadUserNotes();
   }
 }
 </script>
@@ -131,8 +122,7 @@ export default {
 .note-container {
   display: flex;
   align-items: top;
-
-position: relative;
+  position: relative;
 }
 
 .note-box,
@@ -147,6 +137,7 @@ position: relative;
   box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
   overflow: hidden; 
   position: relative;
+  font-size: 1.5rem
 }
 
 .edit-note {
@@ -155,9 +146,14 @@ position: relative;
   font-family: 'Satoshi-Variable';
   font-style: normal;
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #000000;
+  flex-grow: 1;
+  position: relative;
+  height: auto;
+  overflow-y: auto;
 }
+
 
 .delete-btn {
   margin-left: 1rem;

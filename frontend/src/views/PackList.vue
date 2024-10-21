@@ -65,24 +65,18 @@ export default {
         this.state.tripData[0].details.packlist.push(this.newDetails.trim())
         this.newDetails = ''
       }
-      await fetch(`${this.state.apiUrl}events/${this.$route.params.id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.state.tripData[0])
-      })
+      await this.state.updateTripState(this.$route.params.id)
     },
 
     removePackItem(index) {
       this.state.tripData[0].details.packlist.splice(index, 1)
-      this.state.deleteItem(this.$route.params.id)
+      this.state.updateTripState(this.$route.params.id)
     },
   },
 
-  created() { 
-    this.state.checkUser()
-    this.state.loadTripData(this.$route.params.id)
+  async created() { 
+    await this.state.checkUser()
+    await this.state.loadTripData(this.$route.params.id)
   }
 }
 </script>

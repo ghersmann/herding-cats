@@ -57,8 +57,8 @@ export default {
     },
 
   },
-  created() {
-    this.state.loadTripIds()
+  async created() {
+    await this.state.loadTripIds()
   }
 }
 </script>

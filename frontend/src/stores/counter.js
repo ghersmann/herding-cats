@@ -12,12 +12,12 @@ export const herdingCatsstore = defineStore('registration', {
       isDataLoaded: false
   }),
   actions: {
-   async loadUserData() {
+/*    async loadUserData() {
       const response = await fetch(`${this.apiUrl}/users`)
       const apiUserData = await response.json()
       this.userData = apiUserData
       return this.userData
-    },
+    }, */
 
     async loadUserTripData() {
       this.userTrips = []
@@ -82,11 +82,23 @@ export const herdingCatsstore = defineStore('registration', {
             });
           },
 
-    async deleteItem(id) {
-      console.log('pinia deleteItem')
+    async updateUserState(userId) {
+      console.log('Pinia update user state, user id: ', userId)
+      await fetch(`${this.apiUrl}/users?id=${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.user)
+      });
+      localStorage.setItem('loggedUser', JSON.stringify(this.user));
+    },
+    
+/*     async deleteItem(id) {
+      console.log('pinia deleteItem', id)
 
       try {
-        const response = await fetch(`${this.apiUrl}?pathname=events&id=${id}`, {
+        const response = await fetch(`${this.apiUrl}/events?id=${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -104,7 +116,8 @@ export const herdingCatsstore = defineStore('registration', {
         console.error('Error updating event:', error);
         alert('Failed to update event. Please try again.');
       }
-    },
+    }, */
+    
     async checkUser() {
       if (this.user === null || Object.keys(this.user).length === 0) {
         this.isUserThere = false

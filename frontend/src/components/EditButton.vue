@@ -3,24 +3,24 @@
     <form method="dialog" class="addLodging">
       <div class="inputtext">
         <label class="required" for="item-name">{{ itemName }}:</label>
-        <input required id="item-name" v-model="newEntry.name" :placeholder="placeholder" />
+        <input required id="item-name" v-model="name" :placeholder="placeholder" />
       </div>
       <div class="inputtext">
         <label v-if="!isGroupMembers" for="zipcode">Zipcode:</label>
-        <input v-if="!isGroupMembers" id="zipcode" v-model="newEntry.zipcode" />
+        <input v-if="!isGroupMembers" id="zipcode" v-model="zipcode" />
         <label v-if="!isGroupMembers" for="city">City:</label>
-        <input v-if="!isGroupMembers" id="city" v-model="newEntry.city" />
+        <input v-if="!isGroupMembers" id="city" v-model="city" />
         <label v-if="!isGroupMembers" for="address">Adress:</label>
-        <input v-if="!isGroupMembers" id="address" v-model="newEntry.address" />
+        <input v-if="!isGroupMembers" id="address" v-model="address" />
         <label for="begin">{{ beginName }}:</label>
-        <input type="datetime-local" id="begin" v-model="newEntry.startDate" />
+        <input type="datetime-local" id="begin" v-model="startDate" />
         <label for="end">{{ endName }}:</label>
-        <input type="datetime-local" id="end" v-model="newEntry.endDate" />
+        <input type="datetime-local" id="end" v-model="endDate" />
         <label v-if="!isGroupMembers" for="notes">Notes:</label>
-        <input v-if="!isGroupMembers" id="notes" v-model="newEntry.notes" />
+        <input v-if="!isGroupMembers" id="notes" v-model="notes" />
       </div>
       <div v-if="isGroupMembers" class="admin">
-        <input id="set-admin" type="checkbox" v-model="newEntry.isAdmin" />
+        <input id="set-admin" type="checkbox" v-model="isAdmin" />
         <label for="set-admin">Admin</label>
       </div>
       <button @click="editItem">Save</button>
@@ -32,16 +32,7 @@
   </footer>
 </template>
 
-<style>
-.inputtext input {
-  margin-bottom: 10px;
-  display: block;
-}
 
-.admin input {
-  margin-right: 5px;
-}
-</style>
 
 <script>
 import { herdingCatsstore } from '@/stores/counter.js'
@@ -50,7 +41,6 @@ export default {
     return {
       state: herdingCatsstore(),
       tripDetails: [],
-      newEntry: {
         category: '',
         name: this.nameValue,
         zipcode: this.zipcodeValue,
@@ -61,7 +51,6 @@ export default {
         notes: this.notesValue,
         isAdmin: this.isAdminValue,
         id: this.idValue
-      }
     }
   },
 
@@ -100,7 +89,7 @@ export default {
     },
     currenEntry() {
       const category = this.$route.name
-      return this.state.tripData[0].details[category].find((item) => item.id === this.newEntry.id)
+      return this.state.tripData[0].details[category].find((item) => item.id === this.id)
     }
   },
 
@@ -112,7 +101,7 @@ export default {
         const day = date.slice(8, 10)
         const time = date.slice(11, 16)
         const convertedDate = day + '.' + month + '.' + year + ' - ' + time
-        return convertedDate
+        return convertedDate.toString()
       }
     },
     //converts the date into a format that can be displayed in the edit dialog
@@ -128,55 +117,62 @@ export default {
     },
 
     async editItem() {
-      if (this.newEntry.name.trim() === '') {
-        alert('Please fill out all required fields')
-      } else {
-        if (this.newEntry.startDate) {
-          this.newEntry.startDate = this.convertDate(this.newEntry.startDate)
-        }
-        if (this.newEntry.endDate) {
-          this.newEntry.endDate = this.convertDate(this.newEntry.endDate)
-        }
-        this.currenEntry.name = this.newEntry.name
-        this.currenEntry.zipcode = this.newEntry.zipcode
-        this.currenEntry.city = this.newEntry.city
-        this.currenEntry.address = this.newEntry.address
-        this.currenEntry.startDate = this.newEntry.startDate
-        this.currenEntry.endDate = this.newEntry.endDate
-        this.currenEntry.notes = this.newEntry.notes
+  // Validate that the required fields (like 'name') are not empty
+  if (this.name.trim() === '') {
+    alert('Please fill out all required fields');
+    return;
+  }
 
-        await fetch(`${this.state.apiUrl}/${this.$route.params.id}/`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.state.tripData[0])
-        })
-      }
-    },
+  // Convert the start and end dates into the required format before updating
+  const convertedStartDate = this.convertDate(this.startDate);
+  const convertedEndDate = this.convertDate(this.endDate);
+
+  // Update the properties of the current entry (the entry being edited)
+  this.currenEntry.name = this.name;
+  this.currenEntry.zipcode = this.zipcode;
+  this.currenEntry.city = this.city;
+  this.currenEntry.address = this.address;
+  this.currenEntry.startDate = convertedStartDate; // Store converted date format
+  this.currenEntry.endDate = convertedEndDate; // Store converted date format
+  this.currenEntry.notes = this.notes;
+  this.currenEntry.isAdmin = this.isAdmin; // If applicable
+
+  console.log('Edit button this.state.tripData', this.state.tripData)
+
+  // Update the tripData state and send the updated entry to the API
+  try {
+    await this.state.updateTripState(this.$route.params.id);
+  } catch (error) {
+    console.error('Failed to update trip data:', error);
+    alert('An error occurred while updating the item.');
+  }
+},
+
+
     openDialog() {
       this.$refs['add-item'].showModal()
       if (this.startDateValue) {
-        this.newEntry.startDate = this.reconvertDate(this.startDateValue)
+        this.startDate = this.reconvertDate(this.startDateValue)
       }
       if (this.endDateValue) {
-        this.newEntry.endDate = this.reconvertDate(this.endDateValue)
+        this.endDate = this.reconvertDate(this.endDateValue)
       }
     },
+
     closeDialog() {
       this.$refs['add-item'].close()
     }
   },
   created() {
     this.$watch('nameValue', (newValue) => {
-      this.newEntry.name = newValue
+      this.name = newValue
     })
     this.$emit('clickAdd', this.tripDetails)
     if (this.startDateValue) {
-      this.newEntry.startDate = this.reconvertDate(this.startDateValue)
+      this.startDate = this.reconvertDate(this.startDateValue)
     }
     if (this.endDateValue) {
-      this.newEntry.endDate = this.reconvertDate(this.endDateValue)
+      this.endDate = this.reconvertDate(this.endDateValue)
     }
     this.state.checkUser()
   },
@@ -184,3 +180,20 @@ export default {
   emits: ['clickAdd']
 }
 </script>
+
+
+<style>
+.inputtext {
+  margin-bottom: 1rem;
+  display: block;
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: #000000;
+}
+
+.admin input {
+  margin-right: 5px;
+}
+</style>

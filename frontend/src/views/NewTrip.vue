@@ -22,7 +22,6 @@
 
 <script>
 import { herdingCatsstore } from '@/stores/counter.js'
-import router from '@/router/index.js'
 import CatHeader from '@/components/CatHeader.vue';
 export default {
   data() {
@@ -51,28 +50,20 @@ export default {
     },
 
     async makeTrip() {
-      if (this.tripName !== '') {
+      if (this.tripName !== '' && this.tripStart !== '' && this.tripEnd !== '') {
         this.tripId = (Date.now() + Math.floor(Math.random() * 10)).toString()
         await this.updateUserData(this.tripId)
         await this.sendTripData(this.tripId)
-        router.push(`/trip/${this.tripId}`);
+        this.$router.push(`/trip/${this.tripId}`);
+      } else {
+        alert("Please make sure you've filled out all required fields.")
       }
     },
 
     async updateUserData(tripId){
-      const currentUser = { ...this.state.user };
-      currentUser.trips.push(tripId.toString());
-      const { _id, ...updateUserRequestData } = currentUser;
-      const updateUserResponse = await fetch(`${this.state.apiUrl}/users?id=${this.state.user.id}`, { 
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updateUserRequestData)
-      });
-      if (updateUserResponse.ok) {
-        localStorage.setItem('loggedUser', JSON.stringify(updateUserRequestData));
-    }},
+      this.state.user.trips.push(tripId.toString())
+      await this.state.updateUserState(this.state.user.id)
+    },
 
    async sendTripData(tripId) {
   const tripStartFormatted = this.convertDate(this.tripStart);
@@ -107,11 +98,11 @@ export default {
       } 
      else {
       alert('Server Error. Failed to create trip. Sorry.');
-      router.push('/AllTravels/');
+      this.$router.push('/AllTravels/');
     }
   } catch (error) {
     alert('Server Error. Failed to create trip. Sorry.');
-    router.push('/AllTravels/');
+    this.$router.push('/AllTravels/');
   } 
   }
   } 

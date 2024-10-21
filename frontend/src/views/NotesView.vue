@@ -70,25 +70,18 @@ export default {
         this.state.tripData[0].details.notes.push(this.newNotes.trim())
         this.newNotes = ''
       }
-      await fetch(`${this.state.apiUrl}events/${this.$route.params.id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.state.tripData[0])
-      })
+      await this.state.updateTripState(this.$route.params.id)
     },
 
-    
-    removeNote(index) {
+    async removeNote(index) {
       this.state.tripData[0].details.notes.splice(index, 1)
-      this.state.deleteItem(this.$route.params.id)
+      await this.state.updateTripState(this.$route.params.id)
     },
   },
 
-  created() {
-    this.state.checkUser()
-    this.state.loadTripData(this.$route.params.id)
+  async created() {
+    await this.state.checkUser()
+    await this.state.loadTripData(this.$route.params.id)
   }
 }
 </script>
@@ -135,6 +128,9 @@ h2 {
 
 .list-item {
   justify-content: space-between;
+  max-width: 10rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word; 
 }
 
 p {

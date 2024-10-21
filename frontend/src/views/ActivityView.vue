@@ -84,12 +84,12 @@ export default {
 
     removeActivity(index) {
       this.state.tripData[0].details.activity.splice(index, 1)
-      this.state.deleteItem(this.$route.params.id)
+      this.state.updateTripState(this.$route.params.id)
     },
   },
-  created() {
-    this.state.checkUser()
-    this.state.loadTripData(this.$route.params.id)
+  async created() {
+    await this.state.checkUser()
+    await this.state.loadTripData(this.$route.params.id)
   }
 }
 </script>
