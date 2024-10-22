@@ -11,7 +11,7 @@ export default defineConfig({
     VueDevTools(),
   ],
   build: {
-    outDir: 'dist', // This must match with "distDir" in vercel.json
+    outDir: 'frontend/dist', // This must match with "distDir" in vercel.json
   },
   resolve: {
     alias: {
