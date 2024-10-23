@@ -35,3 +35,4 @@ database.dev.local.json
 models
 .vite
 deps
+.env*.local

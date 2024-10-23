@@ -10,9 +10,6 @@ export default defineConfig({
     vue(),
     VueDevTools(),
   ],
-  build: {
-    outDir: './dist', // This must match with "distDir" in vercel.json
-  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
