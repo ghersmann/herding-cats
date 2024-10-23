@@ -10,6 +10,7 @@ export default defineConfig({
     vue(),
     VueDevTools(),
   ],
+  root: 'frontend', // Set to your frontend folder
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
