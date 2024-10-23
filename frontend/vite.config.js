@@ -11,6 +11,9 @@ export default defineConfig({
     VueDevTools(),
   ],
   root: 'frontend', // Set to your frontend folder
+  build: {
+    outDir: 'dist',  // Ensure that your build output is correctly set up
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
