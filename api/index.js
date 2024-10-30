@@ -7,7 +7,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors()); // Enable CORS for all routes
+app.use(cors({
+  origin: [
+    'http://localhost:3000', // Frontend local development
+    'https://herding-cats.vercel.app' // Production
+  ]
+}));
+
 app.use(express.json()); // Parse incoming JSON data
 
 // MongoDB Connection Setup
