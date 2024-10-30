@@ -10,11 +10,22 @@ export default defineConfig({
     vue(),
     VueDevTools(),
   ],
+  base: './',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  server: {
+    port: 3000,
+   /*  proxy: {
+      '/api': {
+        target: 'http://localhost:5000',  // your backend server
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    } */
+  }
 })
 
 
