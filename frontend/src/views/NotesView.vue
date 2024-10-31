@@ -9,7 +9,7 @@
         :key="index"
         class="list-item"
       >
-        <p>{{ item }}</p>
+        <p class="list-p">{{ item }}</p>
         <button v-if="state.isUserThere" class="delete-btn" @click="removeNote(index)">x</button>
       </li>
     </ul>
@@ -126,11 +126,8 @@ h2 {
   z-index: 2;
 }
 
-.list-item {
-  justify-content: space-between;
-  max-width: 10rem;
-  word-wrap: break-word;
-  overflow-wrap: break-word; 
+.list-p {
+  max-width: 24rem;
 }
 
 p {

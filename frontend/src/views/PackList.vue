@@ -9,7 +9,7 @@
         :key="index"
         class="list-item"
       >
-        <p>{{ item }}</p>
+        <p class="list-p">{{ item }}</p>
         <button v-if="state.isUserThere" class="delete-btn" @click="removePackItem(index)">x</button>
       </li>
     </ul>

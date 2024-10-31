@@ -101,6 +101,9 @@ p {
   font-size: 1.4rem;
   color: #000000;
   line-height: 2.5rem;
+  inline-size: 26rem;
+  overflow-wrap: break-word; 
+  hyphens: manual;
 }
 
 .list-item {

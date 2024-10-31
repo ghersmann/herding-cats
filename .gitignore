@@ -12,9 +12,6 @@ node_modules
 coverage
 *.local
 
-/cypress/videos/
-/cypress/screenshots/
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -31,9 +28,7 @@ coverage
 .env
 .env.production
 notes.md
-org-index.js
 database.dev.local.json
-models
 .vite
 deps
 .env*.local

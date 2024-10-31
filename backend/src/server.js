@@ -18,7 +18,7 @@ app.use(express.json()); // Parse incoming JSON data
 app.use(express.static(path.join(__dirname, '../dist')))
 
 // MongoDB Connection Setup
-const uri = process.env.MONGODB_URI; // Use the same URI as you used for MongoClient in your test
+const uri = process.env.MONGO_URI; // Use the same URI as you used for MongoClient in your test
 
 let db; // This will store the reference to the connected database
 
