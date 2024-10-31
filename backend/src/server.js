@@ -31,8 +31,8 @@ async function connectToDB() {
 connectToDB();
 
 // Import routes and pass the `db` to route handlers
-const eventRoutes = require('./routes/eventRoutes');
-const userRoutes = require('./routes/userRoutes');
+const eventRoutes = require('../routes/eventRoutes');
+const userRoutes = require('../routes/userRoutes');
 
 // Use the routes and pass the database as a parameter
 app.use((req, res, next) => {
@@ -43,10 +43,10 @@ app.use((req, res, next) => {
 app.use('/api', eventRoutes); // All routes are prefixed with '/api'
 app.use('/api', userRoutes);
 
-app.use(express.static(path.join(__dirname, 'frontend', 'dist')))
+app.use(express.static(path.join(__dirname, 'dist')))
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // Start the server

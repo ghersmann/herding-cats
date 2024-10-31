@@ -1,0 +1,23 @@
+{
+  "name": "herding-cats-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Herding Cats",
+  "main": "build/server.js", 
+    "scripts": {
+    "dev": "nodemon src/server.js",       
+    "build": "npx babel src --out-dir build", 
+    "start": "node build/server.js"        
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "mongodb": "^6.9.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.21.5",
+    "@babel/preset-env": "^7.21.5",
+    "nodemon": "^2.0.15"
+  }
+}

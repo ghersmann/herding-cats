@@ -1,27 +1,20 @@
 {
-  "name": "herding-cats",
+  "name": "herding-cats-frontend",
   "version": "1.0.0",
-  "description": "## Manage the Impossible",
+  "description": "Manage the Impossible",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "format": "prettier --write src/",
-    "start": "node backend/server.js"
+    "format": "prettier --write src/"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Gustav Hersmann",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "esbuild": "~0.23.0",
-    "express": "^4.21.1",
-    "mongodb": "^6.9.0",
     "pinia": "^2.1.7",
-    "vercel": "^32.3.0",
     "vue": "^3.5.12",
     "vue-router": "^4.3.0"
   },
