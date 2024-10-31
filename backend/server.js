@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const { MongoClient } = require('mongodb');
 const cors = require('cors');
 require('dotenv').config();
@@ -7,13 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({
-  origin: [
-    'http://localhost:3000', // Frontend local development
-    'https://herding-cats.vercel.app' // Production
-  ]
-}));
-
+app.use(cors());
 app.use(express.json()); // Parse incoming JSON data
 
 // MongoDB Connection Setup
@@ -47,6 +42,12 @@ app.use((req, res, next) => {
 
 app.use('/api', eventRoutes); // All routes are prefixed with '/api'
 app.use('/api', userRoutes);
+
+app.use(express.static(path.join(__dirname, 'frontend', 'dist')))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+});
 
 // Start the server
 app.listen(PORT, () => {
