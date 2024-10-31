@@ -3,6 +3,10 @@ const path = require('path');
 const { MongoClient } = require('mongodb');
 const cors = require('cors');
 require('dotenv').config();
+require('@babel/register')({
+  presets: ['@babel/preset-env']
+});
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,6 +14,8 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json()); // Parse incoming JSON data
+
+app.use(express.static(path.join(__dirname, '../dist')))
 
 // MongoDB Connection Setup
 const uri = process.env.MONGODB_URI; // Use the same URI as you used for MongoClient in your test
@@ -43,10 +49,8 @@ app.use((req, res, next) => {
 app.use('/api', eventRoutes); // All routes are prefixed with '/api'
 app.use('/api', userRoutes);
 
-app.use(express.static(path.join(__dirname, 'dist')))
-
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 // Start the server
