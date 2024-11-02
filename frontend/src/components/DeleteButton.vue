@@ -15,6 +15,8 @@ export default {
   },
   methods: {
     async deleteTrip() {
+      const confirmed = confirm("Are you sure you want to delete this trip?");
+      if (!confirmed) return; 
       await this.deleteApiTrip();
       await this.deleteTripFromUserTrips();
       this.$router.push({ name: 'alltravels' });
@@ -22,16 +24,10 @@ export default {
 
     // Function to delete trip from the API
     async deleteApiTrip() {
-      console.log('Delete API trip started');
       try {
         const result = await fetch(`${this.state.apiUrl}/events?id=${this.$route.params.id}`, {
           method: 'DELETE',
         });
-        if (result.ok) {
-          console.log('Trip deleted:', result);
-        } else {
-          console.log('Trip not found for deletion');
-        }
       } catch (error) {
         console.error('Error deleting trip:', error);
       }
@@ -39,7 +35,6 @@ export default {
 
     // Function to delete the trip from user's trips array and update API and local storage
     async deleteTripFromUserTrips() {
-      console.log('deleteTripFromUserTrips started');
 
       // Get logged-in user from localStorage
       const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
