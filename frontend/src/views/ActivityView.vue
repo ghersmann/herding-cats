@@ -2,11 +2,11 @@
   <CatHeader />
 
   <main class="container">
-    <h2 class="title">Activities</h2>
+    <h2>Activities</h2>
     <ul>
       <li class="activity-entry" v-for="(activity, index) of activityEntries" :key="index">
         <h3>{{ activity.name }}</h3>
-        <ul class="list-p">
+        <ul class="entry-p">
           <li>{{ activity.zipcode }} {{ activity.city }}</li>
           <li>{{ activity.address }}</li>
           <li v-if="activity.startDate">From: {{ activity.startDate }}</li>
@@ -34,6 +34,7 @@
         </button>
       </li>
     </ul>
+    <div class="input-area">
     <InputForm
       @clickAdd="getFromChild"
       :item-name="itemName"
@@ -44,6 +45,7 @@
     <router-link :to="{ path: '/trip/' + this.$route.params.id }"
       ><button>Back to Trip</button></router-link
     >
+  </div>
   </main>
 </template>
 
@@ -97,14 +99,9 @@ export default {
 <style scoped>
 .container {
   background-color: var(--pink-activities);
-  min-height: 10rem;
 }
 
-h3 {
-  margin-top: 2rem;
-}
-
-.title {
+h2 {
   color: black;
   text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
 }

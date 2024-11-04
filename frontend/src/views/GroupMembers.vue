@@ -3,18 +3,14 @@
 
   <main id="form" class="container">
     <h2 class="title">Group Members</h2>
-    <ul class="list list-p">
-      <!-- render admins that created the trip, 
-            so that they don't have to manually add themselves. 
-            because they are stored in /users and not in /events, 
-            they are currently non interactable
-          -->
+    <ul class="list">
+      <!-- Render admins that created the trip -->
       <li class="list-item" v-for="(groupMember, index) in filteredUsers" :key="index">
-        {{ groupMember.name }} - Admin
+        <p class="list-p">{{ groupMember.name }} - Admin</p>
         <br />
         <ul>
-          <li v-if="groupMember.startDate">From: {{ groupMember.startDate }}</li>
-          <li v-if="groupMember.endDate">Until: {{ groupMember.endDate }}</li>
+          <li v-if="groupMember.startDate"><p class="list-p">From: {{ groupMember.startDate }}</p></li>
+          <li v-if="groupMember.endDate"><p class="list-p">Until: {{ groupMember.endDate }}</p></li>
         </ul>
       </li>
 
@@ -22,18 +18,18 @@
       <li v-for="(groupMember, index) in this.groupmembersEntries" :key="index">
         <div class="list-item">
           <router-link :to="{ name: 'profile', params: { index: groupMember.id } }">
-            {{ groupMember.name }} - {{ groupMember.isAdmin ? 'Admin' : 'Participant' }}
+            <p class="list-p">{{ groupMember.name }} - {{ groupMember.isAdmin ? 'Admin' : 'Participant' }}</p>
           </router-link>
 
           <button v-if="state.isUserThere" class="delete-btn" @click="deleteMember(index)">x</button>
         </div>
         <ul class="member-dates">
-          <li v-if="groupMember.startDate">From: {{ groupMember.startDate }}</li>
-          <li v-if="groupMember.endDate">Until: {{ groupMember.endDate }}</li>
+          <li v-if="groupMember.startDate"><p class="list-p">From: {{ groupMember.startDate }}</p></li>
+          <li v-if="groupMember.endDate"><p class="list-p">Until: {{ groupMember.endDate }}</p></li>
         </ul>
       </li>
     </ul>
-    <div class="btns">
+    <div class="input-area">
       <InputForm @clickAdd="getFromChild" :item-name="itemName" :placeholder="placeholder" />
       <router-link :to="{ path: '/trip/' + this.$route.params.id }"
         ><button>Back to Trip</button></router-link
@@ -114,34 +110,16 @@ export default {
   async created() {
     await this.state.checkUser()
     await this.state.loadTripData(this.$route.params.id)
-    // this.state.loadUserData()
   }
 }
 </script>
 
 <style scoped>
-.list-item {
-  justify-content: space-between;
-  margin-top: 2rem;
-}
-
-.delete-btn {
-  line-height: 0rem;
-}
 .container {
-  display: flex;
-  flex-direction: column;
   background-color: var(--turqoise-gray-background);
 }
 
-.btns {
-  margin-top: auto;
-  margin-bottom: 0;
-}
-
-.list-p,
-a {
-  font-size: 2rem;
+.list-p {
   color: white;
   text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
 }

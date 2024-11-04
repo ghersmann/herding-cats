@@ -3,7 +3,7 @@
 
   <main class="container">
     <h2 class="title">Notes</h2>
-    <ul class="note-content">
+    <ul class="list">
       <li
         v-for="(item, index) of this.state.tripData[0].details.notes"
         :key="index"
@@ -14,13 +14,13 @@
       </li>
     </ul>
 
-    <form class="note-input-form">
+    <form class="input-area">
       <textarea
         v-if="state.isUserThere"
         v-model="newNotes"
         id="note-input"
         name="note-input"
-        placeholder="Take notes for your trip ..."
+        placeholder="Take notes for your trip..."
         @keydown.enter="addNote"
       ></textarea>
       <button
@@ -87,18 +87,12 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  background-color: var(--turqoise-notes);
-}
-
 h2 {
   color: black;
 }
+
 .container {
-  display: flex;
-  flex-direction: column;
   background: linear-gradient(to bottom, white 2.9rem, #c4ebf4 0.1rem);
-  margin: 1rem auto;
   background-size: 100% 3rem;
   position: relative;
   padding-top: 2rem;
@@ -118,20 +112,12 @@ h2 {
   background: #db4034;
 }
 
-.note-content {
-  margin-top: 1.5rem;
-}
-.note-input-form {
-  margin-top: auto;
-  z-index: 2;
+.list-item,
+.input-area {
+  width: 26rem;
 }
 
 .list-p {
-  max-width: 24rem;
-}
-
-p {
-  font-size: 1.5rem;
-  line-height: 2rem;
+  width: 23rem;
 }
 </style>

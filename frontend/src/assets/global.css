@@ -26,6 +26,9 @@
   --required-red: rgb(165, 0, 0);
 }
 
+
+/* Main container */
+
 html {
   font-size: 10px;
 }
@@ -39,6 +42,21 @@ main {
   margin: 0 auto;
 }
 
+.container {
+  width: 32rem;
+  min-height: 55rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--green-packing-list);
+  border: 1px solid white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  margin: 0.7rem auto;
+}
+
+
+/* Text styles */
+
 h1 {
   font-family: 'Satoshi-Variable', 'Times New Roman', Times, serif;
   font-style: normal;
@@ -50,6 +68,7 @@ h1 {
   text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
 }
 
+/* View titles are all h2 */
 h2 {
   font-family: 'Satoshi-Variable';
   font-style: normal;
@@ -85,23 +104,14 @@ p {
   font-family: 'Satoshi-Variable';
   font-style: normal;
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #000000;
 }
 
-.list {
-  margin-top: 2rem;
-}
+/* Rendered lists */
 
 .list-p {
-  margin-top: 1rem;
-  font-family: 'Satoshi-Variable';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 1.4rem;
-  color: #000000;
-  line-height: 2.5rem;
-  inline-size: 26rem;
+  inline-size: 25rem;
   overflow-wrap: break-word; 
   hyphens: manual;
 }
@@ -109,26 +119,16 @@ p {
 .list-item {
   display: flex;
   align-items: baseline;
-}
-
-.title {
-  margin-bottom: 3rem;
-}
-
-.container {
-  width: 32rem;
-  min-height: 25rem;
-  background-color: var(--green-packing-list);
-  border: 1px solid white;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 2rem;
-  margin: 0.7rem auto;
+  justify-content: space-between;
+  width: 28rem;
+  margin-bottom: 1rem;
 }
 
 .transport-entry,
 .lodging-entry,
 .activity-entry {
   margin: 0 auto;
+  padding-top: 2rem;
   text-align: center;
   max-width: 28rem;
 }
@@ -138,11 +138,18 @@ p {
 .activity-entry + .activity-entry {
   border-top: 0.25rem solid black;
   margin-top: 2rem;
-  padding-top: 1rem;
+  padding-top: 2rem;
 }
 
-.rect-delete-btn {
-  background-color: var(--required-red);
+.entry-p {
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  color: black;
+  text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
+  margin-top: 1rem;
   margin-bottom: 2rem;
 }
 
@@ -151,6 +158,9 @@ p {
   color: var(--required-red);
   margin-left: 0.5rem;
 }
+
+
+/* Buttons */
 
 button {
   margin: 0.7rem auto;
@@ -180,6 +190,58 @@ button:active {
 .btn-disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.rect-delete-btn {
+  background-color: var(--required-red);
+  margin-bottom: 2rem;
+}
+
+.delete-btn {
+  margin: 0;
+  padding: 0;
+  min-height: 2rem;
+  min-width: 2rem;
+  max-height: 2rem;
+  max-width: 2rem;
+  font-size: 1rem;
+  border-radius: 50%;
+}
+
+.edit-btns {
+  position: absolute;
+  display: flex;
+  width: 28rem;
+  bottom: 0rem;
+  right: 0rem;
+
+}
+
+.save-btn {
+  font-size: 1.2rem;
+  width: fit-content;
+  height: 2.2rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.cncl-btn {
+  margin-left: auto;
+  margin-right: 0;
+  background-color: var(--required-red);
+}
+
+.dual-btns {
+  background-color: aqua;
+  display: flex;
+  justify-content: space-between;
+  width: 28rem;
+}
+
+/* Input forms */
+
+.input-area {
+  margin-top: auto;
 }
 
 input[type='text'],
@@ -244,24 +306,8 @@ input[type='datetime-local'] {
   box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
 }
 
-.delete-btn {
-  margin: 0;
-  padding: 0;
-  min-height: 2rem;
-  min-width: 2rem;
-  max-height: 2rem;
-  max-width: 2rem;
-  font-size: 1rem;
-  border-radius: 50%;
-}
 
-.weiterbtn {
-  margin-top: 5rem;
-}
-
-.title {
-  margin-bottom: 2rem;
-}
+/* Labels */
 
 label {
   font-family: 'Satoshi-Variable';
