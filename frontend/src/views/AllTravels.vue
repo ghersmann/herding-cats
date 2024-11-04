@@ -2,7 +2,7 @@
  <CatHeader />
  
   <main class="container">
-      <h3>Hello {{ state.user.name }}!</h3>
+      <h2>Hello {{ state.user.name }}!</h2>
 
     <div class="calendar-list">
       <ul>
@@ -117,11 +117,6 @@ export default {
 .personal-btn {
   color: black;
   background-color: var(--yellow-calendar);
-}
-
-h3 {
-  color: white;
-  margin-bottom: 4rem;
 }
 
 .calendar-list {

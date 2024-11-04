@@ -135,8 +135,8 @@ button {
 }
 
 .back-btn {
-  background-color: var(--pink-background);
   color: black;
+  background-color: var(--pink-background);
 }
 
 .timeline-btn {

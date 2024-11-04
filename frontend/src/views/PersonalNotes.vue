@@ -140,6 +140,7 @@ h2 {
 
 .list-item {
   position: relative;
+  margin-top: 1rem;
 }
 
 .list-p {

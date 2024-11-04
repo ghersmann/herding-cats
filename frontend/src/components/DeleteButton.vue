@@ -51,7 +51,7 @@ export default {
       this.state.user = updatedUser;
 
       // Update the user in the API
-      this.state.updateUserState(this.state.user.id)
+      await this.state.updateUserState(this.state.user.id)
     },
   },
 };
