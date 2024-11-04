@@ -2,7 +2,7 @@
     <CatHeader />
 
   <main>
-    <section v-if="state.tripData[0]" class="container overview">
+    <section v-if="state.tripData[0]" class="container">
       <EditTripTitleDate />
       <p
         v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
@@ -108,25 +108,26 @@ export default {
 <style scoped>
 .container {
   background-color: var(--gray-accomodation);
+  min-height: 16rem;
 }
 
-h4 {
-  margin-top: 1rem;
-}
-
-.list {
-  position: relative;
-  margin-top: 2rem;
-  width: 28rem;
-}
 .list-item {
   position: relative;
 }
+
+p {
+  font-size: 2rem;
+}
+
 .arrow {
   z-index: 1;
   position: absolute;
   margin-left: 25rem;
   margin-top: 2.2rem;
+}
+
+button {
+  width: 32rem;
 }
 
 .cancel-btn {
@@ -138,8 +139,9 @@ h4 {
   color: black;
 }
 
-button {
-  width: 32rem;
+.timeline-btn {
+  color: black;
+  background-color: var(--yellow-calendar);
 }
 
 .white-box-id {
@@ -151,19 +153,10 @@ button {
   font-size: 1.3rem;
 }
 
-.overview {
-  color: black;
-  min-height: 10rem;
-  background-color: var(--gray-accomodation);
-}
-.timeline-btn {
-  color: black;
-  background-color: var(--yellow-calendar);
-}
-
 .add-options form {
   display: flex;
   flex-direction: column;
+  width: 28rem;
 }
 
 .placeholder-text {

@@ -2,7 +2,7 @@
  <CatHeader />
 
   <main class="container">
-    <h2 class="title">Transport</h2>
+    <h2>Transport</h2>
     <ul>
       <li
         class="transport-entry"
@@ -10,9 +10,9 @@
         :key="transport.id"
       >
         <h3>{{ transport.name }}</h3>
-        <ul class="list-p">
-          <li>{{ transport.zipcode }} {{ transport.city }}</li>
+        <ul class="entry-p">
           <li>{{ transport.address }}</li>
+          <li>{{ transport.zipcode }} {{ transport.city }}</li>
           <li v-if="transport.startDate">Departure: {{ transport.startDate }}</li>
           <li v-if="transport.endDate">Arrival: {{ transport.endDate }}</li>
           <br />
@@ -38,6 +38,7 @@
         </button>
       </li>
     </ul>
+    <div class="input-area">
     <InputForm
       @clickAdd="getFromChild"
       :item-name="itemName"
@@ -48,6 +49,7 @@
     <router-link :to="{ path: '/trip/' + this.$route.params.id }"
       ><button>Back to Trip</button></router-link
     >
+    </div>
   </main>
 </template>
 
@@ -85,6 +87,7 @@ export default {
     EditButton,
     CatHeader
   },
+
   methods: {
     getFromChild(data) {
       this.transportList = data
@@ -92,7 +95,6 @@ export default {
     
     async removeTransport(index) {
       this.state.tripData[0].details.transport.splice(index, 1)
-      //PUT Request with updated state.tripData 
       await this.state.updateTripState(this.$route.params.id)
     }, 
   },
@@ -107,14 +109,14 @@ export default {
 <style scoped>
 .container {
   background-color: var(--turqoise-notes);
-  min-height: 10rem;
 }
+
 h3 {
-  margin-top: 2rem;
   color: white;
   text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
 }
-.list-p {
+
+.entry-p {
   color: white;
   text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
 }

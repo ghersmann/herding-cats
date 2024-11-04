@@ -3,7 +3,7 @@
     <img class="catlogo" src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logotype" />
   </header>
   <main class="container">
-    <h2 class="title">Sign Up</h2>
+    <h2>Sign Up</h2>
 
     <form>
       <label class="required">First Name</label>
@@ -44,7 +44,7 @@
       <input type="password" v-model="confirmPassword" />
     </form>
 
-      <button @click.prevent="createAccount" class="weiterbtn">Create Account</button>
+      <button @click.prevent="createAccount">Create Account</button>
     <router-link :to="{ name: 'home' }">
         <button>Back to Start Page</button></router-link
       >

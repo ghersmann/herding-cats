@@ -2,7 +2,7 @@
   <CatHeader />
 
   <main class="container">
-    <h2 class="title">Packing List</h2>
+    <h2>Packing List</h2>
     <ul class="list">
       <li
         v-for="(item, index) of this.state.tripData[0].details.packlist"
@@ -82,25 +82,12 @@ export default {
 </script>
 
 <style scoped>
-h3 {
-  color: white;
-}
-
-.list-item p {
-  max-width: 24rem;
-  color: white;
-  margin-right: auto;
-  margin-top: 0;
-  padding: 0;
-}
-
 .container {
-  display: flex;
-  flex-direction: column;
   background-color: var(--green-packing-list);
 }
 
-.input-area {
-  margin-top: auto;
+.list-p {
+  color: white;
+  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
 }
 </style>
