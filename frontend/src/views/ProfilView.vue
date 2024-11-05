@@ -2,43 +2,37 @@
 <CatHeader />
 
   <main class="container">
-    <h2>Profile</h2>
-    <div class="profile-entry">
-      <label class="required" for="name">Name:</label>
-      <p v-if="!editing">
+      <h2 v-if="!editing">
         {{ currentGroupMember.name }}
-      </p>
+      </h2>
       <input v-else type="text" v-model="nameInput" :placeholder="currentGroupMember.name" />
-    </div>
 
-    <div class="profile-entry">
       <label for="adresse">Address:</label>
       <p v-if="!editing">
-        {{ currentGroupMember.address }}
+        {{ currentGroupMember.address || ("n/a".toString()) }}
       </p>
-      <input v-else type="text" v-model="addressInput" :placeholder="currentGroupMember.address" />
-    </div>
+      <textarea v-else v-model="addressInput" :placeholder="currentGroupMember.address" />
 
-    <div class="profile-entry">
       <label for="tele">Phone:</label>
-      <div class="row">
-        <p v-if="!editing">{{ currentGroupMember.tele }}</p>
-        <input v-else type="text" v-model="teleInput" :placeholder="currentGroupMember.tele" />
-      </div>
+        <p v-if="!editing">
+          {{ currentGroupMember.tele || ("n/a".toString()) }}
+        </p>
+        <input v-else type="number" id="tele" v-model="teleInput" :placeholder="currentGroupMember.tele" />
 
       <label v-if="state.isUserThere && editing" class="member-dates">(Please use the +49 format)</label>
-    </div>
-    <div class="profile-entry list-p">
-      <ul class="member-dates">
-        <li v-if="currentGroupMember.startDate">From: {{ currentGroupMember.startDate }}</li>
-        <li v-if="currentGroupMember.endDate">Until: {{ currentGroupMember.endDate }}</li>
+
+      <label for="participation">Participates:</label>
+      <ul id="participation">
+        <li class="member-dates">From: {{ currentGroupMember.startDate || ("n/a".toString()) }}</li>
+        <li class="member-dates">Until: {{ currentGroupMember.endDate || ("n/a".toString()) }}</li>
       </ul>
-    </div>
+
     <div class="input-area">
       <button v-if="state.isUserThere && !editing" class="edit-btn" @click="startEditing">Edit</button>
       <div class="sv-cncl-btns">
+        <button v-if="editing" class="sv-btn-green" @click="finishEditing">Save</button>
       <button v-if="editing" class="cncl" @click="cancelEditing">Cancel</button>
-      <button v-if="editing" class="sv-btn" @click="finishEditing">Save</button>
+
     </div>
       <router-link :to="{ path: '/groupmembers/' + this.$route.params.id }"
         ><button class="back-btn">Back to Group Members</button></router-link
@@ -83,6 +77,11 @@ components: {
       this.addressInput = this.currentGroupMember.address
       this.teleInput = this.currentGroupMember.tele
     },
+
+    cancelEditing() {
+      this.editing = false;
+    },
+
     async finishEditing() {
       if (this.nameInput && this.nameInput !== this.currentGroupMember.name) {
         this.currentGroupMember.name = this.nameInput
@@ -111,27 +110,6 @@ components: {
   background-color: var(--turqoise-gray-background);
 }
 
-.profile-entry {
-  margin-top: 2rem;
-}
-
-.wa {
-  width: 2rem;
-  margin-left: 1rem;
-}
-.row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-}
-
-
-
-.btns {
-  margin-top: auto;
-  margin-bottom: 0;
-}
-
 p,
 label {
   color: white;
@@ -142,7 +120,11 @@ label {
   background-color: var(--required-red);
 }
 
-.sv-btn {
-  background-color: var(--green-travel);
+.cncl {
+  background-color: var(--required-red);
+}
+
+#participation {
+  margin-top: 0.5rem;
 }
 </style>

@@ -2,7 +2,14 @@
 <CatHeader />
 
   <main id="form" class="container">
-    <h2 class="title">Group Members</h2>
+    <h2>Group Members</h2>
+    <p
+        v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
+        class="placeholder-text"
+      >
+        Click "Add new Member" to start Herding your Cats
+      </p>
+
     <ul class="list">
       <!-- Render admins that created the trip -->
       <li class="list-item" v-for="(groupMember, index) in filteredUsers" :key="index">
@@ -23,9 +30,9 @@
 
           <button v-if="state.isUserThere" class="delete-btn" @click="deleteMember(index)">x</button>
         </div>
-        <ul class="member-dates">
-          <li v-if="groupMember.startDate"><p class="list-p">From: {{ groupMember.startDate }}</p></li>
-          <li v-if="groupMember.endDate"><p class="list-p">Until: {{ groupMember.endDate }}</p></li>
+        <ul>
+          <li v-if="groupMember.startDate" class="member-dates">From: {{ groupMember.startDate }}</li>
+          <li v-if="groupMember.endDate" class="member-dates">Until: {{ groupMember.endDate }}</li>
         </ul>
       </li>
     </ul>
@@ -119,8 +126,13 @@ export default {
   background-color: var(--turqoise-gray-background);
 }
 
-.list-p {
+.list-p,
+p {
   color: white;
   text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
+}
+
+.list-item {
+  height: 4rem;
 }
 </style>

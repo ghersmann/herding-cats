@@ -1,29 +1,31 @@
 <template>
+  <div v-if="isModalOpen" class="overlay-mask" @click="closeDialog"></div>
+
   <dialog ref="add-item">
     <form method="dialog" class="addLodging">
       <div class="inputtext">
         <label class="required" for="item-name">{{ itemName }}:</label>
-        <input required id="item-name" v-model="name" :placeholder="placeholder" />
+        <input type="text" required id="item-name" v-model="name" :placeholder="placeholder" />
       </div>
       <div class="inputtext">
-        <label v-if="!isGroupMembers" for="zipcode">Zipcode:</label>
-        <input v-if="!isGroupMembers" id="zipcode" v-model="zipcode" />
-        <label v-if="!isGroupMembers" for="city">City:</label>
-        <input v-if="!isGroupMembers" id="city" v-model="city" />
-        <label v-if="!isGroupMembers" for="address">Adress:</label>
-        <input v-if="!isGroupMembers" id="address" v-model="address" />
         <label for="begin">{{ beginName }}:</label>
         <input type="datetime-local" id="begin" v-model="startDate" />
         <label for="end">{{ endName }}:</label>
         <input type="datetime-local" id="end" v-model="endDate" />
+        <label v-if="!isGroupMembers" for="address">Adress:</label>
+        <input type="text" v-if="!isGroupMembers" id="address" v-model="address" />
+        <label v-if="!isGroupMembers" for="zipcode">Zipcode:</label>
+        <input type="text" v-if="!isGroupMembers" id="zipcode" v-model="zipcode" />
+        <label v-if="!isGroupMembers" for="city">City:</label>
+        <input type="text" v-if="!isGroupMembers" id="city" v-model="city" />
         <label v-if="!isGroupMembers" for="notes">Notes:</label>
-        <input v-if="!isGroupMembers" id="notes" v-model="notes" />
+        <input type="text" v-if="!isGroupMembers" id="notes" v-model="notes" />
       </div>
-      <div v-if="isGroupMembers" class="admin">
-        <input id="set-admin" type="checkbox" v-model="isAdmin" />
+      <div v-if="isGroupMembers" class="admin-checkbox">
         <label for="set-admin">Admin</label>
+        <input id="set-admin" type="checkbox" v-model="isAdmin" />
       </div>
-      <button @click="addItem">Save</button>
+      <button @click="addItem" class="sv-btn-green">Save</button>
       <button @click="closeDialog">Cancel</button>
     </form>
   </dialog>
@@ -48,7 +50,8 @@ export default {
       endDate: '',
       notes: '',
       isAdmin: false,
-      id: 1
+      id: 1,
+      isModalOpen: false
     }
   },
 
@@ -124,10 +127,12 @@ export default {
       }
     },
     openDialog() {
-      this.$refs['add-item'].showModal()
+      this.isModalOpen = true;
+      this.$refs['add-item'].showModal();
     },
     closeDialog() {
-      this.$refs['add-item'].close()
+      this.isModalOpen = false;
+      this.$refs['add-item'].close();
     }
   },
   async created() {
@@ -138,18 +143,3 @@ export default {
   emits: ['clickAdd']
 }
 </script>
-
-<style scoped>
-.inputtext {
-  margin-bottom: 1rem;
-  display: block;
-  font-family: 'Satoshi-Variable';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 1.5rem;
-  color: #000000;
-}
-.admin input {
-  margin-right: 5px;
-}
-</style>

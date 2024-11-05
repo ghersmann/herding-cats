@@ -109,6 +109,10 @@ p {
   color: #000000;
 }
 
+.placeholder-text {
+  text-align: center;
+}
+
 /* Rendered lists */
 
 .list-p {
@@ -224,6 +228,11 @@ button:active {
   margin-left: 1rem;
 }
 
+.sv-btn-green {
+  margin-top: 2rem;
+  background-color: var(--green-travel);
+}
+
 .cncl-btn {
   margin-left: auto;
   margin-right: 0;
@@ -246,7 +255,8 @@ button:active {
 
 input[type='text'],
 input[type='email'],
-input[type='password'] {
+input[type='password'],
+input[type='number'] {
   margin: 0.7rem auto;
   font-family: 'Satoshi-Variable';
   font-style: normal;
@@ -273,7 +283,8 @@ textarea {
 input[type='text']::placeholder,
 textarea::placeholder,
 input[type='email']::placeholder,
-input[type='password']::placeholder {
+input[type='password']::placeholder,
+input[type='number'] {
   color: var(--turqoise-gray-background);
 }
 
@@ -288,7 +299,10 @@ input[type='email']:active,
 input[type='email']:hover,
 input[type='password']:focus,
 input[type='password']:active,
-input[type='password']:hover {
+input[type='password']:hover,
+input[type='number']:focus,
+input[type='number']:active,
+input[type='number']:hover {
   box-shadow: white 0px 0px 1rem;
   outline: 0.1rem solid white;
 }
@@ -306,6 +320,19 @@ input[type='datetime-local'] {
   box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
 }
 
+input[type="checkbox"] {
+  margin-left: 1rem;
+  border-radius: 0;
+  height: 2rem;
+  width: 2rem;
+}
+
+.admin-checkbox {
+  display: flex;
+  padding-top: 1rem;
+}
+
+
 
 /* Labels */
 
@@ -313,7 +340,8 @@ label {
   font-family: 'Satoshi-Variable';
   font-style: normal;
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
   color: #000000;
 }
 
@@ -328,11 +356,14 @@ label {
 }
 
 .member-dates {
-  display: block;
+  margin-top: 0;
+  padding: 0;
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 300;
   font-size: 1.1rem;
-  line-height: 1.4rem;
+  line-height: 1.5rem;
   color: white;
-  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
 }
 
 /* Overlay mask to darken background when modals and info screens are visible */
@@ -345,4 +376,8 @@ label {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 5;
+}
+
+dialog {
+  z-index: 1000;
 }

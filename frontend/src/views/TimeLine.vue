@@ -2,17 +2,18 @@
 <CatHeader />
 
   <main class="container">
-    <h2 class="title">Timeline</h2>
+    <h2>Timeline</h2>
       <div v-for="(item, index) in sortedEvents" :key="item">
-        <h3 v-if="isNewDate(item.startDate, index)" class="week">
+        <h4 v-if="isNewDate(item.startDate, index)" class="weekday">
           {{ weekNumber(item.startDate) }} {{ item.startDate.slice(0, 10) }}
-        </h3>
-        <h3 class="weekline">{{ item.category.charAt(0).toUpperCase() + item.category.slice(1) }}</h3>
-        <p class="value-name">
+        </h4>
+        <h4 class="type-of">{{ item.category.charAt(0).toUpperCase() + item.category.slice(1) }}</h4>
+        <div class="activity-item">
+        <h3>
           {{ item.name }}
-        </p>
-        <h3>{{ item.to }}</h3>
-        <p class="value-startdate">Start: {{ item.startDate.slice(13, 18) }}</p>
+        </h3>
+        <p>Start: {{ item.startDate.slice(13, 18) }}</p>
+        </div>
       </div>
 
     <router-link :to="{ path: '/trip/' + this.$route.params.id }"
@@ -29,7 +30,6 @@ export default {
     return {
       state: herdingCatsstore(),
       tripData: {},
-      allEvents: []
     }
   },
   components: {
@@ -108,40 +108,50 @@ export default {
 </script>
 
 <style scoped>
-button {
-  margin-top: auto; 
+.container {
+  background-color: var(--yellow-calendar);
 }
 
-.value-name {
-  margin: 0;
+h2 {
+  color: black;
+  text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
 }
-.value-startdate {
-  margin-top: 0.5rem;
-  margin-bottom: 3rem;
-  font-size: 1.5rem;
-}
-.week {
+
+h3 {
   text-align: left;
+  font-size: 2rem;
+  text-shadow: none;
+}
+
+p {
+  font-size: 1.5rem;
+  margin: 0rem;
+  line-height: 2rem; 
+}
+
+.activity-item {
+margin-bottom: 2rem;
+}
+
+.weekday {
+  border-bottom: 2px solid var(--green-travel);
+  text-align: left;
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
   font-weight: 350;
 }
 
-.weekline {
-  border-top: 2px solid var(--green-travel);
+.weekday:first-of-type {
+  margin-top: 0;
+}
+
+.weekday + .weekday {
+  margin-top: 5rem;
+}
+
+.type-of {
   text-align: left;
-  font-size: 2rem;
-  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-  padding-top: 0.5rem;
-  font-weight: 300;
-}
-
-.title {
-  color: black;
-  text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
-  margin-bottom: 3rem;
-}
-
-.container {
-  background-color: var(--yellow-calendar);
+  padding-top: 1rem;
 }
 </style>

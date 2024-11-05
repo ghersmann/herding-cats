@@ -54,7 +54,35 @@ export default {
     },
 
     async validation() {
-      // Validation logic here...
+      try {
+        // Make an API request to fetch the user by email
+        const response = await fetch(`${this.state.apiUrl}/users?email=${this.email}`);
+        const user = await response.json();
+        
+        if (response.ok && user) {
+          // If user is found, validate the password
+          if (user.password === this.password) {
+            // Store user in Pinia store and localStorage
+            this.state.user = user;
+            localStorage.setItem('loggedUser', JSON.stringify(user));
+            this.state.tripData = [];
+            this.state.loadUserTripData(); // Load user trip data
+            return true;
+          } else {
+            // Incorrect password
+            alert('Incorrect password.');
+            return false;
+          }
+        } else {
+          // User not found
+          alert('User not found. Please check your email.');
+          return false;
+        }
+      } catch (error) {
+        console.error('Error during login validation:', error);
+        alert('Server error. Please try again later.');
+        return false;
+      }
     },
 
     async logIn() {

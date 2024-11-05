@@ -3,6 +3,13 @@
 
   <main class="container">
     <h2>Transport</h2>
+    <p
+        v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
+        class="placeholder-text"
+      >
+        Click "Add new Transport" to start Herding your Cats
+    </p>
+
     <ul>
       <li
         class="transport-entry"
@@ -66,7 +73,7 @@ export default {
       itemName: 'Transport',
       beginName: 'Departure',
       endName: 'Arrival',
-      placeholder: 'e.g. Hauptbahnhof'
+      placeholder: 'Flight, Train, Car etc...'
     }
   },
   computed: {
@@ -116,7 +123,8 @@ h3 {
   text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
 }
 
-.entry-p {
+.entry-p,
+p {
   color: white;
   text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
 }

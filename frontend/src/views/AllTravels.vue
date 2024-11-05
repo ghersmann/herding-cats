@@ -4,15 +4,14 @@
   <main class="container">
       <h2>Hello {{ state.user.name }}!</h2>
 
-    <div class="calendar-list">
-      <ul>
+      <ul class="calendar-list">
         <li v-if="Object.values(state.user.trips).every((array) => array.length === 0)"
         class="calendar-list-item">
         <p>You currently have <br>no cats to herd.</p>
         <p>Start herding.</p>
         <img class="arrow-down" src="@/assets/arrow-white.svg" />
         </li>
-        <li class="calendar-list-item" v-for="trip in sortedEvents" :key="trip.id">
+        <li v-else class="calendar-list-item" v-for="trip in sortedEvents" :key="trip.id">
           <router-link :to="`/trip/${trip.id}`">
             <p>{{ trip.tripTitle }}</p>
             <br />
@@ -21,7 +20,6 @@
           </router-link>
         </li>
       </ul>
-    </div>
 
     <searchPublicTrips />
     <router-link :to="'/NewTrip'"
@@ -119,10 +117,6 @@ export default {
   background-color: var(--yellow-calendar);
 }
 
-.calendar-list {
-  text-align: center;
-}
-
 ul li a {
   list-style-position: inside;
   font-family: 'Satoshi-Variable';
@@ -135,6 +129,10 @@ ul li a {
 p {
   color: white;
   margin-bottom: 0;
+}
+
+.calendar-list {
+  text-align: center;
 }
 
 .calendar-list-item {

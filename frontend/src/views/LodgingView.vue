@@ -3,6 +3,12 @@
 
   <main class="container">
     <h2>Lodging</h2>
+    <p
+        v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
+        class="placeholder-text"
+      >
+        Click "Add new Lodging" to start Herding your Cats
+      </p>
     <ul>
       <li class="lodging-entry" v-for="(lodging, index) of lodgingEntries" :key="index">
         <h3>{{ lodging.name }}</h3>
@@ -60,7 +66,7 @@ export default {
     return {
       state: herdingCatsstore(),
       itemName: 'Lodging',
-      placeholder: 'e.g. Hauptbahnhof'
+      placeholder: 'Hotel, Pension, AirBnB etc...'
     }
   },
   computed: {

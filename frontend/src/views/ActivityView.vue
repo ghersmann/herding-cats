@@ -3,6 +3,12 @@
 
   <main class="container">
     <h2>Activities</h2>
+    <p
+        v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
+        class="placeholder-text"
+      >
+        Click "Add new Activity" to start Herding your Cats
+      </p>
     <ul>
       <li class="activity-entry" v-for="(activity, index) of activityEntries" :key="index">
         <h3>{{ activity.name }}</h3>
@@ -59,7 +65,7 @@ export default {
     return {
       state: herdingCatsstore(),
       itemName: 'Activity',
-      placeholder: 'e.g. Museum'
+      placeholder: 'Museum, Party, Sports etc...'
     }
   },
   components: {
