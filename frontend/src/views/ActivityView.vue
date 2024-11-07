@@ -65,6 +65,8 @@ export default {
     return {
       state: herdingCatsstore(),
       itemName: 'Activity',
+      beginName: 'Start',
+      endName: 'End',
       placeholder: 'Museum, Party, Sports etc...'
     }
   },

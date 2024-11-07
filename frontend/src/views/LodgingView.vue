@@ -66,6 +66,8 @@ export default {
     return {
       state: herdingCatsstore(),
       itemName: 'Lodging',
+      beginName: 'Arrival',
+      endName: 'Departure',
       placeholder: 'Hotel, Pension, AirBnB etc...'
     }
   },

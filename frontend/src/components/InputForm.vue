@@ -12,14 +12,14 @@
         <input type="datetime-local" id="begin" v-model="startDate" />
         <label for="end">{{ endName }}:</label>
         <input type="datetime-local" id="end" v-model="endDate" />
-        <label v-if="!isGroupMembers" for="address">Adress:</label>
-        <input type="text" v-if="!isGroupMembers" id="address" v-model="address" />
-        <label v-if="!isGroupMembers" for="zipcode">Zipcode:</label>
-        <input type="text" v-if="!isGroupMembers" id="zipcode" v-model="zipcode" />
-        <label v-if="!isGroupMembers" for="city">City:</label>
-        <input type="text" v-if="!isGroupMembers" id="city" v-model="city" />
-        <label v-if="!isGroupMembers" for="notes">Notes:</label>
-        <input type="text" v-if="!isGroupMembers" id="notes" v-model="notes" />
+        <label for="address">Adress:</label>
+        <input type="text" id="address" v-model="address" />
+        <label for="zipcode">Zipcode:</label>
+        <input type="text" id="zipcode" v-model="zipcode" />
+        <label for="city">City:</label>
+        <input type="text" id="city" v-model="city" />
+        <label for="notes">Notes:</label>
+        <input type="text" id="notes" v-model="notes" />
       </div>
       <div v-if="isGroupMembers" class="admin-checkbox">
         <label for="set-admin">Admin</label>
@@ -124,6 +124,8 @@ export default {
         this.notes = ''
         this.isAdmin = false
         this.id = 1
+
+        this.isModalOpen = false
       }
     },
     openDialog() {

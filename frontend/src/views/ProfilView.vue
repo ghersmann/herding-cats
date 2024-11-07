@@ -90,7 +90,7 @@ components: {
         this.currentGroupMember.address = this.addressInput
       }
       if (this.teleInput && this.teleInput !== this.currentGroupMember.tele) {
-        this.currentGroupMember.tele = this.teleInput
+        this.currentGroupMember.tele = this.teleInput.toString()
       }
 
       await this.state.updateTripState(this.$route.params.id)
