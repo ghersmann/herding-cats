@@ -2,7 +2,7 @@
 <CatHeader />
 
   <main class="container">
-    <h2 class="title">Create new trip</h2>
+    <h2>Create new trip</h2>
 
     <label class="required">Name your trip</label>
     <input v-model="tripName" type="text" />
@@ -12,11 +12,12 @@
 
     <label class="required">End of trip</label>
     <input v-model="tripEnd" type="datetime-local" />
-
+    <div class="input-area">
     <button class="create-btn" @click="makeTrip">Create Trip</button>
     <router-link :to="{ name: 'alltravels' }">
       <button class="cancel-btn">Cancel</button>
     </router-link>
+  </div>
   </main>
 </template>
 
@@ -111,22 +112,17 @@ export default {
 
 <style scoped>
 .container {
-  min-height: 10rem;
   background-color: var(--turqoise-notes);
 }
 
 label {
   margin-top: 2rem;
-  font-family: 'Satoshi-Variable';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 2rem;
-  color: #000000;
 }
+
 .create-btn {
-  margin-top: 4rem;
   background-color: var(--green-packing-list);
 }
+
 .cancel-btn {
   margin-top: 2rem;
 }

@@ -1,29 +1,32 @@
 <template>
+  <div v-if="isModalOpen" class="overlay-mask" @click="closeDialog"></div>
+
   <dialog ref="add-item">
     <form method="dialog" class="addLodging">
       <div class="inputtext">
         <label class="required" for="item-name">{{ itemName }}:</label>
-        <input required id="item-name" v-model="name" :placeholder="placeholder" />
+        <input type="text" required id="item-name" v-model="name" :placeholder="placeholder" />
       </div>
       <div class="inputtext">
-        <label v-if="!isGroupMembers" for="zipcode">Zipcode:</label>
-        <input v-if="!isGroupMembers" id="zipcode" v-model="zipcode" />
-        <label v-if="!isGroupMembers" for="city">City:</label>
-        <input v-if="!isGroupMembers" id="city" v-model="city" />
-        <label v-if="!isGroupMembers" for="address">Adress:</label>
-        <input v-if="!isGroupMembers" id="address" v-model="address" />
         <label for="begin">{{ beginName }}:</label>
         <input type="datetime-local" id="begin" v-model="startDate" />
         <label for="end">{{ endName }}:</label>
         <input type="datetime-local" id="end" v-model="endDate" />
-        <label v-if="!isGroupMembers" for="notes">Notes:</label>
-        <input v-if="!isGroupMembers" id="notes" v-model="notes" />
+        <label for="address">Adress:</label>
+        <input type="text" id="address" v-model="address" />
+        <label for="zipcode">Zipcode:</label>
+        <input type="text" id="zipcode" v-model="zipcode" />
+        <label for="city">City:</label>
+        <input type="text" id="city" v-model="city" />
+        <label for="notes">Notes:</label>
+        <input type="text" id="notes" v-model="notes" />
       </div>
       <div v-if="isGroupMembers" class="admin">
-        <input id="set-admin" type="checkbox" v-model="isAdmin" />
         <label for="set-admin">Admin</label>
+        <input id="set-admin" type="checkbox" v-model="isAdmin" />
       </div>
-      <button @click="editItem">Save</button>
+    
+      <button @click="editItem" class="sv-btn-green">Save</button>
       <button @click="closeDialog">Cancel</button>
     </form>
   </dialog>
@@ -50,7 +53,8 @@ export default {
         endDate: this.endDateValue,
         notes: this.notesValue,
         isAdmin: this.isAdminValue,
-        id: this.idValue
+        id: this.idValue,
+        isModalOpen: false 
     }
   },
 
@@ -137,8 +141,6 @@ export default {
   this.currenEntry.notes = this.notes;
   this.currenEntry.isAdmin = this.isAdmin; // If applicable
 
-  console.log('Edit button this.state.tripData', this.state.tripData)
-
   // Update the tripData state and send the updated entry to the API
   try {
     await this.state.updateTripState(this.$route.params.id);
@@ -150,6 +152,7 @@ export default {
 
 
     openDialog() {
+      this.isModalOpen = true
       this.$refs['add-item'].showModal()
       if (this.startDateValue) {
         this.startDate = this.reconvertDate(this.startDateValue)
@@ -160,6 +163,7 @@ export default {
     },
 
     closeDialog() {
+      this.isModalOpen = false
       this.$refs['add-item'].close()
     }
   },
@@ -180,20 +184,3 @@ export default {
   emits: ['clickAdd']
 }
 </script>
-
-
-<style>
-.inputtext {
-  margin-bottom: 1rem;
-  display: block;
-  font-family: 'Satoshi-Variable';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 1.5rem;
-  color: #000000;
-}
-
-.admin input {
-  margin-right: 5px;
-}
-</style>

@@ -86,9 +86,6 @@ export default {
 </script>
 
 <style scoped>
-.trip-title {
-  margin-bottom: 2rem;
-}
 h4 {
   margin-top: 1rem;
 }
@@ -96,7 +93,9 @@ h4 {
 .cancel-btn {
   background-color: var(--required-red);
 }
+
 .edit-trip {
   cursor: pointer;
+  margin-bottom: 1rem;
 }
 </style>

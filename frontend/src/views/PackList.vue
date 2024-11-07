@@ -3,6 +3,12 @@
 
   <main class="container">
     <h2>Packing List</h2>
+    <p
+        v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
+        class="placeholder-text"
+      >
+       It's empty.
+    </p>
     <ul class="list">
       <li
         v-for="(item, index) of this.state.tripData[0].details.packlist"
@@ -86,7 +92,8 @@ export default {
   background-color: var(--green-packing-list);
 }
 
-.list-p {
+.list-p,
+p {
   color: white;
   text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
 }

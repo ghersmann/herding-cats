@@ -1,4 +1,6 @@
 <template>
+  <div v-if="isModalOpen" class="overlay-mask" @click="closeDialog"></div>
+
     <CatHeader />
 
   <main>
@@ -42,7 +44,7 @@
           <router-link :to="{ path: '/notes/' + this.$route.params.id }"
             ><button>Notes</button></router-link
           >
-          <button class="cancel-btn">Cancel</button>
+          <button class="cancel-btn" @click="closeDialog">Cancel</button>
         </form>
       </dialog>
       <router-link :to="{ path: '/timeline/' + this.$route.params.id }">
@@ -72,6 +74,7 @@ export default {
   data() {
     return {
       state: herdingCatsstore(),
+      isModalOpen: false 
     }
   },
   components: {
@@ -89,13 +92,18 @@ export default {
   },
   methods: {
     openOptions() {
+      this.isModalOpen = true
       this.$refs['add-options'].showModal()
+    },
+    closeDialog(){
+      this.isModalOpen = false
     },
 
     async copyId() {
       await navigator.clipboard.writeText(this.$route.params.id)
     },
   },
+
   async created() {
     await this.state.checkUser()
     await this.state.loadTripData(this.$route.params.id);
@@ -135,8 +143,8 @@ button {
 }
 
 .back-btn {
-  background-color: var(--pink-background);
   color: black;
+  background-color: var(--pink-background);
 }
 
 .timeline-btn {
@@ -157,9 +165,5 @@ button {
   display: flex;
   flex-direction: column;
   width: 28rem;
-}
-
-.placeholder-text {
-  text-align: center;
 }
 </style>
