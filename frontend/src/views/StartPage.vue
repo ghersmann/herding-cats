@@ -1,4 +1,5 @@
 <template>
+    <div v-if="isModalOpen" class="overlay-mask" @click="closeDialog"></div>
   <header>
     <img src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logotype" />
   </header>
@@ -23,6 +24,29 @@
         </button>
       </form>
     </div>
+     <dialog class="info-box" ref="test-info">
+      <h2>
+        Welcome to<br>
+        Herding Cats
+      </h2>
+      <p>
+        To test the app:  
+      </p>
+      <p>
+        Type in Trip ID: "12345" and press Go to Trip.
+      </p>
+      <p>
+        Test user:
+      </p>
+      <p>
+        Login: john@doe.de<br>
+        Password: john1234
+      </p>
+      <button class="cancel-btn" @click="closeDialog">Got it</button>
+    </dialog>
+    <section>
+     <button class="help-btn" @click="openDialog">Help</button>
+    </section>
   </main>
 </template>
 
@@ -31,13 +55,28 @@ import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
     return {
+      state: herdingCatsstore(),
       tripId: '',
       disableGoBtn: true,
-      state: herdingCatsstore()
+      isModalOpen: false 
     }
   },
 
   methods: {
+    openDialog() {
+      this.isModalOpen = true;
+      if (this.$refs['test-info']) {
+        this.$refs['test-info'].showModal();
+      }
+    },
+
+    closeDialog() {
+      this.isModalOpen = false;
+      if (this.$refs['test-info']) {
+        this.$refs['test-info'].close();
+      }
+    },
+
     checkInputLength() {
       this.disableGoBtn = this.tripId.trim().length <= 3
     },
@@ -96,5 +135,18 @@ input[type='text'] {
   flex-direction: column;
   justify-content: flex-start;
   height: 50vh;
+}
+
+.help-btn {
+  background-color: var(--green-packing-list);
+}
+
+.info-box {
+  width: 30rem;
+  padding: 2rem;
+}
+
+.info-box h2 {
+  color: black;
 }
 </style>
