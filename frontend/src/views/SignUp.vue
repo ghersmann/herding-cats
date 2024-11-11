@@ -1,4 +1,5 @@
 <template>
+  <div v-if="isModalOpen" class="overlay-mask" @click="closeDialog"></div>
   <header>
     <img class="catlogo" src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logotype" />
   </header>
@@ -44,7 +45,20 @@
       <input type="password" v-model="confirmPassword" />
     </form>
 
-      <button @click.prevent="createAccount">Create Account</button>
+    <dialog class="info-box" ref="signup-warning">
+      <h3>
+        Sign up is currently disabled.
+      </h3>
+      <p>
+        This is happening while I develop a more secure password management system.  
+      </p>
+      <p>
+        Sorry for the inconvenience.
+      </p>
+      <button class="cancel-btn" @click="closeDialog">Got it</button>
+    </dialog>
+
+      <button @click.prevent="openDialog">Create Account</button>
     <router-link :to="{ name: 'home' }">
         <button>Back to Start Page</button></router-link
       >
@@ -65,11 +79,32 @@ export default {
       phone: '',
       password: '',
       confirmPassword: '',
-      userId: ''
+      userId: '',
+      isModalOpen: true
+    }
+  },
+
+  mounted() {
+    if (this.$refs['signup-warning']) {
+      this.$refs['signup-warning'].showModal();
     }
   },
 
   methods: {
+    openDialog() {
+      this.isModalOpen = true;
+      if (this.$refs['signup-warning']) {
+        this.$refs['signup-warning'].showModal();
+      }
+    },
+
+    closeDialog() {
+      this.isModalOpen = false;
+      if (this.$refs['signup-warning']) {
+        this.$refs['signup-warning'].close();
+      }
+    },
+
     validation() {
       if (
         this.firstname === '' ||
@@ -97,12 +132,11 @@ export default {
     - min. 1 digit`)
         return
       } else {
-        console.log('Validation ok')
         this.userId = (Date.now() + Math.floor(Math.random() * 10)).toString()
-        this.sendData()
+        //this.sendData()
       }
     },
-    async sendData() {
+    /* async sendData() {
       const requestData = {
         id: this.userId,
         name: `${this.firstname} ${this.lastname}`,
@@ -138,7 +172,7 @@ export default {
         router.push('/')
         alert('Server Error. Failed to create user. Sorry.')
       }
-    }
+    } */
   }
 }
 </script>
@@ -156,6 +190,11 @@ header {
 h2 {
   color: black;
   text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
+}
+
+.info-box {
+  width: 30rem;
+  padding: 2rem;
 }
 
 .info-icon {
