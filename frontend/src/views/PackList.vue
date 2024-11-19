@@ -4,19 +4,23 @@
   <main class="container">
     <h2>Packing List</h2>
     <p
-        v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
-        class="placeholder-text"
-      >
-       It's empty.
+      v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
+      class="placeholder-text"
+    >
+      It's empty.
     </p>
     <ul class="list">
       <li
-        v-for="(item, index) of this.state.tripData[0].details.packlist"
+        v-for="(item, index) in state.tripData[0].details.packlist"
         :key="index"
         class="list-item"
       >
-        <p class="list-p">{{ item }}</p>
-        <button v-if="state.isUserThere" class="delete-btn" @click="removePackItem(index)">x</button>
+        <!-- Use EditableNote Component -->
+        <EditableNote
+          :noteText="item"
+          @update-note="updatePackItem(index, $event)"
+          @delete-note="removePackItem(index)"
+        />
       </li>
     </ul>
     <div class="input-area">
@@ -36,56 +40,59 @@
       >
         Add Item
       </button>
-      <router-link :to="{ path: '/trip/' + this.$route.params.id }"
-        ><button>Back to Trip</button></router-link
-      >
+      <router-link :to="{ path: '/trip/' + this.$route.params.id }">
+        <button>Back to Trip</button>
+      </router-link>
     </div>
   </main>
 </template>
 
+
 <script>
-import { herdingCatsstore } from '@/stores/counter.js'
+import { herdingCatsstore } from '@/stores/counter.js';
 import CatHeader from '@/components/CatHeader.vue';
+import EditableNote from '@/components/EditableNote.vue';
+
 export default {
   data() {
     return {
       state: herdingCatsstore(),
       newDetails: ''
-    }
+    };
   },
   components: {
-    CatHeader
+    CatHeader,
+    EditableNote
   },
   computed: {
     checkInput() {
-      if (this.newDetails.trim().length >= 1) {
-        return false
-      } else {
-        return true
-      }
+      return this.newDetails.trim().length < 1;
     }
   },
   methods: {
     async addItem() {
       if (this.newDetails.trim() !== '') {
-        this.state.tripData[0].details.packlist.push(this.newDetails.trim())
-        this.newDetails = ''
+        this.state.tripData[0].details.packlist.push(this.newDetails.trim());
+        this.newDetails = '';
       }
-      await this.state.updateTripState(this.$route.params.id)
+      await this.state.updateTripState(this.$route.params.id);
     },
-
-    removePackItem(index) {
-      this.state.tripData[0].details.packlist.splice(index, 1)
-      this.state.updateTripState(this.$route.params.id)
+    updatePackItem(index, newText) {
+      this.state.tripData[0].details.packlist[index] = newText;
+      this.state.updateTripState(this.$route.params.id);
     },
+    async removePackItem(index) {
+      this.state.tripData[0].details.packlist.splice(index, 1);
+      await this.state.updateTripState(this.$route.params.id);
+    }
   },
-
-  async created() { 
-    await this.state.checkUser()
-    await this.state.loadTripData(this.$route.params.id)
+  async created() {
+    await this.state.checkUser();
+    await this.state.loadTripData(this.$route.params.id);
   }
-}
+};
 </script>
+
 
 <style scoped>
 .container {
