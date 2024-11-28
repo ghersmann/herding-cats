@@ -15,12 +15,21 @@
         :key="index"
         class="list-item"
       >
-        <!-- Use EditableNote Component -->
-        <EditableNote
+        <!-- Use RenderEditNotes Component with Scoped Slot -->
+        <RenderEditNotes
           :noteText="item"
           @update-note="updatePackItem(index, $event)"
           @delete-note="removePackItem(index)"
-        />
+        >
+          <template #note="{ text, startEditing }">
+            <p
+              class="render-list-p"
+              @click="startEditing"
+            >
+              {{ text }}
+            </p>
+          </template>
+        </RenderEditNotes>
       </li>
     </ul>
     <div class="input-area">
@@ -47,27 +56,26 @@
   </main>
 </template>
 
-
 <script>
 import { herdingCatsstore } from '@/stores/counter.js';
 import CatHeader from '@/components/CatHeader.vue';
-import EditableNote from '@/components/EditableNote.vue';
+import RenderEditNotes from '@/components/RenderEditNotes.vue';
 
 export default {
   data() {
     return {
       state: herdingCatsstore(),
-      newDetails: ''
+      newDetails: '',
     };
   },
   components: {
     CatHeader,
-    EditableNote
+    RenderEditNotes,
   },
   computed: {
     checkInput() {
       return this.newDetails.trim().length < 1;
-    }
+    },
   },
   methods: {
     async addItem() {
@@ -84,24 +92,22 @@ export default {
     async removePackItem(index) {
       this.state.tripData[0].details.packlist.splice(index, 1);
       await this.state.updateTripState(this.$route.params.id);
-    }
+    },
   },
   async created() {
     await this.state.checkUser();
     await this.state.loadTripData(this.$route.params.id);
-  }
+  },
 };
 </script>
-
 
 <style scoped>
 .container {
   background-color: var(--green-packing-list);
 }
 
-.list-p,
-p {
-  color: white;
-  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
+.render-list-p {
+  color: white; 
+  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25)
 }
 </style>

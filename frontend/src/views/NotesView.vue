@@ -5,16 +5,22 @@
     <h2 class="title">Notes</h2>
     <ul class="list">
       <li
-        v-for="(item, index) in state.tripData[0].details.notes"
+        v-for="(item, index) in state.tripData[0]?.details?.notes || []"
         :key="index"
         class="list-item"
       >
-        <!-- Use EditableNote Component -->
-        <EditableNote
+        <!-- RenderEditNotes with custom slot -->
+        <RenderEditNotes
           :noteText="item"
           @update-note="updateNote(index, $event)"
           @delete-note="removeNote(index)"
-        />
+        >
+          <template #note="{ text, startEditing }">
+            <p class="render-list-p" @click="startEditing">
+              {{ text }}
+            </p>
+          </template>
+        </RenderEditNotes>
       </li>
     </ul>
 
@@ -25,7 +31,7 @@
         id="note-input"
         name="note-input"
         placeholder="Take notes for your trip..."
-        @keydown.enter="addNote"
+        @keydown.enter.prevent="addNote"
       ></textarea>
       <button
         v-if="state.isUserThere"
@@ -46,45 +52,49 @@
 <script>
 import { herdingCatsstore } from '@/stores/counter.js';
 import CatHeader from '@/components/CatHeader.vue';
-import EditableNote from '@/components/EditableNote.vue';
+import RenderEditNotes from '@/components/RenderEditNotes.vue';
 
 export default {
   data() {
     return {
       state: herdingCatsstore(),
-      newNotes: ''
+      newNotes: '',
     };
   },
   components: {
     CatHeader,
-    EditableNote
+    RenderEditNotes,
   },
   computed: {
     checkInput() {
       return this.newNotes.trim().length < 1;
-    }
+    },
   },
   methods: {
     async addNote() {
       if (this.newNotes.trim() !== '') {
-        this.state.tripData[0].details.notes.push(this.newNotes.trim());
+        this.state.tripData[0]?.details?.notes.push(this.newNotes.trim());
         this.newNotes = '';
       }
       await this.state.updateTripState(this.$route.params.id);
     },
     updateNote(index, newText) {
-      this.state.tripData[0].details.notes[index] = newText;
-      this.state.updateTripState(this.$route.params.id);
+      if (this.state.tripData[0]?.details?.notes) {
+        this.state.tripData[0].details.notes[index] = newText;
+        this.state.updateTripState(this.$route.params.id);
+      }
     },
     async removeNote(index) {
-      this.state.tripData[0].details.notes.splice(index, 1);
-      await this.state.updateTripState(this.$route.params.id);
-    }
+      if (this.state.tripData[0]?.details?.notes) {
+        this.state.tripData[0].details.notes.splice(index, 1);
+        await this.state.updateTripState(this.$route.params.id);
+      }
+    },
   },
   async created() {
     await this.state.checkUser();
     await this.state.loadTripData(this.$route.params.id);
-  }
+  },
 };
 </script>
 

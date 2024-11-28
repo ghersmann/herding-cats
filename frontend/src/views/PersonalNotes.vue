@@ -5,21 +5,37 @@
     <h2>Personal Notes</h2>
 
     <ul class="list">
+      <!-- Placeholder text when no notes exist -->
       <li v-if="!state.user.notes.length" class="list-item">
         <div class="note-box">
           <p class="list-p">{{ placeholderText }}</p>
         </div>
       </li>
 
-      <li v-for="(note, index) in state.user.notes" :key="index" class="list-item">
-        <EditableNote
+      <!-- Iterate through notes and render editable notes -->
+      <li
+        v-for="(note, index) in state.user.notes"
+        :key="index"
+        class="list-item"
+      >
+        <RenderEditNotes
           :noteText="note"
           @update-note="updateNote(index, $event)"
           @delete-note="deleteNote(index)"
-        />
+        >
+          <template #note="{ text, startEditing }">
+            <p
+              class="render-list-p"
+              @click="startEditing"
+            >
+              {{ text }}
+            </p>
+          </template>
+        </RenderEditNotes>
       </li>
     </ul>
 
+    <!-- Input area for adding a new note -->
     <div v-if="state.isUserThere" class="input-area">
       <textarea
         class="input-text-area"
@@ -46,7 +62,7 @@
 <script>
 import { herdingCatsstore } from '@/stores/counter.js';
 import CatHeader from '@/components/CatHeader.vue';
-import EditableNote from '@/components/EditableNote.vue';
+import RenderEditNotes from '@/components/RenderEditNotes.vue';
 
 export default {
   data() {
@@ -58,7 +74,7 @@ export default {
   },
   components: {
     CatHeader,
-    EditableNote
+    RenderEditNotes
   },
   computed: {
     checkInput() {
@@ -75,9 +91,11 @@ export default {
       await this.state.updateUserState(this.state.user.id);
     },
     async addNote() {
-      this.state.user.notes.push(this.newDetails.trim());
-      await this.state.updateUserState(this.state.user.id);
-      this.newDetails = '';
+      if (this.newDetails.trim() !== '') {
+        this.state.user.notes.push(this.newDetails.trim());
+        await this.state.updateUserState(this.state.user.id);
+        this.newDetails = '';
+      }
     }
   },
   async created() {
@@ -106,43 +124,19 @@ h2 {
   width: 23rem;
 }
 
- .note-box {
+.note-box {
   padding: 1.4rem;
   background: linear-gradient(150deg, #efec88 0%, #fefabc 100%);
   box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
   width: 28rem;
 }
-/*
-.note-box--editing {
-  box-shadow: white 0px 0px 1rem;
-}
-
-.edit-note {
-  background: rgb(0 0 0 / 0%);
-  box-sizing: inherit;
-  margin: 0;
-  padding: 0;
-  border: none;
-  width: 100%;
-  height: auto;
-  overflow-y: auto;
-  box-shadow: none;
-}
-
-.edit-note:hover,
-.edit-note:active,
-.edit-note:focus {
-  box-shadow: none;
-  outline: none;
-}
-
-.delete-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-} */
 
 .add-note {
   background-color: var(--green-packing-list);
+}
+
+.render-list-p {
+  color: white; 
+  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25)
 }
 </style>
