@@ -1,16 +1,33 @@
 <template>
-<CatHeader />
+  <CatHeader />
 
   <main class="container">
     <h2 class="title">Notes</h2>
     <ul class="list">
       <li
-        v-for="(item, index) of this.state.tripData[0].details.notes"
+        v-for="(note, index) in state.tripData[0].details.notes || []"
         :key="index"
         class="list-item"
       >
-        <p class="list-p">{{ item }}</p>
-        <button v-if="state.isUserThere" class="delete-btn" @click="removeNote(index)">x</button>
+        <!-- RenderEditNotes with custom slot -->
+        <RenderEditNotes
+  :noteText="note"
+  customEditClass="custom-edit-area"
+  @update-note="updateNote(index, $event)"
+  @delete-note="removeNote(index)"
+>
+  <template #note="{ text, startEditing }">
+    <p
+      class="render-list-p"
+      @click="startEditing"
+    >
+      {{ text }}
+    </p>
+  </template>
+</RenderEditNotes>
+
+
+
       </li>
     </ul>
 
@@ -21,7 +38,7 @@
         id="note-input"
         name="note-input"
         placeholder="Take notes for your trip..."
-        @keydown.enter="addNote"
+        @keydown.enter.prevent="addNote"
       ></textarea>
       <button
         v-if="state.isUserThere"
@@ -32,58 +49,60 @@
         Add Note
       </button>
 
-      <router-link :to="{ path: '/trip/' + this.$route.params.id }"
-        ><button>Back to Trip</button></router-link
-      >
+      <router-link :to="{ path: '/trip/' + this.$route.params.id }">
+        <button>Back to Trip</button>
+      </router-link>
     </form>
   </main>
 </template>
 
 <script>
-import { herdingCatsstore } from '@/stores/counter.js'
+import { herdingCatsstore } from '@/stores/counter.js';
 import CatHeader from '@/components/CatHeader.vue';
+import RenderEditNotes from '@/components/RenderEditNotes.vue';
+
 export default {
   data() {
     return {
       state: herdingCatsstore(),
-      newNotes: ''
-    }
+      newNotes: '',
+    };
   },
-  
   components: {
-    CatHeader
+    CatHeader,
+    RenderEditNotes,
   },
-
   computed: {
     checkInput() {
-      if (this.newNotes.trim().length >= 1) {
-        return false
-      } else {
-        return true
-      }
-    }
+      return this.newNotes.trim().length < 1;
+    },
   },
-
   methods: {
     async addNote() {
       if (this.newNotes.trim() !== '') {
-        this.state.tripData[0].details.notes.push(this.newNotes.trim())
-        this.newNotes = ''
+        this.state.tripData[0]?.details?.notes.push(this.newNotes.trim());
+        this.newNotes = '';
       }
-      await this.state.updateTripState(this.$route.params.id)
+      await this.state.updateTripState(this.$route.params.id);
     },
-
+    updateNote(index, newText) {
+      if (this.state.tripData[0]?.details?.notes) {
+        this.state.tripData[0].details.notes[index] = newText;
+        this.state.updateTripState(this.$route.params.id);
+      }
+    },
     async removeNote(index) {
-      this.state.tripData[0].details.notes.splice(index, 1)
-      await this.state.updateTripState(this.$route.params.id)
+      if (this.state.tripData[0]?.details?.notes) {
+        this.state.tripData[0].details.notes.splice(index, 1);
+        await this.state.updateTripState(this.$route.params.id);
+      }
     },
   },
-
   async created() {
-    await this.state.checkUser()
-    await this.state.loadTripData(this.$route.params.id)
-  }
-}
+    await this.state.checkUser();
+    await this.state.loadTripData(this.$route.params.id);
+  },
+};
 </script>
 
 <style scoped>
@@ -117,7 +136,13 @@ h2 {
   width: 26rem;
 }
 
-.list-p {
+.render-list-p {
   width: 23rem;
+}
+</style>
+
+<style>
+.custom-edit-area {
+  width: 26rem;
 }
 </style>
