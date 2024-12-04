@@ -5,22 +5,29 @@
     <h2 class="title">Notes</h2>
     <ul class="list">
       <li
-        v-for="(item, index) in state.tripData[0]?.details?.notes || []"
+        v-for="(note, index) in state.tripData[0].details.notes || []"
         :key="index"
         class="list-item"
       >
         <!-- RenderEditNotes with custom slot -->
         <RenderEditNotes
-          :noteText="item"
-          @update-note="updateNote(index, $event)"
-          @delete-note="removeNote(index)"
-        >
-          <template #note="{ text, startEditing }">
-            <p class="render-list-p" @click="startEditing">
-              {{ text }}
-            </p>
-          </template>
-        </RenderEditNotes>
+  :noteText="note"
+  customEditClass="custom-edit-area"
+  @update-note="updateNote(index, $event)"
+  @delete-note="removeNote(index)"
+>
+  <template #note="{ text, startEditing }">
+    <p
+      class="render-list-p"
+      @click="startEditing"
+    >
+      {{ text }}
+    </p>
+  </template>
+</RenderEditNotes>
+
+
+
       </li>
     </ul>
 
@@ -129,7 +136,13 @@ h2 {
   width: 26rem;
 }
 
-.list-p {
+.render-list-p {
   width: 23rem;
+}
+</style>
+
+<style>
+.custom-edit-area {
+  width: 26rem;
 }
 </style>

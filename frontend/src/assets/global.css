@@ -115,8 +115,9 @@ p {
 
 /* Rendered lists */
 
-.list-p {
-  inline-size: 25rem;
+.list-p,
+.render-list-p {
+  inline-size: 24rem;
   overflow-wrap: break-word; 
   hyphens: manual;
 }
@@ -126,6 +127,7 @@ p {
   align-items: baseline;
   justify-content: space-between;
   width: 28rem;
+  position: relative;
 }
 
 .transport-entry,
@@ -240,10 +242,9 @@ button:active {
 }
 
 .dual-btns {
-  background-color: aqua;
   display: flex;
   justify-content: space-between;
-  width: 28rem;
+  /* width: 28rem; */
 }
 
 /* Input forms */

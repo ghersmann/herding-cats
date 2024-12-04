@@ -8,7 +8,7 @@
       <!-- Placeholder text when no notes exist -->
       <li v-if="!state.user.notes.length" class="list-item">
         <div class="note-box">
-          <p class="list-p">{{ placeholderText }}</p>
+          <p class="render-list-p">{{ placeholderText }}</p>
         </div>
       </li>
 

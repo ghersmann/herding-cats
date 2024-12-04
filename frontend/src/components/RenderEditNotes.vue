@@ -1,21 +1,37 @@
 <template>
-  <div :class="{ 'note-box--editing': isEditing }">
-    <!-- Use a slot for rendering the note text -->
-    <slot name="note" :text="editableNoteText" :start-editing="startEditing">
-      <p v-if="!isEditing" @click="startEditing" class="render-list-p">{{ noteText }}</p>
-    </slot>
+  <div :class="{ 'note-box--editing': isEditing }" class="list-item">
+    <!-- Show the note text only if not editing -->
+    <div v-if="!isEditing">
+      <slot name="note" :text="editableNoteText" :start-editing="startEditing">
+        <p @click="startEditing" class="render-list-p">
+          {{ noteText }}
+        </p>
+      </slot>
+    </div>
 
-    <!-- Display textarea in edit mode -->
-    <div v-if="isEditing">
-      <textarea
-        v-model="editableNoteText"
-        ref="textarea"
-        @keyup="adjustTextarea"
-      ></textarea>
-      <div>
-        <button @click="cancelEditing">Cancel</button>
-        <button @click="finishEditing">Save</button>
-      </div>
+    <!-- Show the textarea only when editing -->
+    <div
+      v-else
+      class="edit-mode"
+      :class="[customEditClass]"
+    >
+      <slot
+        name="edit"
+        :text="editableNoteText"
+        :set-text="setEditableNoteText"
+        :cancel-editing="cancelEditing"
+        :finish-editing="finishEditing"
+      >
+        <textarea
+          v-model="editableNoteText"
+          ref="textarea"
+          @keyup="adjustTextarea"
+        ></textarea>
+        <div class="dual-btns">
+          <button @click="cancelEditing" class="cncl-btn">Cancel</button>
+          <button @click="finishEditing" class="save-btn">Save</button>
+        </div>
+      </slot>
     </div>
 
     <!-- Delete button -->
@@ -30,6 +46,10 @@ export default {
       type: String,
       required: true,
     },
+    customEditClass: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -38,6 +58,9 @@ export default {
     };
   },
   methods: {
+    setEditableNoteText(newText) {
+      this.editableNoteText = newText;
+    },
     startEditing() {
       this.isEditing = true;
       this.$nextTick(this.adjustTextarea);
@@ -63,3 +86,32 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+.delete-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.save-btn,
+.cncl-btn {
+  font-size: 1.2rem;
+  width: fit-content;
+  height: 2.2rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.cncl-btn {
+  margin-left: auto;
+  margin-right: 0;
+  background-color: var(--required-red);
+}
+
+.dual-btns {
+  display: flex;
+  justify-content: space-between;
+}
+</style>
