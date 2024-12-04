@@ -16,10 +16,11 @@
       <li
         v-for="(note, index) in state.user.notes"
         :key="index"
-        class="list-item"
+        class="list-item note-box"
       >
         <RenderEditNotes
           :noteText="note"
+            customEditClass="custom-edit-area"
           @update-note="updateNote(index, $event)"
           @delete-note="deleteNote(index)"
         >
@@ -118,14 +119,8 @@ h2 {
   margin-top: 1rem;
 }
 
-.list-p {
-  margin: 0;
-  font-size: 1.5rem;
-  width: 23rem;
-}
-
 .note-box {
-  padding: 1.4rem;
+  padding: 1rem;
   background: linear-gradient(150deg, #efec88 0%, #fefabc 100%);
   box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
   width: 28rem;
@@ -134,9 +129,10 @@ h2 {
 .add-note {
   background-color: var(--green-packing-list);
 }
+</style>
 
-.render-list-p {
-  color: white; 
-  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25)
+<style>
+.custom-edit-area {
+  width: 26rem;
 }
 </style>
