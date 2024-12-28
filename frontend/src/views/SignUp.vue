@@ -22,24 +22,25 @@
       <label>Phone</label>
       <input type="text" v-model="phone" />
 
-      <div class="info">
-        <label class="required pw">
-          Password
-          <div class="infoIcondiv">
-            <span class="info-icon">&#9432;</span>
-            <span class="info-list">
-              <p>Password must contain:</p>
-              <ul>
-                <li>min. 8 characters</li>
-                <li>min. 1 uppercase letter</li>
-                <li>min. 1 lowercase letter</li>
-                <li>min. 1 digit</li>
-              </ul>
-            </span>
-          </div>
-        </label>
+      <div class="pw-flex">
+  <label for="pw" class="required">Password</label>
+  <span class="info-icon" @click="toggleInfo">&#9432;</span>
+  <div v-show="showInfo" class="overlay-mask" @click="toggleInfo"></div>
+  <div class="infoIcondiv">
+    <span class="info-list" v-show="showInfo">
+      <p>Password must contain:</p>
+      <ul class="info-p">
+        <li>min. 8 characters</li>
+        <li>min. 1 uppercase letter</li>
+        <li>min. 1 lowercase letter</li>
+        <li>min. 1 digit</li>
+      </ul>
+      <button class="delete-btn" @click.prevent="toggleInfo">x</button>
+    </span>
+  </div>
+</div>
         <input type="password" v-model="password" />
-      </div>
+
 
       <label class="required">Confirm Password</label>
       <input type="password" v-model="confirmPassword" />
@@ -55,7 +56,7 @@
       <p>
         Sorry for the inconvenience.
       </p>
-      <button class="cancel-btn" @click="closeDialog">Got it</button>
+      <button @click="closeDialog">Got it</button>
     </dialog>
 
       <button @click.prevent="openDialog">Create Account</button>
@@ -80,7 +81,8 @@ export default {
       password: '',
       confirmPassword: '',
       userId: '',
-      isModalOpen: true
+      isModalOpen: true,
+      showInfo: false
     }
   },
 
@@ -91,6 +93,10 @@ export default {
   },
 
   methods: {
+    toggleInfo() {
+      this.showInfo = !this.showInfo; // Toggle visibility on click
+    },
+
     openDialog() {
       this.isModalOpen = true;
       if (this.$refs['signup-warning']) {
@@ -178,6 +184,10 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  background-color: var(--pink-activities);
+}
+
 header {
   margin: 1rem auto;
   width: 32rem;
@@ -189,62 +199,9 @@ header {
 
 h2 {
   color: black;
-  text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
-}
-
-.info-box {
-  width: 30rem;
-  padding: 2rem;
-}
-
-.info-icon {
-  cursor: pointer;
-  font-size: large;
-}
-
-.info-list {
-  position: absolute;
-  visibility: hidden;
-  left: 0;
-  background-color: #fff;
-  color: black;
-  text-align: left;
-  border: 1px solid var(--dark-button-blue);
-  padding: 1rem;
-  width: 26rem;
-  height: 15rem;
-  margin: 0;
-}
-
-.info-list ul li {
-  font-family: 'Satoshi-Variable';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 1.5rem;
-  padding-left: 20px;
-  text-indent: -20px;
-}
-
-.infoIcondiv {
-  position: absolute;
-  top: 50%;
-  right: -20px;
-  transform: translateY(-50%);
 }
 
 .pw {
   position: relative;
-}
-
-.infoIcondiv:hover .info-list {
-  visibility: visible;
-}
-
-.row {
-  display: inline;
-}
-
-.container {
-  background-color: var(--pink-activities);
 }
 </style>

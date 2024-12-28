@@ -153,12 +153,14 @@ button {
 }
 
 .white-box-id {
-  padding: 1rem;
+  padding: 1.4rem;
   color: black;
   background-color: white;
   margin-bottom: 0;
   margin-top: 2rem;
   font-size: 1.3rem;
+  border-radius: 1rem;
+  height: 4rem;
 }
 
 .add-options form {

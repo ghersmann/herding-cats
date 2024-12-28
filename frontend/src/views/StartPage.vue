@@ -45,7 +45,7 @@
       <button class="cancel-btn" @click="closeDialog">Got it</button>
     </dialog>
     <section>
-     <button class="help-btn" @click="openDialog">Help</button>
+     <button @click="openDialog">Help</button>
     </section>
   </main>
 </template>
@@ -123,7 +123,6 @@ h3 {
   margin-top: 2rem;
   color: white;
   font-weight: 400;
-  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
 }
 
 input[type='text'] {
@@ -135,15 +134,6 @@ input[type='text'] {
   flex-direction: column;
   justify-content: flex-start;
   height: 50vh;
-}
-
-.help-btn {
-  background-color: var(--green-packing-list);
-}
-
-.info-box {
-  width: 30rem;
-  padding: 2rem;
 }
 
 .info-box h2 {
