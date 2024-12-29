@@ -1,7 +1,7 @@
 <template>
-  <div v-if="isModalOpen" class="overlay-mask" @click="closeDialog"></div>
+  <div v-if="state.isModalOpen" class="overlay-mask" @click="closeDialog"></div>
 
-  <dialog ref="add-item">
+  <dialog ref="add-item" class="popup-add-edit">
     <form method="dialog" class="addLodging">
       <div class="inputtext">
         <label class="required" for="item-name">{{ itemName }}:</label>
@@ -54,7 +54,6 @@ export default {
         notes: this.notesValue,
         isAdmin: this.isAdminValue,
         id: this.idValue,
-        isModalOpen: false 
     }
   },
 
@@ -152,7 +151,7 @@ export default {
 
 
     openDialog() {
-      this.isModalOpen = true
+      this.state.isModalOpen = true
       this.$refs['add-item'].showModal()
       if (this.startDateValue) {
         this.startDate = this.reconvertDate(this.startDateValue)
@@ -163,7 +162,7 @@ export default {
     },
 
     closeDialog() {
-      this.isModalOpen = false
+      this.state.isModalOpen = false
       this.$refs['add-item'].close()
     }
   },

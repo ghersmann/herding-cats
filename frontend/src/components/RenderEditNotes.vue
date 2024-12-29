@@ -27,19 +27,19 @@
           ref="textarea"
           @keyup="adjustTextarea"
         ></textarea>
-        <div class="dual-btns">
-          <button @click="cancelEditing" class="cncl-btn">Cancel</button>
-          <button @click="finishEditing" class="save-btn">Save</button>
+        <div class="trio-btns">
+          <button @click="deleteNote" class="trio-del-btn">Delete</button>
+          <button @click="cancelEditing" class="trio-cncl-btn">Cancel</button>
+          <button @click="finishEditing" class="trio-save-btn">Save</button>
         </div>
       </slot>
     </div>
-
-    <!-- Delete button -->
-    <button @click="deleteNote" class="delete-btn">x</button>
   </div>
 </template>
 
 <script>
+import { herdingCatsstore } from '@/stores/counter.js';
+
 export default {
   props: {
     noteText: {
@@ -53,6 +53,7 @@ export default {
   },
   data() {
     return {
+      state: herdingCatsstore(),
       isEditing: false,
       editableNoteText: this.noteText,
     };
@@ -62,8 +63,10 @@ export default {
       this.editableNoteText = newText;
     },
     startEditing() {
+      if (this.state.isUserThere) {
       this.isEditing = true;
       this.$nextTick(this.adjustTextarea);
+      }
     },
     adjustTextarea() {
       const textarea = this.$refs.textarea;
@@ -82,6 +85,7 @@ export default {
     },
     deleteNote() {
       this.$emit('delete-note');
+      this.isEditing = false;
     },
   },
 };
@@ -89,29 +93,35 @@ export default {
 
 
 <style scoped>
-.delete-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+.trio-btns {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-right: 0;
+  margin-left: auto;
+  width: 20rem;
 }
 
-.save-btn,
-.cncl-btn {
+.trio-del-btn,
+.trio-save-btn,
+.trio-cncl-btn {
+  border-radius: 0.5rem;
   font-size: 1.2rem;
   width: fit-content;
   height: 2.2rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
+  margin: 0.3rem;
 }
 
-.cncl-btn {
-  margin-left: auto;
-  margin-right: 0;
+.trio-del-btn {
   background-color: var(--required-red);
 }
 
-.dual-btns {
-  display: flex;
-  justify-content: space-between;
+.trio-cncl-btn {
+  background-color: var(--dark-button-blue);
+}
+
+.trio-save-btn {
+  background-color: var(--green-travel);
+  margin-right: 0;
 }
 </style>

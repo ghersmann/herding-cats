@@ -1,7 +1,7 @@
 <template>
-  <div v-if="isModalOpen" class="overlay-mask" @click="closeDialog"></div>
+  <div v-if="state.isModalOpen" class="overlay-mask" @click="closeDialog"></div>
 
-  <dialog ref="add-item">
+  <dialog ref="add-item" class="popup-add-edit">
     <form method="dialog" class="addLodging">
       <div class="inputtext">
         <label class="required" for="item-name">{{ itemName }}:</label>
@@ -51,7 +51,6 @@ export default {
       notes: '',
       isAdmin: false,
       id: 1,
-      isModalOpen: false
     }
   },
 
@@ -125,15 +124,15 @@ export default {
         this.isAdmin = false
         this.id = 1
 
-        this.isModalOpen = false
+        this.state.isModalOpen = false
       }
     },
     openDialog() {
-      this.isModalOpen = true;
+      this.state.isModalOpen = true;
       this.$refs['add-item'].showModal();
     },
     closeDialog() {
-      this.isModalOpen = false;
+      this.state.isModalOpen = false;
       this.$refs['add-item'].close();
     }
   },

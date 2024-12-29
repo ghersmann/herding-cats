@@ -118,15 +118,8 @@ export default {
   background-color: var(--turqoise-notes);
 }
 
-h3 {
+h3, p, .entry-p {
   color: white;
-  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
-}
-
-.entry-p,
-p {
-  color: white;
-  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
 }
 
 .transport-entry + .transport-entry {

@@ -48,8 +48,7 @@ main {
   display: flex;
   flex-direction: column;
   background-color: var(--green-packing-list);
-  border: 1px solid white;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 1rem;
   padding: 2rem;
   margin: 0.7rem auto;
 }
@@ -65,7 +64,6 @@ h1 {
   line-height: 6.5rem;
   text-align: center;
   color: #000000;
-  text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
 }
 
 /* View titles are all h2 */
@@ -77,7 +75,6 @@ h2 {
   line-height: 4.3rem;
   text-align: center;
   color: #ffffff;
-  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
   margin-bottom: 2rem;
 }
 
@@ -88,7 +85,6 @@ h3 {
   font-size: 2.4rem;
   text-align: center;
   color: #000000;
-  text-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
 }
 
 h4 {
@@ -98,7 +94,6 @@ h4 {
   font-size: 1.5rem;
   text-align: center;
   color: #000000;
-  text-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
 }
 
 p {
@@ -153,7 +148,6 @@ p {
   font-size: 1.6rem;
   line-height: 2.2rem;
   color: black;
-  text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
   margin-top: 1rem;
   margin-bottom: 2rem;
 }
@@ -177,19 +171,17 @@ button {
   color: white;
   width: 28rem;
   height: 4rem;
-  border: 0.1rem solid white;
-  box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+  border-radius: 1rem;
+  border: 0;
 }
 
 button:hover,
 button:focus {
   box-shadow: white 0px 0px 1rem;
-  outline: 0.2rem solid var(--green-travel);
 }
 
 button:active {
   outline: 0.2rem solid var(--pink-activities);
-  border: 0.1rem solid var(--pink-background);
 }
 
 .btn-disabled {
@@ -213,39 +205,11 @@ button:active {
   border-radius: 50%;
 }
 
-.edit-btns {
-  position: absolute;
-  display: flex;
-  width: 28rem;
-  bottom: 0rem;
-  right: 0rem;
-
-}
-
-.save-btn {
-  font-size: 1.2rem;
-  width: fit-content;
-  height: 2.2rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
-}
-
 .sv-btn-green {
   margin-top: 2rem;
   background-color: var(--green-travel);
 }
 
-.cncl-btn {
-  margin-left: auto;
-  margin-right: 0;
-  background-color: var(--required-red);
-}
-
-.dual-btns {
-  display: flex;
-  justify-content: space-between;
-  /* width: 28rem; */
-}
 
 /* Input forms */
 
@@ -266,9 +230,10 @@ input[type='number'] {
   line-height: 2.7rem;
   width: 28rem;
   height: 4rem;
-  border: 0.1rem solid var(--dark-button-blue);
-  box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+  border: 0.1rem solid white;
+  border-radius: 1rem;
 }
+
 
 textarea {
   width: 28rem;
@@ -278,7 +243,7 @@ textarea {
   font-size: 1.5rem;
   color: #000000;
   border: 0.1rem solid var(--dark-button-blue);
-  box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+  border-radius: 1rem;
 }
 
 input[type='text']::placeholder,
@@ -305,7 +270,7 @@ input[type='number']:focus,
 input[type='number']:active,
 input[type='number']:hover {
   box-shadow: white 0px 0px 1rem;
-  outline: 0.1rem solid white;
+  outline: 0.1rem solid var(--dark-button-blue);
 }
 
 input[type='datetime-local'] {
@@ -318,7 +283,7 @@ input[type='datetime-local'] {
   width: 28rem;
   height: 3rem;
   border: 0.1rem solid black;
-  box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+  border-radius: 1rem;
 }
 
 input[type="checkbox"] {
@@ -365,6 +330,68 @@ label {
   font-size: 1.1rem;
   line-height: 1.5rem;
   color: white;
+}
+
+/* Info boxes and toggles */
+
+.info-box {
+  width: 30rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 0;
+}
+
+.info-icon {
+  cursor: pointer;
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+
+.pw-flex {
+  display: flex;
+  align-items: center;
+}
+
+.infoIcondiv {
+  position: relative;
+}
+
+.info-list {
+  position: absolute;
+  transform: translateX(-45%);
+  background-color: #fff;
+  color: black;
+  border-radius: 1rem;
+  padding-top: 0; 
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+  width: 26rem;
+  z-index: 10;
+  margin-top: 1rem;
+}
+
+.info-p {
+  font-family: 'Satoshi-Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  color: black;
+  margin-top: 1rem;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* Pop-up Add or Edit Transport, Activitiy or Lodging */
+
+.popup-add-edit {
+  background-color: var(--gray-accomodation);
+  border: 0;
+  border-radius: 1rem;
 }
 
 /* Overlay mask to darken background when modals and info screens are visible */

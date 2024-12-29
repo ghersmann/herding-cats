@@ -68,8 +68,7 @@ export default {
   width: 32rem;
   height: 4rem;
   display: grid;
-  border: 1px solid white;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 1rem;
   padding: 1rem;
   grid-template-columns: 26rem 4rem;
   grid-template-rows: 2rem;

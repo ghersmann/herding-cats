@@ -37,7 +37,7 @@
         v-model="newNotes"
         id="note-input"
         name="note-input"
-        placeholder="Take notes for your trip..."
+        placeholder=" Take notes for your trip..."
         @keydown.enter.prevent="addNote"
       ></textarea>
       <button
@@ -85,12 +85,14 @@ export default {
       }
       await this.state.updateTripState(this.$route.params.id);
     },
-    updateNote(index, newText) {
+
+    async updateNote(index, newText) {
       if (this.state.tripData[0]?.details?.notes) {
         this.state.tripData[0].details.notes[index] = newText;
-        this.state.updateTripState(this.$route.params.id);
+        await this.state.updateTripState(this.$route.params.id);
       }
     },
+
     async removeNote(index) {
       if (this.state.tripData[0]?.details?.notes) {
         this.state.tripData[0].details.notes.splice(index, 1);
@@ -139,9 +141,7 @@ h2 {
 .render-list-p {
   width: 23rem;
 }
-</style>
 
-<style>
 .custom-edit-area {
   width: 26rem;
 }
