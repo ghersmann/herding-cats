@@ -13,7 +13,7 @@
     <label class="required">End of trip</label>
     <input v-model="tripEnd" type="datetime-local" />
     <div class="input-area">
-    <button class="create-btn" @click="makeTrip">Create Trip</button>
+    <button class="sv-btn-green" @click="makeTrip">Create Trip</button>
     <router-link :to="{ name: 'alltravels' }">
       <button class="cancel-btn">Cancel</button>
     </router-link>
@@ -119,9 +119,6 @@ label {
   margin-top: 2rem;
 }
 
-.create-btn {
-  background-color: var(--green-packing-list);
-}
 
 .cancel-btn {
   margin-top: 2rem;

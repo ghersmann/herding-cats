@@ -113,6 +113,5 @@ export default {
 
 h2 {
   color: black;
-  text-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
 }
 </style>

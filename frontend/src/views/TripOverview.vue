@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isModalOpen" class="overlay-mask" @click="closeDialog"></div>
+  <div v-if="state.isModalOpen" class="overlay-mask" @click="closeDialog"></div>
 
     <CatHeader />
 
@@ -25,7 +25,7 @@
     <nav>
       <button v-if="state.isUserThere" @click="openOptions">Add Item</button>
       <dialog class="add-options" ref="add-options">
-        <form method="dialog" action="">
+        <form method="dialog" action="" @click="closeDialog">
           <router-link :to="{ path: '/transport/' + this.$route.params.id }"
             ><button>Transport</button></router-link
           >
@@ -73,8 +73,7 @@ import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
     return {
-      state: herdingCatsstore(),
-      isModalOpen: false 
+      state: herdingCatsstore()
     }
   },
   components: {
@@ -92,11 +91,12 @@ export default {
   },
   methods: {
     openOptions() {
-      this.isModalOpen = true
+      this.state.isModalOpen = true
       this.$refs['add-options'].showModal()
     },
     closeDialog(){
-      this.isModalOpen = false
+      this.state.isModalOpen = false;
+      this.$refs['add-options'].close()
     },
 
     async copyId() {
@@ -161,6 +161,11 @@ button {
   font-size: 1.3rem;
   border-radius: 1rem;
   height: 4rem;
+}
+
+.add-options {
+  border-radius: 1rem;
+  border:0;
 }
 
 .add-options form {

@@ -38,7 +38,7 @@
         class="input-text-area"
         v-model="newDetails"
         id="item-input"
-        placeholder="Add stuff to bring"
+        placeholder=" Add stuff to bring..."
         @keyup.enter="addItem"
       ></textarea>
       <button
@@ -85,9 +85,9 @@ export default {
       }
       await this.state.updateTripState(this.$route.params.id);
     },
-    updatePackItem(index, newText) {
+    async updatePackItem(index, newText) {
       this.state.tripData[0].details.packlist[index] = newText;
-      this.state.updateTripState(this.$route.params.id);
+      await this.state.updateTripState(this.$route.params.id);
     },
     async removePackItem(index) {
       this.state.tripData[0].details.packlist.splice(index, 1);
@@ -108,6 +108,5 @@ export default {
 
 .render-list-p {
   color: white; 
-  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25)
 }
 </style>

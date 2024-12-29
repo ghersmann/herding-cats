@@ -125,10 +125,6 @@ h2 {
   box-shadow: 0px 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
   width: 28rem;
 }
-
-.add-note {
-  background-color: var(--green-packing-list);
-}
 </style>
 
 <style>

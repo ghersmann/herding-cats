@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isModalOpen" class="overlay-mask" @click="closeDialog"></div>
+  <div v-if="state.isModalOpen" class="overlay-mask" @click="closeDialog"></div>
   <header>
     <img class="catlogo" src="@/assets/cat-logo/cat-logo-small.svg" alt="Herding Cats Logotype" />
   </header>
@@ -81,7 +81,6 @@ export default {
       password: '',
       confirmPassword: '',
       userId: '',
-      isModalOpen: true,
       showInfo: false
     }
   },
@@ -89,6 +88,7 @@ export default {
   mounted() {
     if (this.$refs['signup-warning']) {
       this.$refs['signup-warning'].showModal();
+      this.state.isModalOpen = true
     }
   },
 
@@ -98,14 +98,14 @@ export default {
     },
 
     openDialog() {
-      this.isModalOpen = true;
+      this.state.isModalOpen = true;
       if (this.$refs['signup-warning']) {
         this.$refs['signup-warning'].showModal();
       }
     },
 
     closeDialog() {
-      this.isModalOpen = false;
+      this.state.isModalOpen = false;
       if (this.$refs['signup-warning']) {
         this.$refs['signup-warning'].close();
       }

@@ -8,7 +8,7 @@
       {{ state.tripData[0].tripEnd.split(' ')[0] }}
     </h4>
   </div>
-  <dialog class="edit-trip-title" ref="edit-trip-title">
+  <dialog class="popup-add-edit" ref="edit-trip-title">
     <form method="dialog" action="" >
       <input
       class="trip-title"
@@ -24,9 +24,9 @@
       <label class="required">End of trip</label>
       <input class="trip-title" v-model="formattedEndDate" type="datetime-local" />
 
-      <button @click="saveTripChanges">Save Changes</button>
+      <button @click="saveTripChanges" class="sv-btn-green">Save</button>
 
-      <button class="cancel-btn">Cancel</button>
+      <button @click="cancelEdit">Cancel</button>
     </form>
   </dialog>
 </template>
@@ -70,12 +70,21 @@ export default {
     },
 
     editTripTitleDate() {
+      if (this.state.isUserThere) {
+      this.state.isModalOpen = true;
       this.formattedStartDate = this.formatDateToInput(this.state.tripData[0].tripStart);
       this.formattedEndDate = this.formatDateToInput(this.state.tripData[0].tripEnd);
       this.$refs['edit-trip-title'].showModal();
+      }
+    },
+
+    cancelEdit() {
+      this.state.isModalOpen = false;
+      this.$refs['edit-trip-title'].close();
     },
 
     async saveTripChanges() {
+      this.state.isModalOpen = false;
       this.state.tripData[0].tripStart = this.formatDateFromInput(this.formattedStartDate);
       this.state.tripData[0].tripEnd = this.formatDateFromInput(this.formattedEndDate);
 
@@ -90,12 +99,13 @@ h4 {
   margin-top: 1rem;
 }
 
-.cancel-btn {
-  background-color: var(--required-red);
-}
-
 .edit-trip {
   cursor: pointer;
   margin-bottom: 1rem;
+}
+
+.popup-add-edit {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 </style>

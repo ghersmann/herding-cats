@@ -182,7 +182,6 @@ button:focus {
 
 button:active {
   outline: 0.2rem solid var(--pink-activities);
-/*   border: 0.1rem solid var(--pink-background); */
 }
 
 .btn-disabled {
@@ -206,39 +205,11 @@ button:active {
   border-radius: 50%;
 }
 
-.edit-btns {
-  position: absolute;
-  display: flex;
-  width: 28rem;
-  bottom: 0rem;
-  right: 0rem;
-
-}
-
-.save-btn {
-  font-size: 1.2rem;
-  width: fit-content;
-  height: 2.2rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
-}
-
 .sv-btn-green {
   margin-top: 2rem;
   background-color: var(--green-travel);
 }
 
-.cncl-btn {
-  margin-left: auto;
-  margin-right: 0;
-  background-color: var(--required-red);
-}
-
-.dual-btns {
-  display: flex;
-  justify-content: space-between;
-  /* width: 28rem; */
-}
 
 /* Input forms */
 
@@ -272,6 +243,7 @@ textarea {
   font-size: 1.5rem;
   color: #000000;
   border: 0.1rem solid var(--dark-button-blue);
+  border-radius: 1rem;
 }
 
 input[type='text']::placeholder,
@@ -311,6 +283,7 @@ input[type='datetime-local'] {
   width: 28rem;
   height: 3rem;
   border: 0.1rem solid black;
+  border-radius: 1rem;
 }
 
 input[type="checkbox"] {
@@ -357,22 +330,6 @@ label {
   font-size: 1.1rem;
   line-height: 1.5rem;
   color: white;
-}
-
-/* Overlay mask to darken background when modals and info screens are visible */
-
-.overlay-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 5;
-}
-
-dialog {
-  z-index: 1000;
 }
 
 /* Info boxes and toggles */
@@ -427,4 +384,28 @@ dialog {
   position: absolute;
   top: 1rem;
   right: 1rem;
+}
+
+/* Pop-up Add or Edit Transport, Activitiy or Lodging */
+
+.popup-add-edit {
+  background-color: var(--gray-accomodation);
+  border: 0;
+  border-radius: 1rem;
+}
+
+/* Overlay mask to darken background when modals and info screens are visible */
+
+.overlay-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 5;
+}
+
+dialog {
+  z-index: 1000;
 }
