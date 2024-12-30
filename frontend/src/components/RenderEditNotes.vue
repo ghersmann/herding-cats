@@ -84,9 +84,11 @@ export default {
       this.isEditing = false;
     },
     deleteNote() {
-      this.$emit('delete-note');
-      this.isEditing = false;
-    },
+  if (confirm('Are you sure you wish to delete this?')) {
+    this.$emit('delete-note');
+    this.isEditing = false;
+  }
+}
   },
 };
 </script>

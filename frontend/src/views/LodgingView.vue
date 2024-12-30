@@ -94,14 +94,16 @@ export default {
       this.lodgingList = data
     },
 
-    removeLodging(index) {
+    async removeLodging(index) {
+      if (confirm('Are you sure you wish to delete this?'))  {
       this.state.tripData[0].details.lodging.splice(index, 1)
-      this.state.updateTripState(this.$route.params.id)
+      await this.state.updateTripState(this.$route.params.id)
+      }
     },
   },
-  created() {
-    this.state.checkUser()
-    this.state.loadTripData(this.$route.params.id)
+  async created() {
+    await this.state.checkUser()
+    await this.state.loadTripData(this.$route.params.id)
   }
 }
 </script>

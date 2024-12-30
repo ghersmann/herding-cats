@@ -101,8 +101,10 @@ export default {
     },
     
     async removeTransport(index) {
+      if (confirm('Are you sure you wish to delete this?'))  {
       this.state.tripData[0].details.transport.splice(index, 1)
       await this.state.updateTripState(this.$route.params.id)
+      }
     }, 
   },
 

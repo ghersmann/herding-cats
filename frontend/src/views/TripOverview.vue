@@ -14,13 +14,14 @@
       </p>
 
       <ul class="list">
-        <li class="list-item" v-for="(key, index) in filteredDetailsKeys" :key="index">
-          <router-link :to="`/${key}/${this.$route.params.id}`">
-            <img class="arrow" src="@/assets/arrow.svg" alt="Arrow symbol" />
-            <p>{{ key.charAt(0).toUpperCase() + key.slice(1) }}</p>
-          </router-link>
-        </li>
-      </ul>
+  <li class="list-item" v-for="(key, index) in filteredDetailsKeys" :key="index">
+      <router-link :to="`/${key}/${this.$route.params.id}`">
+        <img class="arrow" src="@/assets/arrow.svg" alt="Arrow symbol" />
+        <p>{{ formatKey(key) }}</p>
+      </router-link>
+  </li>
+</ul>
+
     </section>
     <nav>
       <button v-if="state.isUserThere" @click="openOptions">Add Item</button>
@@ -101,6 +102,13 @@ export default {
 
     async copyId() {
       await navigator.clipboard.writeText(this.$route.params.id)
+    },
+
+    formatKey(key) {
+      if (key === 'groupmembers') {
+        return 'Group Members';
+      }
+      return key.charAt(0).toUpperCase() + key.slice(1);
     },
   },
 

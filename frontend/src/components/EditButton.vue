@@ -143,6 +143,7 @@ export default {
   // Update the tripData state and send the updated entry to the API
   try {
     await this.state.updateTripState(this.$route.params.id);
+    this.state.isModalOpen = false
   } catch (error) {
     console.error('Failed to update trip data:', error);
     alert('An error occurred while updating the item.');

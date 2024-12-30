@@ -92,9 +92,11 @@ export default {
       this.transportList = data
     },
 
-    removeActivity(index) {
+    async removeActivity(index) {
+      if (confirm('Are you sure you wish to delete this?'))  {
       this.state.tripData[0].details.activity.splice(index, 1)
-      this.state.updateTripState(this.$route.params.id)
+      await this.state.updateTripState(this.$route.params.id)
+      }
     },
   },
   async created() {
