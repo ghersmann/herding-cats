@@ -99,12 +99,12 @@ export default {
         await this.state.updateTripState(this.$route.params.id);
       }
     },
-  },
+},
   async created() {
     await this.state.checkUser();
     await this.state.loadTripData(this.$route.params.id);
   },
-};
+}
 </script>
 
 <style scoped>

@@ -17,7 +17,7 @@
         <p v-if="!editing">
           {{ currentGroupMember.tele || ("n/a".toString()) }}
         </p>
-        <input v-else type="number" id="tele" v-model="teleInput" :placeholder="currentGroupMember.tele" />
+        <input v-else class="edit-number" type="number" id="tele" v-model="teleInput" :placeholder="currentGroupMember.tele" />
 
       <label v-if="state.isUserThere && editing" class="member-dates">(Please use the +49 format)</label>
 
@@ -30,12 +30,14 @@
     <div class="input-area">
       <button v-if="state.isUserThere && !editing" class="edit-btn" @click="startEditing">Edit</button>
       <div class="sv-cncl-btns">
+        <button v-if="editing" class="del-btn" @click="deleteMember">Delete</button>
+        <button v-if="editing" class="cncl" @click="cancelEditing">Cancel</button>
         <button v-if="editing" class="sv-btn-green" @click="finishEditing">Save</button>
-      <button v-if="editing" class="cncl" @click="cancelEditing">Cancel</button>
+      
 
     </div>
       <router-link :to="{ path: '/groupmembers/' + this.$route.params.id }"
-        ><button class="back-btn">Back to Group Members</button></router-link
+        ><button v-if="!editing" class="back-btn">Back to Group Members</button></router-link
       >
     </div>
   </main>
@@ -51,7 +53,8 @@ export default {
       editing: false,
       nameInput: '',
       addressInput: '',
-      teleInput: ''
+      teleInput: '',
+      groupMemberId: this.$route.params.index
     }
   },
 components: {
@@ -96,7 +99,30 @@ components: {
       await this.state.updateTripState(this.$route.params.id)
       
       this.editing = false
+    },
+
+    async deleteMember(index) {
+      console.log('delete initiated');
+      console.log('Group member ID: ' + this.groupMemberId);
+      console.log('Group members array: ', this.state.tripData[0].details.groupmembers);
+
+      if (confirm('Are you sure you want to delete this?')) {
+        const groupmembers = this.state.tripData[0].details.groupmembers;
+
+        // Find the index of the group member with the given ID
+        const memberIndex = groupmembers.findIndex(member => member.id === this.groupMemberId);
+
+      if (memberIndex !== -1) {
+        groupmembers.splice(memberIndex, 1); // Remove the member at the found index
+        await this.state.updateTripState(this.$route.params.id); // Update state
+        console.log('Member deleted successfully');
+        this.$router.push('/groupmembers/' + this.$route.params.id);
+      } else {
+        console.log('Member not found');
     }
+  }
+}
+
   },
   async created() {
     await this.state.checkUser()
@@ -110,18 +136,17 @@ components: {
   background-color: var(--turqoise-gray-background);
 }
 
+.del-btn {
+  background-color: var(--required-red)
+}
+
+.edit-number {
+  color: black;
+}
+
 p,
 label {
   color: white;
-  text-shadow: 0px 0.2rem 0.2rem rgba(255, 255, 255, 0.25);
-}
-
-.edit-btn {
-  background-color: var(--required-red);
-}
-
-.cncl {
-  background-color: var(--required-red);
 }
 
 #participation {

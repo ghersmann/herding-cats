@@ -25,10 +25,8 @@
       <li v-for="(groupMember, index) in this.groupmembersEntries" :key="index">
         <div class="list-item">
           <router-link :to="{ name: 'profile', params: { index: groupMember.id } }">
-            <p class="list-p">{{ groupMember.name }} - {{ groupMember.isAdmin ? 'Admin' : 'Participant' }}</p>
+            <p class="list-p">{{ groupMember.name }}{{ groupMember.isAdmin ? ' - Admin' : '' }}</p>
           </router-link>
-
-          <button v-if="state.isUserThere" class="delete-btn" @click="deleteMember(index)">x</button>
         </div>
         <ul>
           <li v-if="groupMember.startDate" class="member-dates">From: {{ groupMember.startDate }}</li>
@@ -100,11 +98,6 @@ export default {
   },
 
   methods: {
-    deleteMember(index) {
-      this.state.tripData[0].details.groupmembers.splice(index, 1)
-      this.state.updateTripState(this.$route.params.id)
-    },
-
     goToProfile(id) {
       this.$router.push({ name: 'profile', params: { id } })
     },
