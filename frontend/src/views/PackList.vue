@@ -4,7 +4,7 @@
   <main class="container">
     <h2>Packing List</h2>
     <p
-      v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
+      v-if="Object.values(state.tripData[0].details.packlist).every((array) => array.length === 0)"
       class="placeholder-text"
     >
       It's empty.
@@ -106,7 +106,7 @@ export default {
   background-color: var(--green-packing-list);
 }
 
-.render-list-p {
+.render-list-p, .placeholder-text {
   color: white; 
 }
 </style>

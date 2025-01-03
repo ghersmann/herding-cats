@@ -102,10 +102,6 @@ components: {
     },
 
     async deleteMember(index) {
-      console.log('delete initiated');
-      console.log('Group member ID: ' + this.groupMemberId);
-      console.log('Group members array: ', this.state.tripData[0].details.groupmembers);
-
       if (confirm('Are you sure you want to delete this?')) {
         const groupmembers = this.state.tripData[0].details.groupmembers;
 
@@ -115,7 +111,6 @@ components: {
       if (memberIndex !== -1) {
         groupmembers.splice(memberIndex, 1); // Remove the member at the found index
         await this.state.updateTripState(this.$route.params.id); // Update state
-        console.log('Member deleted successfully');
         this.$router.push('/groupmembers/' + this.$route.params.id);
       } else {
         console.log('Member not found');

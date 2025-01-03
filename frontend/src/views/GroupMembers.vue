@@ -4,7 +4,7 @@
   <main id="form" class="container">
     <h2>Group Members</h2>
     <p
-        v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
+        v-if="Object.values(state.tripData[0].details.groupmembers).every((array) => array.length === 0)"
         class="placeholder-text"
       >
         Click "Add new Member" to start Herding your Cats
