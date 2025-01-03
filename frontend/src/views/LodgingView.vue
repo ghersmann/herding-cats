@@ -4,13 +4,13 @@
   <main class="container">
     <h2>Lodging</h2>
     <p
-        v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
+        v-if="Object.values(state.tripData[0].details.lodging).every((array) => array.length === 0)"
         class="placeholder-text"
       >
         Click "Add new Lodging" to start Herding your Cats
       </p>
     <ul>
-      <li class="lodging-entry" v-for="(lodging, index) of lodgingEntries" :key="index">
+      <li class="lodging-entry" v-for="(lodging, index) of sortedLodgingEntries" :key="index">
         <h3>{{ lodging.name }}</h3>
         <ul class="entry-p">
           <li>{{ lodging.zipcode }} {{ lodging.city }}</li>
@@ -35,7 +35,7 @@
           :notesValue="lodging.notes"
           :idValue="lodging.id"
         />
-        <button v-if="state.isUserThere" class="rect-delete-btn" @click="removeLodging(index)">
+        <button v-if="state.isUserThere" class="rect-delete-btn" @click="removeLodging(lodging.id)">
           Delete
         </button>
       </li>
@@ -81,7 +81,18 @@ export default {
       } else {
         return []
       }
-    }
+    },
+    sortedLodgingEntries() {
+  return this.lodgingEntries.slice().sort((a, b) => {
+    const [dayA, monthA, yearA, timeA] = a.startDate.split(/[.\s-]+/); 
+    const [dayB, monthB, yearB, timeB] = b.startDate.split(/[.\s-]+/);
+
+    const dateA = new Date(`${yearA}-${monthA}-${dayA}T${timeA}`);
+    const dateB = new Date(`${yearB}-${monthB}-${dayB}T${timeB}`);
+
+    return dateA - dateB;
+  });
+}
   },
 
   components: {
@@ -94,12 +105,18 @@ export default {
       this.lodgingList = data
     },
 
-    async removeLodging(index) {
-      if (confirm('Are you sure you wish to delete this?'))  {
-      this.state.tripData[0].details.lodging.splice(index, 1)
-      await this.state.updateTripState(this.$route.params.id)
-      }
-    },
+    async removeLodging(id) {
+  if (confirm('Are you sure you wish to delete this?')) {
+    const lodgingList = this.state.tripData[0].details.lodging;
+    const indexToRemove = lodgingList.findIndex(lodging => lodging.id === id);
+    if (indexToRemove !== -1) {
+      lodgingList.splice(indexToRemove, 1);
+      await this.state.updateTripState(this.$route.params.id);
+    } else {
+      console.error('Lodging entry not found for deletion');
+    }
+  }
+}
   },
   async created() {
     await this.state.checkUser()

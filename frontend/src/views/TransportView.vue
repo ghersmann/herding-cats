@@ -4,7 +4,7 @@
   <main class="container">
     <h2>Transport</h2>
     <p
-        v-if="Object.values(state.tripData[0].details).every((array) => array.length === 0)"
+        v-if="Object.values(state.tripData[0].details.transport).every((array) => array.length === 0)"
         class="placeholder-text"
       >
         Click "Add new Transport" to start Herding your Cats
@@ -13,7 +13,7 @@
     <ul>
       <li
         class="transport-entry"
-        v-for="(transport, index) of transportEntries"
+        v-for="(transport, index) of sortedTransportEntries"
         :key="transport.id"
       >
         <h3>{{ transport.name }}</h3>
@@ -40,7 +40,7 @@
           :notesValue="transport.notes"
           :idValue="transport.id"
         />
-        <button v-if="state.isUserThere" class="rect-delete-btn" @click="removeTransport(index)">
+        <button v-if="state.isUserThere" class="rect-delete-btn" @click="removeTransport(transport.id)">
           Delete
         </button>
       </li>
@@ -77,16 +77,28 @@ export default {
     }
   },
   computed: {
-    transportEntries() {
-      if (this.state.tripData.length > 0) {
-        if (this.state.tripData[0].details) {
-          return this.state.tripData[0].details.transport
-        }
-        return []
-      } else {
-        return []
+transportEntries() {
+    if (this.state.tripData.length > 0) {
+      if (this.state.tripData[0].details) {
+        const transportData = this.state.tripData[0].details.transport;
+        return transportData;
       }
-    }
+      return [];
+    } else {
+      return [];
+    }},
+
+sortedTransportEntries() {
+  return this.transportEntries.slice().sort((a, b) => {
+    const [dayA, monthA, yearA, timeA] = a.startDate.split(/[.\s-]+/); 
+    const [dayB, monthB, yearB, timeB] = b.startDate.split(/[.\s-]+/);
+
+    const dateA = new Date(`${yearA}-${monthA}-${dayA}T${timeA}`);
+    const dateB = new Date(`${yearB}-${monthB}-${dayB}T${timeB}`);
+
+    return dateA - dateB;
+  });
+}
   },
 
   components: {
@@ -100,12 +112,18 @@ export default {
       this.transportList = data
     },
     
-    async removeTransport(index) {
-      if (confirm('Are you sure you wish to delete this?'))  {
-      this.state.tripData[0].details.transport.splice(index, 1)
-      await this.state.updateTripState(this.$route.params.id)
-      }
-    }, 
+    async removeTransport(id) {
+  if (confirm('Are you sure you wish to delete this?')) {
+    const transportList = this.state.tripData[0].details.transport;
+    const indexToRemove = transportList.findIndex(transport => transport.id === id);
+    if (indexToRemove !== -1) {
+      transportList.splice(indexToRemove, 1);
+      await this.state.updateTripState(this.$route.params.id);
+    } else {
+      console.error('Transport entry not found for deletion');
+    }
+  }
+}
   },
 
   async created() {
