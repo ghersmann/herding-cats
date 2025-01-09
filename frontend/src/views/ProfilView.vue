@@ -19,7 +19,7 @@
         </p>
         <input v-else class="edit-number" type="number" id="tele" v-model="teleInput" :placeholder="currentGroupMember.tele" />
 
-      <label v-if="state.isUserThere && editing" class="member-dates">(Please use the +49 format)</label>
+      <!-- <label v-if="state.isUserThere && editing" class="member-dates">(Please use the +49 format)</label> -->
 
       <label for="participation">Participates:</label>
       <ul id="participation">
