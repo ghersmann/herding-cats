@@ -17,7 +17,7 @@
       </div>
 
     <router-link :to="{ path: '/trip/' + this.$route.params.id }"
-      ><button>Back to Trip</button></router-link
+      ><button class="back-btn">Back to Trip</button></router-link
     >
   </main>
 </template>
@@ -110,6 +110,7 @@ export default {
 <style scoped>
 .container {
   background-color: var(--yellow-calendar);
+  min-height: 30rem;
 }
 
 h2 {
