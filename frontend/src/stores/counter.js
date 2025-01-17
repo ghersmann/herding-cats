@@ -10,7 +10,8 @@ export const herdingCatsstore = defineStore('registration', {
       tripData: [],
       isUserThere: false,
       isDataLoaded: false,
-      isModalOpen: false
+      isModalOpen: false,
+      isMenuOpen: false
   }),
   actions: {
     async loadUserTripData() {
