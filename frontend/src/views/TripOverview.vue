@@ -53,7 +53,7 @@
       </router-link>
       <ToggleSwitch v-if="state.isUserThere && state.isDataLoaded" class="toggle-switch" labelText="This trip is Public" />
       <p class="white-box-id">Trip ID: {{ this.$route.params.id }}</p>
-      <button @click="copyId">Copy ID</button>
+      <button @click="copyId">{{ copyAlert ? 'Trip ID Copied' : 'Copy ID' }}</button>
       <router-link :to="{ name: 'alltravels' }">
         <button class="back-btn" v-if="state.isUserThere">Back to all your trips</button></router-link
       >
@@ -74,7 +74,8 @@ import { herdingCatsstore } from '@/stores/counter.js'
 export default {
   data() {
     return {
-      state: herdingCatsstore()
+      state: herdingCatsstore(),
+      copyAlert: false
     }
   },
   components: {
@@ -102,14 +103,18 @@ export default {
 
     async copyId() {
       await navigator.clipboard.writeText(this.$route.params.id)
-    },
+      this.copyAlert = true; // Show alert
+        setTimeout(() => {
+          this.copyAlert = false; // Hide alert after 0.5 seconds
+        }, 1000);
+      },
 
     formatKey(key) {
       if (key === 'groupmembers') {
         return 'Group Members';
       }
       return key.charAt(0).toUpperCase() + key.slice(1);
-    },
+    }
   },
 
   async created() {
@@ -117,8 +122,9 @@ export default {
     await this.state.loadTripData(this.$route.params.id);
     //Used for Toggleswitch component
     this.state.isDataLoaded = true;
-  }
+  },
 }
+
 </script>
 
 <style scoped>
