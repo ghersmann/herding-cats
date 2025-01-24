@@ -19,14 +19,12 @@
 
   <div class="side-menu" v-show="state.isMenuOpen">
     <form class="side-menu-form">
-      <nav>
+      <nav><ul>
+        <li><a href="/home" @click.prevent="navigateTo('/')" class="menu-p menu-p-bold">Start Page</a></li>
+        <li ><a href="/AllTravels" v-if="state.isUserThere" @click.prevent="navigateTo('/AllTravels')" class="menu-p">My Travels</a></li>
+      </ul>
         <ul>
-          <li><a href="/home" @click.prevent="navigateTo('/')" class="menu-p">Start Page</a></li>
-          <li v-if="state.isUserThere"><a href="/AllTravels" @click.prevent="navigateTo('/AllTravels')" class="menu-p">My Travels</a></li>
-          <li v-if="state.isUserThere"><a href="/settings" @click.prevent="navigateTo('/settings')" class="menu-p">Settings</a></li>
-          <li><a href="/about" @click.prevent="navigateTo('/about')" class="menu-p">About</a></li>
-        </ul>
-        <ul>
+          <li class="menu-p menu-p-bold">Current Trip</li>
           <li><router-link :to="{ path: '/trip/' + this.$route.params.id }"
             @click.prevent="closeDialog()" class="menu-p">Trip Overview</router-link
           ></li>
@@ -38,8 +36,7 @@
           ></li>
           <li><router-link :to="{ path: '/lodging/' + this.$route.params.id }"
             @click.prevent="closeDialog()" class="menu-p">Lodging</router-link
-          >
-          </li>
+          ></li>
           <li><router-link :to="{ path: '/activity/' + this.$route.params.id }"
             @click.prevent="closeDialog()" class="menu-p">Activity</router-link
           ></li>
@@ -53,6 +50,10 @@
             @click.prevent="closeDialog()" class="menu-p">Notes</router-link
           ></li>
         </ul>
+        <!-- <ul>
+          <li v-if="state.isUserThere"><a href="/settings" @click.prevent="navigateTo('/settings')" class="menu-p">Settings</a></li>
+          <li><a href="/about" @click.prevent="navigateTo('/about')" class="menu-p">About</a></li>
+        </ul> -->
       </nav>
       <button @click.prevent="closeDialog" class="close-btn">Close Menu</button>
     </form>
@@ -96,7 +97,7 @@ export default {
   position: absolute; /* Positioned relative to .header-container */
   top: calc(100%); /* Places it below the header; add margin if needed */
   right: 0; /* Aligns right side of the menu with the right side of the header */
-  width: 24rem;
+  width: 26rem;
   min-height: 20rem;
   background-color: var(--turqoise-gray-background);
   padding: 2rem;
@@ -149,14 +150,25 @@ header {
 }
 
 .menu-p {
+  display: block;
   font-family: 'Satoshi-Variable';
   font-style: normal;
-  font-weight: 400;
-  font-size: 1.8rem;
-  line-height: 4rem;
+  font-weight: 200;
+  font-size: 1.6rem;
   margin-left: auto;
   margin-right: 0;
+  text-align: right;
   color: white;
+}
+
+.menu-p-bold {
+  font-weight: 500;
+  font-size: 1.6rem;
+}
+
+.menu-p-tiny {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .close-btn {
@@ -164,8 +176,20 @@ header {
   margin-bottom: 0;
 }
 
+button {
+  font-size: 1.6rem;
+}
+
 button:hover,
 button:focus {
   box-shadow: none;
+}
+
+.side-menu-form ul {
+  margin-bottom: 2rem;
+}
+
+.side-menu-form li {
+  margin-top: 1rem;
 }
 </style>
