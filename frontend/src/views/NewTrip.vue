@@ -52,6 +52,15 @@ export default {
 
     async makeTrip() {
       if (this.tripName !== '' && this.tripStart !== '' && this.tripEnd !== '') {
+
+        const startDate = new Date(this.tripStart);
+        const endDate = new Date(this.tripEnd);
+
+        if (endDate < startDate) {
+            alert("Trip end date cannot be earlier than the trip start date.");
+            return;
+        }
+
         this.tripId = (Date.now() + Math.floor(Math.random() * 10)).toString()
         await this.updateUserData(this.tripId)
         await this.sendTripData(this.tripId)
