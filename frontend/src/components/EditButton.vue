@@ -1,8 +1,8 @@
 <template>
   <div v-if="state.isModalOpen" class="overlay-mask" @click="closeDialog"></div>
 
-  <dialog ref="add-item" class="popup-add-edit">
-    <form method="dialog" class="addLodging">
+  <dialog ref="edit-item" class="popup-add-edit" v-bind="$attrs">
+    <form class="editLodging">
       <div class="inputtext">
         <label class="required" for="item-name">{{ itemName }}:</label>
         <input type="text" required id="item-name" v-model="name" :placeholder="placeholder" />
@@ -12,7 +12,7 @@
         <input type="datetime-local" id="begin" v-model="startDate" />
         <label for="end">{{ endName }}:</label>
         <input type="datetime-local" id="end" v-model="endDate" />
-        <label for="address">Adress:</label>
+        <label for="address">Address:</label>
         <input type="text" id="address" v-model="address" />
         <label for="zipcode">Zipcode:</label>
         <input type="text" id="zipcode" v-model="zipcode" />
@@ -21,166 +21,190 @@
         <label for="notes">Notes:</label>
         <input type="text" id="notes" v-model="notes" />
       </div>
-      <div v-if="isGroupMembers" class="admin">
+      <div v-if="isGroupMembers" class="admin-checkbox">
         <label for="set-admin">Admin</label>
         <input id="set-admin" type="checkbox" v-model="isAdmin" />
       </div>
-    
-      <button @click="editItem" class="sv-btn-green">Save</button>
-      <button @click="closeDialog">Cancel</button>
+      <button type="button" @click="editItem" class="sv-btn-green">Save</button>
+      <button type="button" @click="closeDialog">Cancel</button>
     </form>
   </dialog>
   <footer>
-    <button v-if="state.isUserThere" @click.prevent="openDialog">Edit</button>
+    <button v-if="state.isUserThere" @click.prevent="openDialog">Edit {{ itemName }}</button>
   </footer>
 </template>
 
-
-
 <script>
-import { herdingCatsstore } from '@/stores/counter.js'
+import { herdingCatsstore } from '@/stores/counter.js';
 export default {
   data() {
     return {
       state: herdingCatsstore(),
       tripDetails: [],
-        category: '',
-        name: this.nameValue,
-        zipcode: this.zipcodeValue,
-        city: this.cityValue,
-        address: this.addressValue,
-        startDate: this.startDateValue,
-        endDate: this.endDateValue,
-        notes: this.notesValue,
-        isAdmin: this.isAdminValue,
-        id: this.idValue,
-    }
+      category: '',
+      name: '',
+      zipcode: '',
+      city: '',
+      address: '',
+      startDate: '',
+      endDate: '',
+      notes: '',
+      isAdmin: false,
+      id: null, // Use the correct ID for editing
+    };
   },
 
   props: {
     itemName: String,
     beginName: {
       type: String,
-      default: 'From'
+      default: 'From',
     },
     endName: {
       type: String,
-      default: 'Until'
+      default: 'Until',
     },
     contentArray: Array,
     placeholder: String,
-    nameValue: String,
+    nameValue: String, // Add these
     zipcodeValue: String,
     cityValue: String,
     addressValue: String,
     startDateValue: String,
     endDateValue: String,
     notesValue: String,
-    isAdminValue: Boolean,
-    idValue: String
+    idValue: [String, Number],
   },
 
   computed: {
     isGroupMembers() {
-      return this.$route.name === 'groupmembers'
+      return this.$route.name === 'groupmembers';
     },
     isLodging() {
-      return this.$route.name === 'lodging'
+      return this.$route.name === 'lodging';
     },
     isTransport() {
-      return this.$route.name === 'transport'
+      return this.$route.name === 'transport';
     },
-    currenEntry() {
-      const category = this.$route.name
-      return this.state.tripData[0].details[category].find((item) => item.id === this.id)
-    }
   },
 
   methods: {
-    convertDate(date) {
+    dateToString(date) {
       if (date.length >= 1) {
-        const year = date.slice(0, 4)
-        const month = date.slice(5, 7)
-        const day = date.slice(8, 10)
-        const time = date.slice(11, 16)
-        const convertedDate = day + '.' + month + '.' + year + ' - ' + time
-        return convertedDate.toString()
+        const year = date.slice(0, 4);
+        const month = date.slice(5, 7);
+        const day = date.slice(8, 10);
+        const time = date.slice(11, 16);
+        return `${day}.${month}.${year} - ${time}`;
       }
     },
-    //converts the date into a format that can be displayed in the edit dialog
-    reconvertDate(date) {
-      if (date.length >= 1) {
-        const year = date.slice(6, 10)
-        const month = date.slice(3, 5)
-        const day = date.slice(0, 2)
-        const time = date.slice(13, 18)
-        const reconvertedDate = year + '-' + month + '-' + day + 'T' + time
-        return reconvertedDate
+
+    stringDateToIso(date) {
+      if (!date) return ''; // Return an empty string for undefined/null/empty input
+
+      // Match and extract the day, month, year, hour, and minute from the input format
+      const dateRegex = /^(\d{2})\.(\d{2})\.(\d{4}) - (\d{2}):(\d{2})$/;
+      const match = date.match(dateRegex);
+
+      if (!match) {
+        console.error('Invalid date format:', date);
+        return ''; // Return an empty string for invalid formats
       }
+
+      const [, day, month, year, hour, minute] = match;
+
+      // Build an ISO format string: "yyyy-MM-ddTHH:mm"
+      const isoDate = `${year}-${month}-${day}T${hour}:${minute}`;
+      return isoDate;
     },
 
     async editItem() {
-  // Validate that the required fields (like 'name') are not empty
-  if (this.name.trim() === '') {
-    alert('Please fill out all required fields');
-    return;
-  }
-
-  // Convert the start and end dates into the required format before updating
-  const convertedStartDate = this.convertDate(this.startDate);
-  const convertedEndDate = this.convertDate(this.endDate);
-
-  // Update the properties of the current entry (the entry being edited)
-  this.currenEntry.name = this.name;
-  this.currenEntry.zipcode = this.zipcode;
-  this.currenEntry.city = this.city;
-  this.currenEntry.address = this.address;
-  this.currenEntry.startDate = convertedStartDate; // Store converted date format
-  this.currenEntry.endDate = convertedEndDate; // Store converted date format
-  this.currenEntry.notes = this.notes;
-  this.currenEntry.isAdmin = this.isAdmin; // If applicable
-
-  // Update the tripData state and send the updated entry to the API
-  try {
-    await this.state.updateTripState(this.$route.params.id);
-    this.state.isModalOpen = false
-  } catch (error) {
-    console.error('Failed to update trip data:', error);
-    alert('An error occurred while updating the item.');
-  }
-},
-
-
-    openDialog() {
-      this.state.isModalOpen = true
-      this.$refs['add-item'].showModal()
-      if (this.startDateValue) {
-        this.startDate = this.reconvertDate(this.startDateValue)
+      if (this.name.trim() === '') {
+        alert('Please fill out all required fields');
+        return; // Prevent further execution if fields are empty
       }
-      if (this.endDateValue) {
-        this.endDate = this.reconvertDate(this.endDateValue)
+
+      const startDate = new Date(this.startDate);
+      const endDate = new Date(this.endDate);
+
+      // Validation for startDate and endDate
+      if (endDate < startDate) {
+        alert(`${this.endName} cannot be earlier than the ${this.beginName}.`);
+        this.endDate = ''; // Optionally clear the invalid field
+        return; // Prevent further execution
+      }
+
+      // Find the item to edit in the state data
+      const category = this.$route.name;
+      const itemIndex = this.state.tripData[0].details[category].findIndex((item) => item.id === this.id);
+
+      if (itemIndex !== -1) {
+        const updatedEntry = {
+          id: this.id, // Retain the original ID
+          category: category,
+          startDate: this.dateToString(this.startDate),
+          endDate: this.dateToString(this.endDate),
+          name: this.name,
+          zipcode: this.zipcode,
+          city: this.city,
+          address: this.address,
+          notes: this.notes,
+          isAdmin: this.isAdmin,
+        };
+
+        // Update the item in the state
+        this.state.tripData[0].details[category][itemIndex] = updatedEntry;
+
+        // Update the state in the store
+        await this.state.updateTripState(this.$route.params.id);
+
+        // Reset form fields after successful edit
+        this.resetFields();
+
+        // Close the dialog
+        this.closeDialog();
+      } else {
+        alert('Item not found for editing.');
       }
     },
 
+    openDialog() {
+      this.state.isModalOpen = true;
+      this.$refs['edit-item'].showModal();
+
+      this.id = this.idValue;
+      this.name = this.nameValue;
+      this.zipcode = this.zipcodeValue;
+      this.city = this.cityValue;
+      this.address = this.addressValue;
+      this.startDate = this.stringDateToIso(this.startDateValue);
+      this.endDate = this.stringDateToIso(this.endDateValue);
+      this.notes = this.notesValue;
+    },
+
     closeDialog() {
-      this.state.isModalOpen = false
-      this.$refs['add-item'].close()
-    }
-  },
-  created() {
-    this.$watch('nameValue', (newValue) => {
-      this.name = newValue
-    })
-    this.$emit('clickAdd', this.tripDetails)
-    if (this.startDateValue) {
-      this.startDate = this.reconvertDate(this.startDateValue)
-    }
-    if (this.endDateValue) {
-      this.endDate = this.reconvertDate(this.endDateValue)
-    }
-    this.state.checkUser()
+      this.state.isModalOpen = false;
+      this.$refs['edit-item'].close();
+    },
+
+    resetFields() {
+      this.id = null;
+      this.name = '';
+      this.zipcode = '';
+      this.city = '';
+      this.address = '';
+      this.startDate = '';
+      this.endDate = '';
+      this.notes = '';
+      this.isAdmin = false;
+    },
   },
 
-  emits: ['clickAdd']
-}
+  async created() {
+    await this.$emit('clickEdit', this.tripDetails);
+    await this.state.checkUser();
+  },
+
+  emits: ['clickEdit', 'clickAdd'],
+};
 </script>
