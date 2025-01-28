@@ -41,23 +41,45 @@ export default {
       name: 'EditTripTitleDate',
       state: herdingCatsstore(),
       formattedStartDate: '',
-      formattedEndDate: ''
+      formattedEndDate: '',
+
     }
   },
   methods: {
     validateDates() {
-      if (this.formattedEndDate < this.formattedStartDate) {
-        this.errorMessage = 'End date cannot be before the start date.';
-        return false;
-      }
-      this.errorMessage = '';
-      return true;
-    },
+  if (!this.formattedStartDate || !this.formattedEndDate) {
+    alert('Both start date and end date must be provided.');
+    return false;
+  }
+
+  const startDate = new Date(this.formattedStartDate);
+  const endDate = new Date(this.formattedEndDate);
+
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    alert('Invalid date format.');
+    return false;
+  }
+
+  if (endDate < startDate) {
+    alert('End date cannot be earlier than the start date.');
+    return false;
+  }
+
+  return true;
+},
+
+
     formatDateToInput(date) {
-      const [datePart, timePart] = date.split(' - ');
-      const [day, month, year] = datePart.split('.');
-      return `${year}-${month}-${day}T${timePart}`;
-    },
+  try {
+    const [datePart, timePart] = date.split(' - ');
+    const [day, month, year] = datePart.split('.');
+    return `${year}-${month}-${day}T${timePart}`;
+  } catch (error) {
+    console.error('Invalid date format:', date);
+    return '';
+  }
+},
+
 
     formatDateFromInput(date) {
       const [datePart, timePart] = date.split('T');
@@ -84,12 +106,21 @@ export default {
     },
 
     async saveTripChanges() {
-      this.state.isModalOpen = false;
-      this.state.tripData[0].tripStart = this.formatDateFromInput(this.formattedStartDate);
-      this.state.tripData[0].tripEnd = this.formatDateFromInput(this.formattedEndDate);
+  if (this.validateDates()) {
+    console.log('Validation passed. Saving changes...');
+    this.state.tripData[0].tripStart = this.formatDateFromInput(this.formattedStartDate);
+    this.state.tripData[0].tripEnd = this.formatDateFromInput(this.formattedEndDate);
 
-    await this.state.updateTripState(this.$route.params.id)
-    }
+    await this.state.updateTripState(this.$route.params.id);
+    this.state.isModalOpen = false;
+    this.$refs['edit-trip-title'].close();
+  } else {
+    console.error('Validation failed. Changes not saved.');
+    this.state.isModalOpen = false;
+    this.$refs['edit-trip-title'].close();
+  }
+}
+
   }
 }
 </script>

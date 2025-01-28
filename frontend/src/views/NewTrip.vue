@@ -58,6 +58,7 @@ export default {
 
         if (endDate < startDate) {
             alert("Trip end date cannot be earlier than the trip start date.");
+            this.tripEnd = ''
             return;
         }
 
