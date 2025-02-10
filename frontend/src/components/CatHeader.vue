@@ -154,7 +154,8 @@ header {
   font-family: 'Satoshi-Variable';
   font-style: normal;
   font-weight: 200;
-  font-size: 1.6rem;
+  font-size: 2rem;
+  line-height: 2.5rem;
   margin-left: auto;
   margin-right: 0;
   text-align: right;
@@ -163,12 +164,7 @@ header {
 
 .menu-p-bold {
   font-weight: 500;
-  font-size: 1.6rem;
-}
-
-.menu-p-tiny {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+  font-size: 2rem;
 }
 
 .close-btn {
