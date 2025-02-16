@@ -18,6 +18,7 @@ export default {
       this.$router.push({ name: 'logout' }).then(() => {
         this.state.user = null;
         localStorage.removeItem('loggedUser');
+        localStorage.removeItem('expiresAt')
       }).catch(err => {
         console.error('Error during logout navigation:', err);
       });
