@@ -14,13 +14,30 @@ router.get('/events/ids', async (req, res) => {
   }
 });
 
+// GET /events/titles - Get trip titles and IDs for searching
+router.get('/events/titles', async (req, res) => {
+  try {
+    console.log('Req to get all trip titles and ids');
+
+    const trips = await req.db
+      .collection('events')
+      .find({}, { projection: { tripTitle: 1, id: 1, _id: 0 } })
+      .toArray();
+console.log('got the trips and ids:', trips)
+    res.json(trips);
+  } catch (error) {
+    console.error('Error fetching trip titles and ids:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // GET /events - Get a trip by ID
 router.get('/events', async (req, res) => {
   const { id } = req.query;
   console.log('Request to find trip with ID:', id);
 
   try {
-    const trip = await req.db.collection('events').findOne({ id }); // Query MongoDB for the trip
+    const trip = await req.db.collection('events').findOne({ id });
     console.log('Trip found in DB:', trip);
 
     if (trip) {
@@ -57,8 +74,8 @@ router.post('/events', async (req, res) => {
 
 // PUT /events - Update a trip by ID
 router.put('/events', async (req, res) => {
-  const { id } = req.query; // Get trip ID from query parameters
-  let tripData = req.body; // Get updated trip data from the request body
+  const { id } = req.query;
+  let tripData = req.body;
   console.log('PUT request to update trip with ID:', id);
   try {
     // Remove _id from the tripData to prevent modification of the immutable field

@@ -28,12 +28,11 @@
     >
       <li class="li-items">
         <p class="search-result-text">
-          {{ trip.tripTitle }} <br />{{ trip.tripStart.split(' ')[0] }} -
-          {{ trip.tripEnd.split(' ')[0] }}
+          {{ trip.tripTitle }}
         </p>
       </li>
     </router-link>
-    <button @click.prevent="resetSearch">Reset</button>
+    <button @click.prevent="resetSearch" class="reset-btn">Reset</button>
   </section>
 </template>
 
@@ -44,7 +43,6 @@ export default {
   props: {},
   data() {
     return {
-      allTripData: [],
       searchField: '',
       disableGoBtn: true,
       state: herdingCatsstore()
@@ -52,20 +50,25 @@ export default {
   },
   methods: {
     async searchPublicTrip() {
-      const response = await fetch(`${this.apiUrl}?pathname=events`)
-      const apiTripData = await response.json()
-      this.allTripData = apiTripData
-      const searchTermLower = this.searchField.toLowerCase()
-      this.state.userSearchedTrips = this.allTripData.filter(
-        (event) => event.public === true && event.tripTitle.toLowerCase().includes(searchTermLower)
-      )
+      // Ensure trip titles are loaded
+      await this.state.loadTripTitlesAndIds();
+
+      const query = this.searchField.trim().toLowerCase();
+
+      // Filter trips based on searchField
+      this.state.userSearchedTrips = this.state.allTripTitles.filter(trip =>
+      trip.tripTitle && trip.tripTitle.toLowerCase().includes(query)
+      );
+      
       this.searchField = ''
       this.disableGoBtn = true
-      return this.state.userSearchedTrips
+      return this.state.userSearchedTrips;
     },
+
     checkInputLength() {
       this.disableGoBtn = this.searchField.trim().length <= 1
     },
+
     resetSearch() {
       this.searchField = ''
       this.state.userSearchedTrips = []
@@ -96,13 +99,16 @@ export default {
 .search-result {
   position: relative;
   background-color: var(--gray-accomodation);
-  border: 1px solid white;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 28rem;
+  min-height: 17rem;
   padding: 1rem 2rem;
   margin: 0.7rem auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
 }
 
-.close-btn {
-  position: absolute;
+.reset-btn {
+margin-top: auto;
 }
 </style>

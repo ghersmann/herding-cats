@@ -11,7 +11,8 @@ export const herdingCatsstore = defineStore('registration', {
       isUserThere: false,
       isDataLoaded: false,
       isModalOpen: false,
-      isMenuOpen: false
+      isMenuOpen: false,
+      allTripTitles: []
   }),
   actions: {
     async loadUserTripData() {
@@ -43,6 +44,18 @@ export const herdingCatsstore = defineStore('registration', {
           } catch (error) {
             console.error('Failed to fetch trip IDs:', error);
             throw error;
+          }
+        },
+
+    async loadTripTitlesAndIds() {
+      try {
+            const response = await fetch (`${this.apiUrl}/events/titles`);
+            const tripTitles = await response.json();
+            this.allTripTitles = tripTitles;
+            return this.allTripTitles;
+          } catch (error) {
+            console.error('Failed to fetch triptitles', error);
+            throw error
           }
         },
 
