@@ -7,57 +7,49 @@ require('@babel/register')({
   presets: ['@babel/preset-env']
 });
 
-
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Middleware
 app.use(cors());
 app.use(express.json()); // Parse incoming JSON data
 
-
-
 // MongoDB Connection Setup
-const uri = process.env.MONGO_URI; // Use the same URI as you used for MongoClient in your test
+const uri = process.env.MONGO_URI;
 
-let db; // This will store the reference to the connected database
-
-async function connectToDB() {
+async function startServer() {
   try {
     const client = new MongoClient(uri);
     await client.connect();
     console.log('MongoDB connected successfully! Yay!');
-    db = client.db('herding-cats'); // Specify the database you are using
+    const db = client.db('herding-cats');
+
+    // Attach DB to all incoming requests
+    app.use((req, res, next) => {
+      req.db = db;
+      next();
+    });
+
+    // Mount routes AFTER DB is ready
+    const eventRoutes = require('../routes/eventRoutes');
+    const userRoutes = require('../routes/userRoutes');
+
+    app.use('/api', eventRoutes);
+    app.use('/api', userRoutes);
+
+    // Serve frontend
+    app.use(express.static(path.join(__dirname, '../dist')));
+
+    // Catch-all (must come LAST)
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../dist/index.html'));
+    });
+
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
   } catch (err) {
-    console.error('Error connecting to MongoDB:', err);
+    console.error('Error starting server:', err);
   }
 }
 
-// Call the function to connect to the database
-connectToDB();
-
-// Import routes and pass the `db` to route handlers
-const eventRoutes = require('../routes/eventRoutes');
-const userRoutes = require('../routes/userRoutes');
-
-// Use the routes and pass the database as a parameter
-app.use((req, res, next) => {
-  req.db = db; // Attach the database to the request object
-  next();
-});
-
-app.use('/api', eventRoutes); // All routes are prefixed with '/api'
-app.use('/api', userRoutes);
-
-app.use(express.static(path.join(__dirname, '../dist')))
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-module.exports = app;
+startServer(); // Call the startup

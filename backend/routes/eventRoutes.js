@@ -23,7 +23,7 @@ router.get('/events/titles', async (req, res) => {
       .collection('events')
       .find({}, { projection: { tripTitle: 1, id: 1, _id: 0 } })
       .toArray();
-
+console.log('got the trips and ids:', trips)
     res.json(trips);
   } catch (error) {
     console.error('Error fetching trip titles and ids:', error);
