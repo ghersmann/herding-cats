@@ -35,6 +35,8 @@ export const herdingCatsstore = defineStore('registration', {
       }
     },
     
+// Modify loadTripIds to only load public trips
+
     async loadTripIds() {
       try {
             const response = await fetch(`${this.apiUrl}/events/ids`);
