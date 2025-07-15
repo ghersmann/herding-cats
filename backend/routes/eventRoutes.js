@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-// GET /events/ids - Get only the trip IDs
+// GET /events/ids - Get only the trip IDs for public trips
 router.get('/events/ids', async (req, res) => {
   try {
-    console.log('Request to get all tripIds')
-    const tripIds = await req.db.collection('events').find({}, { projection: { id: 1, _id: 0 } }).toArray(); // Fetch only the 'id' field
+    console.log('Request to get all *public* tripIds');
+    const tripIds = await req.db.collection('events').find(
+      { public: true }, // <-- Filter to only include documents with public: true
+      { projection: { id: 1, _id: 0 } } // Only return the 'id' field
+    ).toArray();
+
     const ids = tripIds.map(trip => trip.id); // Extract the IDs into an array
     res.json(ids);
   } catch (error) {
