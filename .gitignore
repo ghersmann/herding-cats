@@ -32,3 +32,5 @@ database.dev.local.json
 .vite
 deps
 .env*.local
+
+dist_old/
