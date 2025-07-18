@@ -20,20 +20,32 @@
     </button>
   </form>
   <section v-if="state.userSearchedTrips.length > 0" class="search-result">
-    <p>Search Results</p>
-    <router-link
-      v-for="trip in state.userSearchedTrips"
-      :key="trip.id"
-      :to="{ path: '/trip/' + trip.id }"
-    >
-      <li class="li-items">
-        <p class="search-result-text">
-          {{ trip.tripTitle }}
-        </p>
-      </li>
-    </router-link>
-    <button @click.prevent="resetSearch" class="reset-btn">Reset</button>
-  </section>
+  <p>Search Results for: "{{ displaySearchedWord }}"</p>
+  
+  <ul class="found-item-wrapper">
+    <li v-for="trip in state.userSearchedTrips" :key="trip.id" class="li-items">
+      <router-link
+        :to="{ path: '/trip/' + trip.id }"
+        class="trip-link"
+      >
+        <p class="search-result-text">{{ trip.tripTitle }}</p>
+      </router-link>
+      <button
+        class="save-trip-btn"
+        @click="saveTripToList(trip.id)"
+        :disabled="state.user.trips.includes(trip.id)"
+        :class="{ 'btn-just-saved': justSavedTripIds.includes(trip.id) }"
+      >
+        {{ justSavedTripIds.includes(trip.id) 
+            ? 'Saved!' 
+            : (state.user.trips.includes(trip.id) ? 'Saved' : 'Save trip') }}
+      </button>
+    </li>
+  </ul>
+  
+  <button @click.prevent="resetSearch" class="reset-btn">Reset</button>
+</section>
+
 </template>
 
 <script>
@@ -44,7 +56,9 @@ export default {
   data() {
     return {
       searchField: '',
+      displaySearchedWord: '',
       disableGoBtn: true,
+      justSavedTripIds: [],
       state: herdingCatsstore()
     }
   },
@@ -60,6 +74,7 @@ export default {
       trip.tripTitle && trip.tripTitle.toLowerCase().includes(query)
       );
       
+      this.displaySearchedWord = this.searchField
       this.searchField = ''
       this.disableGoBtn = true
       return this.state.userSearchedTrips;
@@ -73,6 +88,19 @@ export default {
       this.searchField = ''
       this.state.userSearchedTrips = []
       this.disableGoBtn = true
+    },
+
+    async saveTripToList(tripId) {
+      if (!this.state.user.trips.includes(tripId)) {
+        this.state.user.trips.push(tripId);
+        await this.state.updateUserState(this.state.user.id)
+        await this.state.loadUserTripData()
+
+        this.justSavedTripIds.push(tripId);
+        setTimeout(() => {
+          this.justSavedTripIds = this.justSavedTripIds.filter(id => id !== tripId);
+        }, 1500);
+      }
     }
   }
 }
@@ -86,7 +114,9 @@ export default {
 
 .li-items {
   list-style-type: none;
-}
+  display: flex;
+  align-items: center;
+} 
 
 .icon {
   padding-left: 3rem;
@@ -109,6 +139,60 @@ export default {
 }
 
 .reset-btn {
-margin-top: auto;
+margin-top: 2rem;
 }
+
+.save-trip-btn {
+  background-color: var(--dark-button-blue);
+  width: 4rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  margin-left: auto;
+  margin-right: 0;
+  font-size: 1rem;
+}
+
+.save-trip-btn:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.saved-message {
+  font-size: 1.5rem;
+  color: var(--dark-button-blue);
+  opacity: 1;
+  transition: opacity 1.5s ease-out;
+}
+
+.animate-saved {
+  animation: fadeOut 1.5s forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.05); }
+}
+
+.btn-just-saved {
+  background-color: var(--dark-button-blue);
+  color: white;
+  animation: pulseFade 1.5s ease-in-out forwards;
+}
+
+@keyframes pulseFade {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 </style>

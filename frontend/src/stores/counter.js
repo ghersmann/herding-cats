@@ -16,11 +16,16 @@ export const herdingCatsstore = defineStore('registration', {
   }),
   actions: {
     async loadUserTripData() {
-      this.userTrips = []
       const uniqueTripIds = [...new Set(this.user.trips)]
+      const newTrips = []
+
       for (const tripId of uniqueTripIds) {
-        await this.loadUserTrips(tripId)
+        const response = await fetch(`${this.apiUrl}/events?id=${tripId}`)
+        const apiTripData = await response.json()
+        newTrips.push(apiTripData)
       }
+
+      this.userTrips = newTrips
     },
 
     async loadUserTrips(tripId) {
