@@ -53,6 +53,9 @@
       :end-name="endName"
       :placeholder="placeholder"
     />
+          <router-link :to="{ path: '/timeline/' + this.$route.params.id }">
+        <button class="timeline-btn">Trip Timeline</button>
+      </router-link>
     <router-link :to="{ path: '/trip/' + this.$route.params.id }"
       ><button>Back to Trip</button></router-link
     >
