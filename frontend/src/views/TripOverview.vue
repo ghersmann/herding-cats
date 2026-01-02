@@ -161,11 +161,6 @@ button {
   background-color: var(--pink-background);
 }
 
-.timeline-btn {
-  color: black;
-  background-color: var(--yellow-calendar);
-}
-
 .white-box-id {
   padding: 1.4rem;
   color: black;

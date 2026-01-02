@@ -7,6 +7,7 @@
         <h4 v-if="isNewDate(item.startDate, index)" class="weekday">
           {{ weekNumber(item.startDate) }} {{ item.startDate.slice(0, 10) }}
         </h4>
+          <router-link :to="{ path: '/' + item.category + '/' + this.$route.params.id }">
         <h4 class="type-of">{{ item.category.charAt(0).toUpperCase() + item.category.slice(1) }}</h4>
         <div class="activity-item">
         <h3>
@@ -14,6 +15,7 @@
         </h3>
         <p>Start: {{ item.startDate.slice(13, 18) }}</p>
         </div>
+        </router-link>
       </div>
 
     <router-link :to="{ path: '/trip/' + this.$route.params.id }"
@@ -154,5 +156,9 @@ margin-bottom: 2rem;
   text-align: left;
   margin-bottom: 0.5rem;
   padding-top: 1rem;
+}
+
+.test-class {
+  background-color: hotpink;
 }
 </style>
