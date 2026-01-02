@@ -14,33 +14,56 @@ export const herdingCatsstore = defineStore('registration', {
       isMenuOpen: false,
       allTripTitles: []
   }),
+
   actions: {
     async loadUserTripData() {
+      if (!Array.isArray(this.user?.trips)) {
+        this.userTrips = []
+        return
+      }
+
       const uniqueTripIds = [...new Set(this.user.trips)]
-      const newTrips = []
 
-      for (const tripId of uniqueTripIds) {
-        const response = await fetch(`${this.apiUrl}/events?id=${tripId}`)
-        const apiTripData = await response.json()
-        newTrips.push(apiTripData)
-      }
+      const results = await Promise.all(
+        uniqueTripIds.map(async (tripId) => {
+          try {
+            const response = await fetch(`${this.apiUrl}/events?id=${tripId}`)
+            if (!response.ok) {
+              return null
+            }
 
-      this.userTrips = newTrips
+            const trip = await response.json()
+
+            if (
+              !trip ||
+              typeof trip !== 'object' ||
+              !trip.id ||
+              !trip.tripStart ||
+              !trip.tripEnd
+            ) {
+              console.warn(
+                `Dropped invalid tripId "${tripId}" — malformed trip data returned`,
+                trip
+              )
+              return null
+            }
+            return trip
+
+          } catch (error) {
+            console.error(`[${tripId}] Fetch failed`)
+            return null
+          }
+        })
+      )
+
+      const filteredOutIds = uniqueTripIds.filter(
+        (_, index) => results[index] === null
+      )
+
+      this.userTrips = results.filter(Boolean)
     },
 
-    async loadUserTrips(tripId) {
-      const existingTrip = this.userTrips.find((trip) => trip.id === tripId)
-      if (!existingTrip) {
-        const response = await fetch(`${this.apiUrl}/events?id=${tripId}`)
-        const apiTripData = await response.json()
-        this.userTrips.push(apiTripData)
-        return this.userTrips
-      } else {
-        return this.userTrips
-      }
-    },
-    
-// Modify loadTripIds to only load public trips
+
 
     async loadTripIds() {
       try {
